@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin E-commerce</title>
+    <partial name="_Styles" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <partial name="_Slidebar" />
+    <div class="content">
+        <partial name="_NavBar" />
+        <div class="content-header">
+            <div>
+                <h4 class="content-title">@ViewData["Title"]</h4>
+            </div>
+        </div>
+        <div class="content-body">
+            <h5 class="content-lead"></h5>
+            <div class="card card-body">
+                @RenderBody()
+            </div>
+        </div><!-- content-body -->
+
+    </div><!-- content -->
+
+
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    <partial name="_Scripts" />
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

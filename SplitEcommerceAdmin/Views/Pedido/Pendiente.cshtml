@@ -1,0 +1,179 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Pendientes";
+}
+
+<h1>Pendientes</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Iva)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetodoPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonedaPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatosEnvio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatosFacturacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroGuia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Paqueteria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoCambio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiasCreditoExtra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsoCFDI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aprobada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumGuiaEstatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaqueteriaDescripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaReciboPaquete)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreRecibio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IpSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstatusPuntos)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Iva)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetodoPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonedaPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatosEnvio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatosFacturacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroGuia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paqueteria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoCambio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiasCreditoExtra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsoCFDI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aprobada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumGuiaEstatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaqueteriaDescripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaReciboPaquete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreRecibio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpSource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstatusPuntos)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
