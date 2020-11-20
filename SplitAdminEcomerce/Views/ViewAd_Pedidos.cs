@@ -1,5 +1,6 @@
 ﻿using DbManagerDark.Attributes;
 using SplitAdminEcomerce.Catalogos;
+using SplitAdminEcomerce.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,7 @@ namespace SplitAdminEcomerce.Views
         public int IdCliente { get; set; }
 
         [Display(Name = "Total")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:00}")]
         [DarkColumn(Name = "total", IsMapped = true, IsKey = false)]
         public float Total { get; set; }
 
@@ -46,6 +48,7 @@ namespace SplitAdminEcomerce.Views
         public string Activo { get; set; }
 
         [Display(Name = "TipoCambio")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:00}")]
         [DarkColumn(Name = "tipoCambio", IsMapped = true, IsKey = false)]
         public float TipoCambio { get; set; }
 
@@ -56,7 +59,7 @@ namespace SplitAdminEcomerce.Views
         [DarkColumn(Name = "apellidos", IsMapped = true, IsKey = false)]
         public string Apellidoscliente { get; set; }
 
-        [Display(Name = "Tipo Cliente")]
+        
         [DarkColumn(Name = "tipo_cliente", IsMapped = true, IsKey = false)]
         public string TipoCliente { get; set; }
 
@@ -66,8 +69,16 @@ namespace SplitAdminEcomerce.Views
         [DarkColumn(Name = "sociedad", IsMapped = true, IsKey = false)]
         public string SociedadCliente { get; set; }
 
+        [Display(Name = "Ws estatus")]
+        [DarkColumn(Name = "EstatusWS", IsMapped = true, IsKey = false)]
+        public int EstatusWS { get; set; }
+
         [Display(Name = "Cliente")]
         [DarkColumn(Name = "sociedad", IsMapped = false, IsKey = false)]
         public string NombreFull { get { return string.Format("{0} {1}", NombreCliente, Apellidoscliente); } }
+
+        [Display(Name = "Folio Encripted")]
+        [DarkColumn(Name = "EncriptId", IsMapped = false, IsKey = false)]
+        public string EncriptId { get { return EncryptData.Encrypt(IdPedido+""); } }
     }
 }

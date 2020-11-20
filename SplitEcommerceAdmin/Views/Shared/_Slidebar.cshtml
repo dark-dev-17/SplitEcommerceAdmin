@@ -9,11 +9,14 @@
         <ul class="nav nav-sidebar">
             <li class="nav-label"><label class="content-label">Template Pages</label></li>
             <li class="nav-item">
-                <a href="" class="nav-link with-sub"><i data-feather="box"></i> Dashboard</a>
+                <a href="" class="nav-link with-sub"><i data-feather="box"></i>Ventas</a>
                 <nav class="nav nav-sub">
-                    <a href="../pages/dashboard-one.html" class="nav-sub-link">Analytics &amp; Monitoring</a>
-                    <a href="../pages/dashboard-two.html" class="nav-sub-link">Projects &amp; Web Services</a>
-                    <a href="../pages/dashboard-three.html" class="nav-sub-link">Blog &amp; Social Media</a>
+                    <a href="../pages/dashboard-one.html" class="nav-sub-link">Rastreador</a>
+                    <a href="@Url.Action("Index","Cliente")" class="nav-sub-link">Clientes</a>
+                    <a href="@Url.Action("Cotizacion","Pedido")" class="nav-sub-link">Cotizaciones</a>
+                    <a href="@Url.Action("Pendiente","Pedido")" class="nav-sub-link">Pendientes</a>
+                    <a href="@Url.Action("Pedido","Pedido")" class="nav-sub-link">Pedidos</a>
+                    <a href="../pages/dashboard-three.html" class="nav-sub-link">Historico</a>
                 </nav>
             </li>
             <li class="nav-item">

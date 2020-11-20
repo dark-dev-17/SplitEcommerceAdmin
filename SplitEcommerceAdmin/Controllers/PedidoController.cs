@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SplitAdminEcomerce;
+using SplitAdminEcomerce.Controllers;
+using SplitAdminEcomerce.Tools;
 
 namespace SplitEcommerceAdmin.Controllers
 {
@@ -18,7 +20,26 @@ namespace SplitEcommerceAdmin.Controllers
         {
             PedidoCtrl = new PedidoCtrl(new Splittel(configuration));
         }
-        // GET: PedidoController
+
+        public ActionResult Details(string id)
+        {
+            try
+            {
+                string idDecripted = EncryptData.Decrypt(id);
+                var result = PedidoCtrl.GetPedido(Int32.Parse(idDecripted));
+                return View(result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            finally
+            {
+                PedidoCtrl.Terminar();
+                PedidoCtrl = null;
+            }
+        }
+
         public ActionResult Cotizacion()
         {
             try
@@ -35,7 +56,6 @@ namespace SplitEcommerceAdmin.Controllers
                 PedidoCtrl.Terminar();
                 PedidoCtrl = null;
             }
-            
         }
 
         public ActionResult Pedido()
@@ -73,6 +93,5 @@ namespace SplitEcommerceAdmin.Controllers
                 PedidoCtrl = null;
             }
         }
-
     }
 }

@@ -525,7 +525,8 @@ namespace DbManagerDark.DbManager
             SqlConnection = new MySqlConnection(ConnectionString);
             try
             {
-                SqlConnection.Open();
+                if (SqlConnection.State == ConnectionState.Closed)
+                    SqlConnection.Open();
                 CheckConnection();
             }
             catch (MySqlException ex)

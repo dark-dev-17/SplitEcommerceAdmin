@@ -1,0 +1,157 @@
+﻿@model SplitAdminEcomerce.Uniones.PedidoUnion
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Detalle No: " + Model.Pedido.IdPedido;
+    System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-ES");
+    System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("es-ES");
+}
+@if (Model.Pedido.Fecha.AddDays(10) < DateTime.Now && Model.Pedido.Estatus == "C")
+{
+    <div class="alert alert-warning mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>La cotización con folio: <strong>@Model.Pedido.IdPedido</strong> ya no es vigente.</p>
+        <hr>
+        <p class="mb-0">Atte: Sistema Administrador E-commerce.</p>
+    </div>
+}
+<div class="card card-invoice">
+    <div class="card-header">
+        <div>
+            <h5 class="mg-b-3">Folio: @Model.Pedido.IdPedido</h5>
+            <span class="tx-sm text-muted">Vigente hasta: @Model.Pedido.Fecha.AddDays(10).ToString("F")</span>
+        </div>
+        <div class="btn-group-invoice">
+            @*<a href="" class="btn btn-white btn-sm btn-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Print</a>*@
+            @*<a href="" class="btn btn-white btn-sm btn-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Email</a>*@
+            @*<a href="" class="btn btn-brand-02 btn-sm btn-uppercase"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg> Pay</a>*@
+        </div>
+    </div><!-- card-header -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <label class="content-label">Dirección de envio</label>
+                @if (Model.Pedido.Estatus == "P" && Model.Cliente.TipoCliente == "B2C")
+                {
+            <h6 class="tx-15 mg-b-10">@Html.DisplayFor(modelItem => Model.DireccionEnvio.Nombre) @Html.DisplayFor(modelItem => Model.DireccionEnvio.Apellido)</h6>
+                    <p class="mg-b-0">
+                        @Html.DisplayFor(modelItem => Model.DireccionEnvio.Calle) ,
+                        @Html.DisplayFor(modelItem => Model.DireccionEnvio.NoExterior)
+                        @Html.DisplayFor(modelItem => Model.DireccionEnvio.Colonia),
+                        @Html.DisplayFor(modelItem => Model.DireccionEnvio.Delegacion),
+                        @Html.DisplayFor(modelItem => Model.DireccionEnvio.EstadoName),
+                        CP: @Html.DisplayFor(modelItem => Model.DireccionEnvio.CP)
+                    </p>
+                    <p class="mg-b-0"> Tel No: @Html.DisplayFor(modelItem => Model.DireccionEnvio.Telefono)</p>
+                }
+            </div><!-- col -->
+            <div class="col-sm-6 tx-right d-none d-md-block">
+                <label class="content-label">Cliente</label>
+                <h2 class="tx-normal tx-gray-400 mg-b-10 tx-spacing--2">@Html.DisplayFor(modelItem => Model.Cliente.NombreFull)</h2>
+            </div><!-- col -->
+            <div class="col-sm-6 col-lg-8 mg-t-40 mg-sm-t-0 mg-md-t-40">
+                <label class="content-label">Direccion de facturación</label>
+                @if (Model.Pedido.Estatus == "P" && Model.Cliente.TipoCliente == "B2C")
+                {
+                    <h6 class="tx-15 mg-b-10">@Html.DisplayFor(modelItem => Model.DireccionFacturacion.RazonSocial) </h6>
+                    <p class="mg-b-0"> @Html.DisplayFor(modelItem => Model.DireccionFacturacion.RFC)</p>
+                    <p class="mg-b-0">
+                        @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Calle) ,
+                        @Html.DisplayFor(modelItem => Model.DireccionFacturacion.NoExterior)
+                        @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Colonia),
+                        @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Delegacion),
+                        @Html.DisplayFor(modelItem => Model.DireccionFacturacion.EstadoName),
+                        CP: @Html.DisplayFor(modelItem => Model.DireccionFacturacion.CP)
+                    </p>
+                }
+            </div><!-- col -->
+            <div class="col-sm-6 col-lg-4 mg-t-40">
+                <label class="content-label">Invoice Information</label>
+                <ul class="list-unstyled lh-7">
+                    <li class="d-flex justify-content-between">
+                        <span>Tipo compra:</span>
+                        <span>@Model.Cliente.TipoCliente</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Estatus</span>
+                        <span>@Html.Raw((Model.Pedido.Estatus == "C" ? "Cotización" : "Pedido"))</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Moneda</span>
+                        <span>@Html.Raw(Model.Pedido.MonedaPago == "" ? "USD" : Model.Pedido.MonedaPago)</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Tipo de cambio</span>
+                        <span>@Model.Pedido.TipoCambio</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Fecha</span>
+                        <span>@Model.Pedido.Fecha.ToString("dd MMMM, yyyy")</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Vigente hasta</span>
+                        <span>@Model.Pedido.Fecha.AddDays(10).ToString("dd MMMM, yyyy")</span>
+                    </li>
+                </ul>
+            </div><!-- col -->
+        </div><!-- row -->
+
+        <div class="table-responsive mg-t-25">
+            <table class="table table-invoice bd-b">
+                <thead>
+                    <tr>
+                        <th class="wd-20p">Codigo</th>
+                        <th class="wd-40p d-none d-sm-table-cell">Descripción</th>
+                        <th class="tx-center">Cantidad</th>
+                        <th class="tx-right">Moneda</th>
+                        <th class="tx-right">Subtotal</th>
+                        <th class="tx-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PedidoDetalle)
+                    {
+                        <tr>
+                            <td class="tx-nowrap">@Html.DisplayFor(modelItem => item.Codigo)</td>
+                            <td class="d-none d-sm-table-cell tx-color-03">@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                            <td class="tx-center">@Html.DisplayFor(modelItem => item.Cantidad)</td>
+                            <td class="tx-right">@Html.DisplayFor(modelItem => item.Moneda)</td>
+                            <td class="tx-right">@Html.DisplayFor(modelItem => item.Subtotal)</td>
+                            <td class="tx-right">@Html.DisplayFor(modelItem => item.Total)</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row justify-content-between mg-t-25">
+            <div class="col-sm-6 col-lg-6 order-2 order-sm-0 mg-t-40 mg-sm-t-0">
+                <label class="content-label mg-b-10">Some Additional Notes</label>
+                <p class="tx-sm">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
+            </div><!-- col -->
+            <div class="col-sm-6 col-lg-4 order-1 order-sm-0">
+                <ul class="list-unstyled lh-7 pd-r-10">
+                    <li class="d-flex justify-content-between">
+                        <span>Sub-Total</span>
+                        <span>@Html.DisplayFor(modelItem => Model.Pedido.SubTotal)</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Iva (16%)</span>
+                        <span>@Html.DisplayFor(modelItem => Model.Pedido.Iva)</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <span>Discount (@Html.DisplayFor(modelItem => Model.Cliente.GroupCode))</span>
+                        <span>@Html.Raw((Model.Cliente.GroupCode * Model.Pedido.Total))</span>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <strong>Total</strong>
+                        <strong>@Html.DisplayFor(modelItem => Model.Pedido.Total)</strong>
+                    </li>
+                </ul>
+
+                <button class="btn btn-block btn-primary btn-brand-02">Pay Now</button>
+            </div><!-- col -->
+        </div>
+    </div><!-- card-body -->
+</div>

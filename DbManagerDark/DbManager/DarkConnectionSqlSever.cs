@@ -503,7 +503,8 @@ namespace DbManagerDark.DbManager
             try
             {
                 SqlConnection = new SqlConnection(ConnectionString);
-                SqlConnection.Open();
+                if (SqlConnection.State == ConnectionState.Closed)
+                    SqlConnection.Open();
                 CheckConnection();
             }
             catch (SqlException ex)

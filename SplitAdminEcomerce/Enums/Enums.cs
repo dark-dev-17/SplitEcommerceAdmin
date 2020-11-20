@@ -18,6 +18,11 @@ namespace SplitAdminEcomerce.Enums
     {
         Pedido = 1,
         ViewAd_Pedidos = 2,
+        ViewAd_Clientes = 3,
+        PedidoDetalle = 4,
+        ViewAd_PedidoDetalle = 5,
+        DireccionFacturacion = 6,
+        DireccionEnvio = 7,
     }
     public enum SplinObjects
     {

@@ -31,6 +31,18 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <partial name="_Scripts" />
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        
+        $(document).ready(function () {
+            $('.datatable1').DataTable({
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

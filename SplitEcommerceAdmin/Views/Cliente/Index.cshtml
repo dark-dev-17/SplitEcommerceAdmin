@@ -1,0 +1,84 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Views.ViewAd_Clientes>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<table class="table datatable1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreFull)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaUltimoIngre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreFull)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaUltimoIngre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                @if (item.TipoCliente.Trim() == "B2C")
+                {
+                    <span class="badge badge-primary">@Html.DisplayFor(modelItem => item.TipoCliente)</span>
+
+                }
+                else
+                {
+                    <span class="badge badge-secondary">@Html.DisplayFor(modelItem => item.TipoCliente)</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardCode)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.Crypptedid })" title="Ver cliente: @item.NombreFull">Ver</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

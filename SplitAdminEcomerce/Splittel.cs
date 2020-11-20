@@ -28,9 +28,14 @@ namespace SplitAdminEcomerce
         protected string StrDbSplinet { get; set; }
         #endregion
 
-        #region Variables de acceso
+        #region Variables de acceso ecomerce
         public DarkManagerMySQL<ViewAd_Pedidos> ViewAd_Pedidos { get; internal set; }
+        public DarkManagerMySQL<ViewAd_Clientes> ViewAd_Clientes { get; internal set; }
         public DarkManagerMySQL<Pedido> Pedido { get; internal set; }
+        public DarkManagerMySQL<PedidoDetalle> PedidoDetalle { get; internal set; }
+        public DarkManagerMySQL<ViewAd_PedidoDetalle> ViewAd_PedidoDetalle { get; internal set; }
+        public DarkManagerMySQL<DireccionEnvio> DireccionEnvio { get; internal set; }
+        public DarkManagerMySQL<DireccionFacturacion> DireccionFacturacion { get; internal set; }
         #endregion
 
         #region Constructores
@@ -77,6 +82,16 @@ namespace SplitAdminEcomerce
                 Pedido = new DarkManagerMySQL<Pedido>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.ViewAd_Pedidos)
                 ViewAd_Pedidos = new DarkManagerMySQL<ViewAd_Pedidos>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.ViewAd_Clientes)
+                ViewAd_Clientes = new DarkManagerMySQL<ViewAd_Clientes>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PedidoDetalle)
+                PedidoDetalle = new DarkManagerMySQL<PedidoDetalle>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.ViewAd_PedidoDetalle)
+                ViewAd_PedidoDetalle = new DarkManagerMySQL<ViewAd_PedidoDetalle>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.DireccionEnvio)
+                DireccionEnvio = new DarkManagerMySQL<DireccionEnvio>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.DireccionFacturacion)
+                DireccionFacturacion = new DarkManagerMySQL<DireccionFacturacion>(DbEcommerce);
         }
         #endregion
 

@@ -1,0 +1,187 @@
+﻿@model SplitAdminEcomerce.Views.ViewAd_Clientes
+
+@{
+    ViewData["Title"] = "Cliente: " + Model.NombreFull;
+
+    List<SplitAdminEcomerce.Views.ViewAd_Pedidos> Cotizaciones = ViewBag.Cotizaciones;
+
+}
+@if(Model.Activo.Trim() == "no")
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>El cliente <strong>@Model.NombreFull</strong> se encuentra desactivado, si deseas activarlo por favor selecciona la pestaña <strong>Configuración</strong> y da click en <strong>Activar/Desactivar</strong></p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+    </div>
+}
+<div class="content-body-profile">
+    <div class="profile-sidebar">
+        <div class="profile-sidebar-header">
+            <div class="avatar"><img src="https://via.placeholder.com/500/637382/fff" class="rounded-circle" alt=""></div>
+            <h5>@Model.NombreFull</h5>
+            <p>Cliente @Model.TipoCliente</p>
+            <span>@Model.CardCode</span>
+        </div><!-- profile-sidebar-header -->
+        <div class="profile-sidebar-body">
+
+            <label class="content-label">Información de contacto</label>
+            <ul class="list-unstyled profile-info-list mg-b-0">
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <a href="">@Html.DisplayFor(model => model.Telefono)</a>
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <a href="">@Html.DisplayFor(model => model.Email)</a>
+                </li>
+            </ul>
+            <hr />
+            <label class="content-label">Último ingreso</label>
+            <ul class="list-unstyled profile-info-list mg-b-0">
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span class="tx-color-03">@Html.DisplayFor(model => model.FechaUltimoIngre)</span>
+                </li>
+            </ul>
+            @if (Model.TipoCliente == "B2B")
+            {
+                <hr />
+                <label class="content-label">@Html.DisplayNameFor(model => model.EmailEjecutivo)</label>
+                <ul class="list-unstyled profile-info-list mg-b-0">
+                    @foreach (string email in Model.EmailEjecutivo.Split(';'))
+                    {
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                            <span class="tx-color-03 small">@email</span>
+                        </li>
+                    }
+                </ul>
+                <hr />
+                <label class="content-label">@Html.DisplayNameFor(model => model.GroupCode)</label>
+                <ul class="list-unstyled profile-info-list mg-b-0">
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span class="tx-color-03">@Html.DisplayFor(model => model.GroupCode)</span>
+                    </li>
+                </ul>
+                <hr />
+                <label class="content-label">@Html.DisplayNameFor(model => model.Segmento)</label>
+                <ul class="list-unstyled profile-info-list mg-b-0">
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span class="tx-color-03">@Html.DisplayFor(model => model.Segmento)</span>
+                    </li>
+                </ul>
+            }
+        </div><!-- profile-sidebar-body -->
+    </div>
+    <div class="profile-body">
+        <div class="profile-body-header">
+            <div class="nav-wrapper">
+                <ul class="nav nav-line" id="profileTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#tab-Cotizaciones" role="tab" aria-controls="overview" aria-selected="true">Cotizaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="projects-tab" data-toggle="tab" href="#tab-Pendientes" role="tab" aria-controls="projects" aria-selected="false">Pendientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="people-tab" data-toggle="tab" href="#tab-Pedidos" role="tab" aria-controls="people" aria-selected="false">Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-Rechazados" role="tab" aria-controls="settings" aria-selected="false">Rechazados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-settings" role="tab" aria-controls="settings" aria-selected="false">Configuración</a>
+                    </li>
+                </ul>
+            </div><!-- nav-wrapper -->
+        </div><!-- profile-body-header -->
+        <div class="tab-content pd-15 pd-sm-20">
+            <div id="tab-Cotizaciones" class="tab-pane show active">
+                <partial name="../Pedido/General" model="Cotizaciones" />
+            </div>
+            <div id="tab-Pendientes" class="tab-pane">
+                <partial name="../Pedido/General" model="ViewBag.Pendientes" />
+            </div>
+            <div id="tab-Pedidos" class="tab-pane">
+                <partial name="../Pedido/General" model="ViewBag.Pedidos" />
+            </div>
+            <div id="tab-Rechazados" class="tab-pane">
+            </div>
+            <div id="tab-settings" class="tab-pane">
+                <div class="row row-xs">
+                    <div class="col-md-4">
+                        <ul class="list-group list-group-settings">
+                            <li class="list-group-item list-group-item-action ">
+                                <a href="#pane-accountSettings" data-toggle="tab" class="media active">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                    <div class="media-body ">
+                                        <h6>Account Settings</h6>
+                                        <span>Activar o desactivar cliente</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <a href="#pane-Security" data-toggle="tab" class="media ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    <div class="media-body">
+                                        <h6>Security</h6>
+                                        <span>Cambiar Contraseña SAP WS</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div><!-- col -->
+                    <div class="col-md-8">
+                        <div class="card card-body pd-sm-40 pd-md-30 pd-xl-y-35 pd-xl-x-40">
+                            <div class="tab-content">
+                                <div id="pane-accountSettings" class="tab-pane active show">
+                                    <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Account Settings</h6>
+                                    <hr>
+                                    @if (Model.Activo == "si")
+                                    {
+                                        <div class="form-group">
+                                            <label class="form-label text-danger">Desactivar cuenta</label>
+                                            <p class="tx-sm tx-color-04">Una vez desactivada la cuenta, el usuario no podra ingresar a nuestro E-commerce.</p>
+                                            <button class="btn btn-sm btn-danger" title="Desactivar cuenta : @Model.NombreFull">Desactivar</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label class="form-label text-success">Activar cuenta</label>
+                                            <p class="tx-sm tx-color-04">Una vez activada la cuenta, el usuario podra ingresar nuevamente a nuestro E-commerce.</p>
+                                            <button class="btn btn-sm btn-success"  title="Activar cuenta : @Model.NombreFull">Activar</button>
+                                        </div>
+                                    }
+                                </div><!-- tab-pane -->
+                                <div id="pane-Security" class="tab-pane">
+                                    <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Security</h6>
+                                    <hr>
+                                    <div class="form-settings">
+                                        <div class="form-group">
+                                            <label class="form-label">Cambiar o agregar contraseña SAP B1</label>
+                                            <input type="text" class="form-control" placeholder="Introduce la contraseña">
+                                            <input type="text" class="form-control mg-t-5" placeholder="confirma la contraseña">
+                                            <input type="text" class="form-control mg-t-5" placeholder="Introduce la sociedad">
+
+                                        </div><!-- form-group -->
+                                        <div class="form-group tx-13 tx-color-04">
+                                            Todos los campos de esta sección son importantes
+                                        </div>
+                                        <hr class="op-0">
+                                        <button class="btn btn-brand-02">Cambiar</button>
+                                        <button class="btn btn-white mg-l-2">Cancelar</button>
+                                    </div>
+                                </div><!-- tab-pane -->
+                            </div><!-- tab-content -->
+                        </div><!-- card -->
+                    </div><!-- col -->
+                </div>
+            </div>
+        </div><!-- tab-content -->
+    </div>
+</div>
+
