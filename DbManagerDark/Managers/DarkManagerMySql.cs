@@ -96,6 +96,16 @@ namespace DbManagerDark.Managers
             return Lista.ElementAt(0);
         }
 
+        public T GetString(string id)
+        {
+            List<T> Lista = DataReader(string.Format("select * from {0} where {1} = '{2}'", Nametable, KeyCol(), id));
+            if (Lista.Count == 0)
+            {
+                return default(T);
+            }
+            return Lista.ElementAt(0);
+        }
+
         public T GetByColumn(string id, string nameCol)
         {
             List<T> Lista = DataReader(string.Format("select * from {0} where {1} = '{2}'", Nametable, nameCol, id));
@@ -138,6 +148,15 @@ namespace DbManagerDark.Managers
         public List<T> GetOpenquery(string where = "", string Order = "")
         {
             return DataReader(string.Format("select * from {0} {1} {2}", Nametable, where, Order));
+        }
+        public T GetOpenquery(string where = "")
+        {
+            List<T> Lista = DataReader(string.Format("select * from {0} {1} ", Nametable, where));
+            if (Lista.Count == 0)
+            {
+                return default(T);
+            }
+            return Lista.ElementAt(0);
         }
         private string KeyCol()
         {

@@ -12,7 +12,7 @@ namespace SplitAdminEcomerce.Enums
     }
     public enum SapB1Objects
     {
-         
+        DireccionPedido = 1
     }
     public enum EcomObjects
     {
@@ -23,6 +23,13 @@ namespace SplitAdminEcomerce.Enums
         ViewAd_PedidoDetalle = 5,
         DireccionFacturacion = 6,
         DireccionEnvio = 7,
+        WsB2C = 8,
+        OPWebHookLog = 9,
+        WsB2B = 10,
+        Producto = 11,
+        Categoria = 12,
+        SubCategoria = 13,
+        ProductoBuscador = 14,
     }
     public enum SplinObjects
     {

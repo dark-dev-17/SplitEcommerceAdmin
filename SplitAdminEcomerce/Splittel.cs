@@ -2,6 +2,7 @@
 using DbManagerDark.Managers;
 using Microsoft.Extensions.Configuration;
 using SplitAdminEcomerce.Models;
+using SplitAdminEcomerce.ModelsSAP;
 using SplitAdminEcomerce.Tools;
 using SplitAdminEcomerce.Views;
 using System;
@@ -16,6 +17,7 @@ namespace SplitAdminEcomerce
         protected DarkConnectionMySQL DbSplinet;
         protected IConfiguration Configuration;
         protected EmailServ EmailServ;
+        public FtpServ FtpServ { get; internal set; }
         protected string Server { get; set; }
         protected string From { get; set; }
         protected string Port { get; set; }
@@ -36,6 +38,21 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<ViewAd_PedidoDetalle> ViewAd_PedidoDetalle { get; internal set; }
         public DarkManagerMySQL<DireccionEnvio> DireccionEnvio { get; internal set; }
         public DarkManagerMySQL<DireccionFacturacion> DireccionFacturacion { get; internal set; }
+        public DarkManagerMySQL<WsB2C> WsB2C { get; internal set; }
+        public DarkManagerMySQL<OPWebHookLog> OPWebHookLog { get; internal set; }
+        public DarkManagerMySQL<WsB2B> WsB2B { get; internal set; }
+        public DarkManagerMySQL<Producto> Producto { get; internal set; }
+        public DarkManagerMySQL<Categoria> Categoria { get; internal set; }
+        public DarkManagerMySQL<SubCategoria> SubCategoria { get; internal set; }
+        public DarkManagerMySQL<ProductoBuscador> ProductoBuscador { get; internal set; }
+        #endregion
+
+        #region Variables de acceso SAP B1
+        /// <summary>
+        /// Direcciones de envio en SAP B1 para clientes B2B
+        /// </summary>
+        public DarkSpecialMSSQL<DireccionPedido> DireccionPedido { get; internal set; }
+
         #endregion
 
         #region Constructores
@@ -69,10 +86,28 @@ namespace SplitAdminEcomerce
             StrDbEcommerce = Configuration.GetConnectionString("Ecommerce"+ Base);
             StrDbSapBussinesOne = Configuration.GetConnectionString("SapB1" + Base);
             StrDbSplinet = Configuration.GetConnectionString("Splittel" + Base);
+            
+            string FTPS = ModeProduction ? "Ftp" : "FtpTest";
+            string FtpServer = Configuration.GetSection(FTPS).GetSection("server").Value;
+            string FtpUser = Configuration.GetSection(FTPS).GetSection("User").Value;
+            string FtpPassword = Configuration.GetSection(FTPS).GetSection("Password").Value;
+            string FtpDomain = Configuration.GetSection(FTPS).GetSection("Domain").Value;
+            string FtpSiterute = Configuration.GetSection(FTPS).GetSection("Siterute").Value;
+
+            FtpServ = new FtpServ(FtpServer, FtpUser, FtpPassword, FtpDomain, FtpSiterute);
+
         }
         #endregion
 
         #region Carga de objectos
+        public void LoadObject(Enums.SapB1Objects SapB1Objects)
+        {
+            if (DbSapBussinesOne == null)
+                throw new Exceptions.SplitException { ErrorCode = -100, Category = Exceptions.TypeException.Error, Description = "Por favor conecta db SAPB1" };
+
+            if (SapB1Objects == Enums.SapB1Objects.DireccionPedido)
+                DireccionPedido = new DarkSpecialMSSQL<DireccionPedido>(DbSapBussinesOne);
+        }
         public void LoadObject(Enums.EcomObjects ecomObjects)
         {
             if (DbEcommerce == null)
@@ -92,6 +127,20 @@ namespace SplitAdminEcomerce
                 DireccionEnvio = new DarkManagerMySQL<DireccionEnvio>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.DireccionFacturacion)
                 DireccionFacturacion = new DarkManagerMySQL<DireccionFacturacion>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.WsB2C)
+                WsB2C = new DarkManagerMySQL<WsB2C>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.OPWebHookLog)
+                OPWebHookLog = new DarkManagerMySQL<OPWebHookLog>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.WsB2B)
+                WsB2B = new DarkManagerMySQL<WsB2B>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.Producto)
+                Producto = new DarkManagerMySQL<Producto>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.Categoria)
+                Categoria = new DarkManagerMySQL<Categoria>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.SubCategoria)
+                SubCategoria = new DarkManagerMySQL<SubCategoria>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.ProductoBuscador)
+                ProductoBuscador = new DarkManagerMySQL<ProductoBuscador>(DbEcommerce);
         }
         #endregion
 

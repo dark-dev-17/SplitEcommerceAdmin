@@ -18,6 +18,7 @@ namespace SplitAdminEcomerce.Controllers
         {
             this.Splittel = Splittel;
             Splittel.Connect();
+
             if(Splittel.ViewAd_Pedidos == null)
                 Splittel.LoadObject(Enums.EcomObjects.ViewAd_Pedidos);
             if(Splittel.Pedido == null)
@@ -28,6 +29,17 @@ namespace SplitAdminEcomerce.Controllers
                 Splittel.LoadObject(Enums.EcomObjects.DireccionFacturacion);
             if (Splittel.DireccionEnvio == null)
                 Splittel.LoadObject(Enums.EcomObjects.DireccionEnvio);
+            if (Splittel.WsB2C == null)
+                Splittel.LoadObject(Enums.EcomObjects.WsB2C);
+            if (Splittel.OPWebHookLog == null)
+                Splittel.LoadObject(Enums.EcomObjects.OPWebHookLog);;
+            if (Splittel.WsB2B == null)
+                Splittel.LoadObject(Enums.EcomObjects.WsB2B);
+
+            Splittel.Connect(Enums.DbAccess.SapBussinesOne);
+
+            if (Splittel.DireccionPedido == null)
+                Splittel.LoadObject(Enums.SapB1Objects.DireccionPedido);
         }
         #endregion
 
@@ -44,8 +56,37 @@ namespace SplitAdminEcomerce.Controllers
             pedidoUnion.Cliente = new ClienteCtrl(Splittel).GetView(pedidoUnion.Pedido.IdCliente);
             if(pedidoUnion.Pedido.Estatus == "P")
             {
-                pedidoUnion.DireccionEnvio = Splittel.DireccionEnvio.Get(Int32.Parse(pedidoUnion.Pedido.DatosEnvio));
-                pedidoUnion.DireccionFacturacion = Splittel.DireccionFacturacion.Get(Int32.Parse(pedidoUnion.Pedido.DatosFacturacion));
+                if(pedidoUnion.Pedido.MetodoPago == "03")
+                {
+                    if(pedidoUnion.Cliente.TipoCliente == "B2C")
+                    {
+                        //direccion de envio
+                        pedidoUnion.DireccionEnvio = Splittel.DireccionEnvio.Get(Int32.Parse(pedidoUnion.Pedido.DatosEnvio));
+                        //direccion de facuracion
+                        pedidoUnion.DireccionFacturacion = Splittel.DireccionFacturacion.Get(Int32.Parse(pedidoUnion.Pedido.DatosFacturacion));
+                        //ultimo log open pay
+                        pedidoUnion.OPWebHookLog = Splittel.OPWebHookLog.GetOpenquery($"where t12_f002 = '{IdPedido}' order by t12_f099 desc limit 1");
+                        //validar si el log de open pay fue exitoso
+                        if (pedidoUnion.OPWebHookLog != null && pedidoUnion.OPWebHookLog.Titulo == "charge.succeeded" && pedidoUnion.OPWebHookLog.Estatus == "completed")
+                        {
+                            pedidoUnion.WsB2C = Splittel.WsB2C.GetOpenquery($"where t06_f006 = '{IdPedido}'");
+                        }
+                    }
+                    else
+                    {
+                        //direccion de envio
+                        pedidoUnion.DirEnvioB2B = Splittel.DireccionPedido.GetSpecialStat(string.Format("exec Eco_GetAddressByCustomer @CardCode = '{0}', @AdresType = 'S'", pedidoUnion.Cliente.CardCode.Trim())).Find(a => a.Nombre == pedidoUnion.Pedido.DatosEnvio.Trim());
+                        //direccion de facuracion
+                        pedidoUnion.DirFacturacionB2B = Splittel.DireccionPedido.GetSpecialStat(string.Format("exec Eco_GetAddressByCustomer @CardCode = '{0}', @AdresType = 'B'", pedidoUnion.Cliente.CardCode.Trim())).Find(a => a.Nombre == pedidoUnion.Pedido.DatosFacturacion.Trim());
+                        //ultimo log open pay
+                        pedidoUnion.OPWebHookLog = Splittel.OPWebHookLog.GetOpenquery($"where t12_f002 = '{IdPedido}' order by t12_f099 desc limit 1");
+                        //validar si el log de open pay fue exitoso
+                        if (pedidoUnion.OPWebHookLog != null && pedidoUnion.OPWebHookLog.Titulo == "charge.succeeded" && pedidoUnion.OPWebHookLog.Estatus == "completed")
+                        {
+                            pedidoUnion.WsB2B = Splittel.WsB2B.GetOpenquery($"where t06_f005 = '{IdPedido}'");
+                        }
+                    }
+                }
             }
             return pedidoUnion;
         }

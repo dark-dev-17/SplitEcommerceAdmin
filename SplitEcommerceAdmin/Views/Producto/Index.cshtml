@@ -1,0 +1,173 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProducto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDesclarga)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdImagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCategoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSubcategoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMarca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdValoraciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioUnitario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descuento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCaraceristicas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInfo_tecnica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Novedades)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HojaTecnica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PesoDimension)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoAdicional)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProdRelacionados)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoConfig)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImgPrincipal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReqCosto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EncriptId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDesclarga)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdImagen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCategoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSubcategoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMarca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdValoraciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descuento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCaraceristicas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdInfo_tecnica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Novedades)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HojaTecnica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PesoDimension)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoAdicional)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProdRelacionados)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoConfig)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImgPrincipal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReqCosto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EncriptId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
