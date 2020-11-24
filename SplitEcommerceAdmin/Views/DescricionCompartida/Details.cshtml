@@ -1,0 +1,30 @@
+﻿@model SplitAdminEcomerce.Models.DescripcionCompartida
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Descripción larga</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-12">
+            @Html.DisplayNameFor(model => model.Clave)
+        </dt>
+        <dd class = "col-sm-12 ">
+            @Html.DisplayFor(model => model.Clave)
+        </dd>
+        <dt class = "col-sm-12">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-12 text-justify">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class = "col-sm-12">
+            @Html.DisplayNameFor(model => model.CEO)
+        </dt>
+        <dd class = "col-sm-12 text-justify">
+            @Html.DisplayFor(model => model.CEO)
+        </dd>
+    </dl>
+</div>

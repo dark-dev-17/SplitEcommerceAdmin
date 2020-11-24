@@ -30,6 +30,8 @@ namespace SplitAdminEcomerce.Enums
         Categoria = 12,
         SubCategoria = 13,
         ProductoBuscador = 14,
+        FichaTecnica = 15,
+        DescripcionCompartida = 16,
     }
     public enum SplinObjects
     {

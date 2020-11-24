@@ -16,8 +16,8 @@ namespace SplitAdminEcomerce.Controllers
             this.Splittel = Splittel;
             Splittel.Connect();
 
-            if (Splittel.Producto == null)
-                Splittel.LoadObject(Enums.EcomObjects.Producto);
+            if (Splittel.Categoria == null)
+                Splittel.LoadObject(Enums.EcomObjects.Categoria);
         }
         #endregion
 

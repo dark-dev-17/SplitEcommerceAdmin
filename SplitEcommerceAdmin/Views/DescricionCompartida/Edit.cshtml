@@ -1,0 +1,36 @@
+﻿@model SplitAdminEcomerce.Models.DescripcionCompartida
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div >
+    <form asp-action="Edit" asp-controller="DescripcionCompartida" class="">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Clave" class="control-label"></label>
+            <input asp-for="IdDescripcionCompartida" readonly type="hidden" class="form-control" />
+            <input asp-for="Clave" class="form-control" />
+            <span asp-validation-for="Clave" class="text-danger"></span>
+        </div><!-- form-group -->
+        <div class="form-group">
+            <label asp-for="Descripcion" class="control-label"></label>
+            <textarea asp-for="Descripcion" class="form-control"></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div><!-- form-group -->
+        <div class="form-group">
+            <label asp-for="CEO" class="control-label"></label>
+            <textarea asp-for="CEO" class="form-control"></textarea>
+            <span asp-validation-for="CEO" class="text-danger"></span>
+        </div><!-- form-group -->
+        <div class="form-group tx-13 tx-color-04">
+            Todos los campos de esta sección son utilizados por mas de un producto
+        </div>
+        <hr class="op-0">
+        <button class="btn btn-brand-02">Guardar cambios</button>
+        <button class="btn btn-white mg-l-2">Cancelar</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -9,6 +9,12 @@ using System.Text;
 
 namespace DbManagerDark.Managers
 {
+    public class ActionsMode
+    {
+        public string Columnname { get; set; }
+        public string ColumPR { get; set; }
+        public string Value { get; set; }
+    }
     public class DarkManagerMySQL<T> where T : new()
     {
         private DarkConnectionMySQL dBConnection { get; set; }
@@ -66,6 +72,21 @@ namespace DbManagerDark.Managers
             {
                 return ActionsObjectCode(DbManagerTypes.Update, tableDefinifiton);
             }
+        }
+        public bool Update(List<ActionsMode> valores, string where)
+        {
+
+            string sentencia = "";
+            List<ProcedureModel> procedureModels = new List<ProcedureModel>();
+            valores.ForEach(a => {
+                sentencia = a.Columnname + " = @" + a.ColumPR + ",";
+                procedureModels.Add(new ProcedureModel { Namefield = "@"+ a.ColumPR, value = "" + a.Value });
+            });
+            string Statement = string.Format("UPDATE {0} SET {1} WHERE {2} ", Nametable, sentencia.Substring(0, sentencia.Length - 1), where);
+            dBConnection.StartUpdate(Statement, procedureModels);
+            bool result = true;
+
+            return result;
         }
 
         public bool Delete()
@@ -145,10 +166,21 @@ namespace DbManagerDark.Managers
         {
             return DataReader(string.Format("select * from {0}", Nametable));
         }
+        /// <summary>
+        /// obtener lista en base sentencia where y order by
+        /// </summary>
+        /// <param name="where"></param>
+        /// <param name="Order"></param>
+        /// <returns></returns>
         public List<T> GetOpenquery(string where = "", string Order = "")
         {
             return DataReader(string.Format("select * from {0} {1} {2}", Nametable, where, Order));
         }
+        /// <summary>
+        /// obtener objeto de acuerdo a sentencia where
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
         public T GetOpenquery(string where = "")
         {
             List<T> Lista = DataReader(string.Format("select * from {0} {1} ", Nametable, where));

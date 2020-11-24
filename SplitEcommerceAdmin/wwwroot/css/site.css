@@ -69,3 +69,24 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.blockDashed {
+    border-style: dashed;
+    border-color: #c4cdd6;
+    font-size: 12px;
+    font-weight: 500;
+    transition: none;
+}
+
+.padre {
+    position: relative;
+}
+
+.hijo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 30%;
+    width: 50%;
+    margin: -15% 0 0 -25%;
+}

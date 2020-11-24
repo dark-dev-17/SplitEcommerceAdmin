@@ -57,6 +57,30 @@ namespace SplitEcommerceAdmin.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult UpdateFile(string Codigo, IFormFile FormFile, ProductoTipoFile Tipo)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Codigo))
+                {
+                    return BadRequest();
+                }
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                string result = ProductoCtrl.UpdateFile(idDecripted, FormFile, Tipo);
+                return Ok(result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
+
         // GET: ProductoController/Details/5
         public ActionResult Details(string id)
         {
@@ -68,6 +92,14 @@ namespace SplitEcommerceAdmin.Controllers
                 }
                 string idDecripted = EncryptData.Decrypt(id);
                 var result = ProductoCtrl.Get(idDecripted);
+                ViewData["ImgsProducto"] = ProductoCtrl.GetFileProducto(idDecripted);
+                ViewData["ImgsDescripcion"] = ProductoCtrl.GetFileProducto(idDecripted,ProductoTipoFile.Descripcion);
+                ViewData["ImgsInfoAdicional"] = ProductoCtrl.GetFileProducto(idDecripted,ProductoTipoFile.InfoAdicional);
+                ViewData["ImgsMiniatura"] = ProductoCtrl.GetFileProducto(idDecripted,ProductoTipoFile.Miniatura);
+                ViewData["FichaTecnica"] = ProductoCtrl.GetFichaTecnica(result.Codigo, result.IdInfo_tecnica);
+                ViewData["DescricionCompartida"] = ProductoCtrl.GetDescripcionCompartida(result.Codigo, result.IdDesclarga);
+                ViewData["Categoria"] = ProductoCtrl.GetCategoria(result.Codigo, result.IdCategoria);
+                ViewData["SubCategoria"] = ProductoCtrl.GetSubCategoria(result.Codigo, result.IdSubcategoria);
                 return View(result);
             }
             catch (SplitAdminEcomerce.Exceptions.SplitException ex)
@@ -81,81 +113,6 @@ namespace SplitEcommerceAdmin.Controllers
             }
         }
 
-        // GET: ProductoController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductoController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductoController/Edit/5
-        public ActionResult Edit(string id)
-        {
-            try
-            {
-                string idDecripted = EncryptData.Decrypt(id);
-                var result = ProductoCtrl.Get(idDecripted);
-                return View(result);
-            }
-            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            finally
-            {
-                ProductoCtrl.Terminar();
-                ProductoCtrl = null;
-            }
-        }
-
-        // POST: ProductoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

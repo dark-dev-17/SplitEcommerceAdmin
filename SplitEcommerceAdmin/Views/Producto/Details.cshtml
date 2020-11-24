@@ -1,268 +1,342 @@
 ﻿@model SplitAdminEcomerce.Models.Producto
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Producto detalle: " + Model.Codigo;
+
+    List<SplitAdminEcomerce.Tools.FileFtp> ImgsMiniatura = ViewBag.ImgsMiniatura;
+
+    string file = "";
+    @if (Model != null)
+    {
+        file = ImgsMiniatura.Count == 1 ? ImgsMiniatura.ElementAt(0).Ruta : "https://via.placeholder.com/500/637382/fff";
+    }
+
+    var Categoria = ViewBag.Categoria == null ? new SplitAdminEcomerce.Models.Categoria() : (SplitAdminEcomerce.Models.Categoria)ViewBag.Categoria;
+    var SubCategoria = ViewBag.SubCategoria == null ? new SplitAdminEcomerce.Models.SubCategoria() : (SplitAdminEcomerce.Models.SubCategoria)ViewBag.SubCategoria;
+
 }
+
 <style>
-    /*.profile-sidebar {
-        width: 250px !important;
-        padding: 25px 0 0 10px;
-        padding-left: 10px;
-        flex-shrink: 0;
-        display: none;
+    /*.off-canvas {
+        position: fixed;
+        top: 0;
+        left: -500px !important;
+        bottom: 0;
+        width: 500px !important;
+        background-color: #fff;
+        z-index: 20;
+        transition: all 0.25s;
     }*/
 </style>
-<div id="app_detalleProducto">
-    <div class="row">
-        <div class="col-4">
-            <div class="input-group">
-                <input type="text" id="inp_bus_patron" v-on:keyup="Buscardor()" class="form-control" placeholder="¿Qué deseas buscar?" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <select  class="form-control" v-on:change="Buscardor()" id="inp_bus_colum">
-                        <option value="Codigo">Codigo</option>
-                        <option value="Descripcion" selected>Descripcion</option>
-                    </select>
-                </div>
-            </div>
-            <div >
-                <div class="list-group" v-if="ResultadosBus.length > 0" style="overflow-y: scroll; height: auto;position: absolute;max-height: 400px;">
-                    <a v-for="(item , index) in ResultadosBus" v-bind:href="'@Url.Action("Details","Producto")/'+item.encriptId"  class="list-group-item list-group-item-action">{{ item.descripcion }}</a>
-                </div>
-            </div>
-            
-        </div>
+
+@if (Model != null && Model.Activo.Trim() == "no")
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>El producto <strong>@Model.Descripcion</strong> se encuentra desactivado, si deseas activarlo por favor selecciona la pestaña <strong>Configuración</strong> y da click en <strong>Activar/Desactivar</strong></p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
     </div>
-    <div class="row">
+}
+<div id="app_detalleProducto">
+    @if (Model == null)
+    {
+        <div class="row">
+            <div class="col-4">
+                <div class="input-group">
+                    <input type="text" id="inp_bus_patron" v-on:keyup="Buscardor()" class="form-control" placeholder="¿Qué deseas buscar?" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <select class="form-control" v-on:change="Buscardor()" id="inp_bus_colum">
+                            <option value="Codigo">Codigo</option>
+                            <option value="Descripcion" selected>Descripcion</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="list-group" v-if="ResultadosBus.length > 0" style="overflow-y: scroll; height: auto;position: absolute;max-height: 400px;">
+                        <a v-for="(item , index) in ResultadosBus" target="_blank" v-bind:href="'@Url.Action("Details","Producto")/'+item.encriptId" class="list-group-item list-group-item-action">{{ item.descripcion }}</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div class="">
         @if (Model != null)
         {
-        <div class="content-body-profile">
-            <div class="profile-sidebar">
-                <div class="">
-                    <h5>@Model.Descripcion</h5>
-                    <p>@Model.Codigo</p>
-                </div><!-- profile-sidebar-header -->
-                <div class="profile-sidebar-body">
-                    <label class="content-label">@Html.DisplayNameFor(model => model.IdDesclarga)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.IdDesclarga)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.IdDesclarga)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.IdDesclarga)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.IdCategoria)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.IdCategoria)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.IdSubcategoria)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.IdSubcategoria)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.PrecioUnitario)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.PrecioUnitario)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.Descuento)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.Descuento)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.Stock)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.Stock)</span>
-                        </li>
-                    </ul>
-                    <label class="content-label">@Html.DisplayNameFor(model => model.Activo)</label>
-                    <ul class="list-unstyled profile-info-list mg-b-0">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                            <span class="tx-color-03">@Html.DisplayFor(model => model.Activo)</span>
-                        </li>
-                    </ul>
-                </div><!-- profile-sidebar-body -->
-            </div>
-            <div class="profile-body">
-                <div class="profile-body-header">
-                    <div class="nav-wrapper">
-                        <ul class="nav nav-line" id="profileTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#tab-Cotizaciones" role="tab" aria-controls="overview" aria-selected="true">Imagenes del producto</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="projects-tab" data-toggle="tab" href="#tab-Pendientes" role="tab" aria-controls="projects" aria-selected="false">Pendientes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="people-tab" data-toggle="tab" href="#tab-Pedidos" role="tab" aria-controls="people" aria-selected="false">Pedidos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-Rechazados" role="tab" aria-controls="settings" aria-selected="false">Rechazados</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-settings" role="tab" aria-controls="settings" aria-selected="false">Configuración</a>
+            <div class="content-body-profile">
+                <div class="profile-sidebar">
+                    <div class="profile-sidebar-header">
+                        <div class="avatar"><img src="@file" class="rounded-circle" alt=""></div>
+                        <h5>@Model.Descripcion</h5>
+                        <p>@Model.Codigo</p>
+                    </div><!-- profile-sidebar-header -->
+                    <div class="profile-sidebar-body">
+                        <label class="content-label">@Html.DisplayNameFor(model => model.IdDesclarga)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <a href="#offCanvas3" title="ver detalle " class="off-canvas-menu tx-primary">@Html.DisplayFor(model => model.IdDesclarga)</a>
                             </li>
                         </ul>
-                    </div><!-- nav-wrapper -->
-                </div><!-- profile-body-header -->
-                <div class="tab-content pd-15 pd-sm-20">
-                    <div id="tab-Cotizaciones" class="tab-pane show active">
-                        <div class="row">
-                            <figure class="pos-relative mg-b-0 wd-lg-50p col-lg-2">
-                                <img src="https://via.placeholder.com/640x426" class="img-fit-cover" alt="Responsive image">
-                                <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="download"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="edit-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="maximize-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="trash-2"></i></a>
+                        <label class="content-label">@Html.DisplayNameFor(model => model.IdCategoria)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <span class="tx-color-03">@Categoria.DescripcionFamilia</span>
+                            </li>
+                        </ul>
+                        <label class="content-label">@Html.DisplayNameFor(model => model.IdSubcategoria)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <span class="tx-color-03">@SubCategoria.SubDescripcion</span>
+                            </li>
+                        </ul>
+                        <label class="content-label">@Html.DisplayNameFor(model => model.PrecioUnitario)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <span class="tx-color-03">$ @Html.DisplayFor(model => model.PrecioUnitario)</span>
+                            </li>
+                        </ul>
+                        <label class="content-label">@Html.DisplayNameFor(model => model.Descuento)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                @if (Model.Descuento <= 0)
+                                {
+                                    <span class="badge badge-danger">No aplica descuento</span>
+                                }
+                                else
+                                {
+                                    <span class="tx-color-03">@Html.DisplayFor(model => model.Descuento) %</span>
+                                }
+                            </li>
+                        </ul>
+                        <label class="content-label">@Html.DisplayNameFor(model => model.Stock)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                @if (Model.Stock <= 0)
+                                {
+                                    <span class="badge badge-danger">@Html.DisplayFor(model => model.Stock)</span>
+                                }
+                                else
+                                {
+                                    <span class="tx-color-03">@Html.DisplayFor(model => model.Stock)</span>
+                                }
+                            </li>
+                        </ul>
+                        <label class="content-label">@Html.DisplayNameFor(model => model.Activo)</label>
+                        <ul class="list-unstyled profile-info-list mg-b-0">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <span class="tx-color-03">@Html.DisplayFor(model => model.Activo)</span>
+                            </li>
+                        </ul>
+                    </div><!-- profile-sidebar-body -->
+                </div>
+                <div class="profile-body">
+                    <div class="profile-body-header">
+                        <div class="nav-wrapper">
+                            <ul class="nav nav-line" id="profileTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#tab-Cotizaciones" role="tab" aria-controls="overview" aria-selected="true">Imagenes del producto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="projects-tab" data-toggle="tab" href="#tab-Pendientes" role="tab" aria-controls="projects" aria-selected="false">Descripcion técnica</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="people-tab" data-toggle="tab" href="#tab-Pedidos" role="tab" aria-controls="people" aria-selected="false">Adicionales</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-Rechazados" role="tab" aria-controls="settings" aria-selected="false">Miniatura</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-Fiechatec" role="tab" aria-controls="settings" aria-selected="false">Ficha Técnica</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-view360" role="tab" aria-controls="settings" aria-selected="false">Vista 360</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#tab-settings" role="tab" aria-controls="settings" aria-selected="false">Configuración</a>
+                                </li>
+                            </ul>
+                        </div><!-- nav-wrapper -->
+                    </div><!-- profile-body-header -->
+                    <div class="tab-content pd-15 pd-sm-20">
+                        <div id="tab-Cotizaciones" class="tab-pane show active">
+                            <div class="row">
+                                <figure class="pos-relative mg-b-0 col-lg-3">
+                                    <div class="blockDashed d-flex h-100  ">
+                                        <a href="#" v-on:click="Updaload('Producto')" class="btn btn-block justify-content-center align-self-center"><i class="icon ion-plus tx-12"></i>Agregar nueva imagen </a>
                                     </div>
-                                </figcaption>
-                            </figure>
+                                </figure>
+                                <partial name="ImgFiles" model="ViewBag.ImgsProducto" />
+                            </div>
                         </div>
-                    </div>
-                    <div id="tab-Pendientes" class="tab-pane">
-                        <div class="row">
-                            <figure class="pos-relative mg-b-0 wd-lg-50p col-lg-2">
-                                <img src="https://via.placeholder.com/640x426" class="img-fit-cover" alt="Responsive image">
-                                <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="download"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="edit-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="maximize-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="trash-2"></i></a>
+                        <div id="tab-Pendientes" class="tab-pane">
+                            <div class="row">
+                                <figure class="pos-relative mg-b-0 col-lg-3">
+                                    <div class="blockDashed d-flex h-100  ">
+                                        <a href="#" v-on:click="Updaload('Descripcion')" class="btn btn-block justify-content-center align-self-center"><i class="icon ion-plus tx-12"></i>Agregar nueva imagen </a>
                                     </div>
-                                </figcaption>
-                            </figure>
+                                </figure>
+                                <partial name="ImgFiles" model="ViewBag.ImgsDescripcion" />
+                            </div>
                         </div>
-                    </div>
-                    <div id="tab-Pedidos" class="tab-pane">
-                        <div class="row">
-                            <figure class="pos-relative mg-b-0 wd-lg-50p col-lg-2">
-                                <img src="https://via.placeholder.com/640x426" class="img-fit-cover" alt="Responsive image">
-                                <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="download"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="edit-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="maximize-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="trash-2"></i></a>
+                        <div id="tab-Pedidos" class="tab-pane">
+                            <div class="row">
+                                <figure class="pos-relative mg-b-0 col-lg-3">
+                                    <div class="blockDashed d-flex h-100  ">
+                                        <a href="#" v-on:click="Updaload('InfoAdicional')" class="btn btn-block justify-content-center align-self-center"><i class="icon ion-plus tx-12"></i>Agregar nueva imagen </a>
                                     </div>
-                                </figcaption>
-                            </figure>
+                                </figure>
+                                <partial name="ImgFiles" model="ViewBag.ImgsInfoAdicional" />
+                            </div>
                         </div>
-                    </div>
-                    <div id="tab-Rechazados" class="tab-pane">
-                        <div class="row">
-                            <figure class="pos-relative mg-b-0 wd-lg-50p col-lg-2">
-                                <img src="https://via.placeholder.com/640x426" class="img-fit-cover" alt="Responsive image">
-                                <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
-                                    <div class="btn-group">
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="download"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="edit-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="maximize-2"></i></a>
-                                        <a href="" class="btn btn-dark btn-icon"><i data-feather="trash-2"></i></a>
+                        <div id="tab-Rechazados" class="tab-pane">
+                            <div class="row">
+                                <figure class="pos-relative mg-b-0 col-lg-3">
+                                    <div class="blockDashed d-flex h-100  ">
+                                        <a href="#" v-on:click="Updaload('Miniatura')" class="btn btn-block justify-content-center align-self-center"><i class="icon ion-plus tx-12"></i>Agregar nueva imagen </a>
                                     </div>
-                                </figcaption>
-                            </figure>
+                                </figure>
+                                <partial name="ImgFiles" model="ViewBag.ImgsMiniatura" />
+                            </div>
                         </div>
-                    </div>
-                    <div id="tab-settings" class="tab-pane">
-                        <div class="row row-xs">
-                            <div class="col-md-2">
-                                <ul class="list-group list-group-settings">
-                                    <li class="list-group-item list-group-item-action ">
-                                        <a href="#pane-accountSettings" data-toggle="tab" class="media active">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                            <div class="media-body ">
-                                                <h6>Account Settings</h6>
-                                                <span>Activar o desactivar cliente</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="list-group-item list-group-item-action">
-                                        <a href="#pane-Security" data-toggle="tab" class="media ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                            <div class="media-body">
-                                                <h6>Security</h6>
-                                                <span>Cambiar Contraseña SAP WS</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div><!-- col -->
-                            <div class="col-md-10">
-                                <div class="card card-body pd-sm-40 pd-md-30 pd-xl-y-35 pd-xl-x-40">
-                                    <div class="tab-content">
-                                        <div id="pane-accountSettings" class="tab-pane active show">
-                                            <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Account Settings</h6>
-                                            <hr>
-                                            @if (Model.Activo == "si")
-                                            {
-                                                <div class="form-group">
-                                                    <label class="form-label text-danger">Desactivar producto</label>
-                                                    <p class="tx-sm tx-color-04">Una vez desactivada el producto, el usuario no podra visualizar el producto dentro de nuestro E-commerce.</p>
-                                                    <button class="btn btn-sm btn-danger" title="Desactivar cuenta : @Model.Descripcion">Desactivar</button>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                        <div class="form-group">
-                                            <label class="form-label text-success">Activar producto</label>
-                                            <p class="tx-sm tx-color-04">Una vez activada el producto, el usuario podra visualizar el producto dentro de nuestro E-commerce.</p>
-                                            <button class="btn btn-sm btn-success" title="Activar cuenta : @Model.Descripcion">Activar</button>
-                                        </div>
-                                            }
-                                        </div><!-- tab-pane -->
-                                        <div id="pane-Security" class="tab-pane">
-                                            <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Security</h6>
-                                            <hr>
-                                            <div class="form-settings">
-                                                <div class="form-group">
-                                                    <label class="form-label">Modificar descripcion larga</label>
-                                                    <input type="text" class="form-control" placeholder="Introduce la contraseña">
-                                                    <input type="text" class="form-control mg-t-5" placeholder="confirma la contraseña">
-                                                    <input type="text" class="form-control mg-t-5" placeholder="Introduce la sociedad">
+                        <div id="tab-Fiechatec" class="tab-pane">
+                            <div class="row">
+                                @if (ViewBag.FichaTecnica != null)
+                                {
+                                    SplitAdminEcomerce.Models.FichaTecnica Ficha = (SplitAdminEcomerce.Models.FichaTecnica)ViewBag.FichaTecnica;
 
-                                                </div><!-- form-group -->
-                                                <div class="form-group tx-13 tx-color-04">
-                                                    Todos los campos de esta sección son importantes
-                                                </div>
-                                                <hr class="op-0">
-                                                <button class="btn btn-brand-02">Cambiar</button>
-                                                <button class="btn btn-white mg-l-2">Cancelar</button>
-                                            </div>
-                                        </div><!-- tab-pane -->
-                                    </div><!-- tab-content -->
-                                </div><!-- card -->
-                            </div><!-- col -->
+                                    <iframe src="@Ficha.Rutapath" type="application/pdf" allowfullscreen="allowfullscreen" class="embed-responsive-item"></iframe>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-danger mg-b-0 col-lg-12" role="alert">
+                                        <h6 class="alert-heading">Estimado usuario!</h6>
+                                        <p>El producto <strong>@Model.Codigo</strong> no tiene asignado una ficha técnica, por favor selecciona la pestaña de <strong>configuración</strong> y en <strong>cambiar ficha técnica</strong></p>
+                                        <hr>
+                                        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+                                    </div>
+                                }
+
+                            </div>
                         </div>
-                    </div>
-                </div><!-- tab-content -->
+                        <div id="tab-view360" class="tab-pane">
+                            <div class="row" style="height: 500px;">
+                                <iframe src="@Model.View360" allowfullscreen="allowfullscreen" class="embed-responsive-item col-lg-12"></iframe>
+                            </div>
+                        </div>
+                        <div id="tab-settings" class="tab-pane">
+                            <div class="row row-xs">
+                                <div class="col-md-2">
+                                    <ul class="list-group list-group-settings">
+                                        <li class="list-group-item list-group-item-action ">
+                                            <a href="#pane-accountSettings" data-toggle="tab" class="media active">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                                <div class="media-body ">
+                                                    <h6>Generales</h6>
+                                                    <span>Activar o desactivar, cambiar ficha técnica</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action ">
+                                            <a href="#pane-desclarg" data-toggle="tab" class="media">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                                <div class="media-body ">
+                                                    <h6>Descripción Larga</h6>
+                                                    <span>Modificar descrión larga</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div><!-- col -->
+                                <div class="col-md-10">
+                                    <div class="card card-body pd-sm-40 pd-md-30 pd-xl-y-35 pd-xl-x-40">
+                                        <div class="tab-content">
+                                            <div id="pane-accountSettings" class="tab-pane active show">
+                                                <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Account Settings</h6>
+                                                <hr>
+                                                @if (Model.Activo == "si")
+                                                {
+                                                    <div class="form-group">
+                                                        <label class="form-label text-danger">Desactivar producto</label>
+                                                        <p class="tx-sm tx-color-04">Una vez desactivada el producto, el usuario no podra visualizar el producto dentro de nuestro E-commerce.</p>
+                                                        <button class="btn btn-sm btn-danger" title="Desactivar cuenta : @Model.Descripcion">Desactivar</button>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <label class="form-label text-success">Activar producto</label>
+                                                        <p class="tx-sm tx-color-04">Una vez activada el producto, el usuario podra visualizar el producto dentro de nuestro E-commerce.</p>
+                                                        <button class="btn btn-sm btn-success" title="Activar cuenta : @Model.Descripcion">Activar</button>
+                                                    </div>
+                                                }
+                                                <hr />
+                                                <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Cambiar ficha ténica</h6>
+                                            </div><!-- tab-pane -->
+                                            <div id="pane-desclarg" class="tab-pane">
+                                                <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Modificar descripción larga</h6>
+                                                <hr>
+
+                                                @if (ViewBag.DescricionCompartida != null)
+                                                {
+                                                    <div class="alert alert-warning mg-b-0" role="alert">
+                                                        <h6 class="alert-heading">Estimado usuario!</h6>
+                                                        <p>La descripción de este producto es compartida, asi que cualquier cambio realizado afectará a más de un producto</p>
+                                                        <hr>
+                                                        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+                                                    </div>
+                                                    <hr />
+                                                    <partial name="../DescricionCompartida/Edit" model="ViewBag.DescricionCompartida" />
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-danger mg-b-0" role="alert">
+                                                        <h6 class="alert-heading">Estimado usuario!</h6>
+                                                        <p>El producto <strong>@Model.Codigo</strong> no cuenta con una descripción asignada</p>
+                                                        <hr>
+                                                        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+                                                    </div>
+                                                    <hr />
+                                                }
+
+                                            </div><!-- tab-pane -->
+                                        </div><!-- tab-content -->
+                                    </div><!-- card -->
+                                </div><!-- col -->
+                            </div>
+                        </div>
+                    </div><!-- tab-content -->
+                </div>
+            </div>
+        }
+
+    </div>
+    <div id="offCanvas3" class="off-canvas off-canvas-overlay off-canvas-right">
+        <a href="#" class="close"><i data-feather="x"></i></a>
+        <div class="pd-30 ht-100p">
+            <partial name="../DescricionCompartida/Details" model="ViewBag.DescricionCompartida" />
+            <hr />
+            <div class="alert alert-success mg-b-0" role="alert">
+                <h6 class="alert-heading">Estimado usuario!</h6>
+                <p>Si deseas cambiar o editar esta descripción por favor dirigete a <strong>Configuracion</strong> > <strong>Descripción larga</strong> dentro de esta misma sección</p>
+                <hr>
+                <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
             </div>
         </div>
-        }
-            
-    </div>
+    </div><!-- off-canvas -->
+
+    <div class="off-canvas-backdrop"></div>
 </div>
 @section Scripts {
-<script src="~/lib/UI-Search-master/search.min.js"></script>
+    <script src="~/lib/UI-Search-master/search.min.js"></script>
     <script>
         var app_detalleProducto = new Vue({
             el: "#app_detalleProducto",
@@ -289,8 +363,79 @@
                     }).finally(() => {
 
                     })
+                },
+                Updaload: async function (tipo) {
+                    const { value: file } = await Swal.fire({
+                        title: 'Select image',
+                        input: 'file',
+                        inputAttributes: {
+                            'accept': 'image/*',
+                            'aria-label': 'Upload your profile picture'
+                        }
+                    })
+                    if (file) {
+                        let params = new FormData();
+                            params.append('FormFile', file);
+                            params.append('codigo', '@Model.EncriptId');
+                            params.append('ImagessType', tipo );
+                        await axios.post('@Url.Action("UpdateFile", "Producto")', params, { headers: this.serverToken }).then(response => {
+                           
+                            const reader = new FileReader()
+                            reader.onload = (e) => {
+                                Swal.fire({
+                                    title: 'Your uploaded picture',
+                                    imageUrl: e.target.result,
+                                    imageAlt: 'The uploaded picture'
+                                })
+                            }
+                            reader.readAsDataURL(file)
+                        }).catch(error => {
+                            if (error.response) {
+                                if (error.response.status === 400) {
+
+                                }
+                            }
+                            console.error(error)
+                        }).finally(() => {
+                        })
+                    }
                 }
             }
         });
+    </script>
+    <script>
+        $(function () {
+
+            'use strict'
+
+            // The code below is for demo purposes only.
+            // For you to not be confused, please refer to
+            // Off-Canvas starter template in Collections
+
+            $('.off-canvas-menu').on('click', function (e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                $(target).addClass('show');
+            });
+
+
+            $('.off-canvas .close').on('click', function (e) {
+                e.preventDefault();
+                $(this).closest('.off-canvas').removeClass('show');
+            })
+
+            $(document).on('click touchstart', function (e) {
+                e.stopPropagation();
+
+                // closing of sidebar menu when clicking outside of it
+                if (!$(e.target).closest('.off-canvas-menu').length) {
+                    var offCanvas = $(e.target).closest('.off-canvas').length;
+                    if (!offCanvas) {
+                        $('.off-canvas.show').removeClass('show');
+                    }
+                }
+            });
+
+        })
     </script>
 }

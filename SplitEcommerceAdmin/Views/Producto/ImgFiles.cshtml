@@ -1,0 +1,25 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Tools.FileFtp>
+@*@if (Model == null || Model != null && Model.Count() == 0)
+{
+    <div class="bd bg-gray-100 pd-20 tx-center col-lg-12">
+        <p class="tx-13 mg-b-0">No se encontrarón imagenes</p>
+    </div>
+}*@
+
+@foreach (var item in Model)
+{
+    <figure class="pos-relative mg-b-0 col-lg-3">
+        <img src="@item.Ruta" class="img-fit-cover" title="@item.Name" alt="Responsive image">
+        <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
+            <div class="btn-group">
+                <a href="@item.Ruta" class="btn btn-dark btn-icon" title="Descargar imagen del producto: @item.Name"><i data-feather="download"></i></a>
+                <a href="" class="btn btn-dark btn-icon" title="Edit imagen del producto: @item.Name"><i data-feather="edit-2"></i></a>
+                <a href="" class="btn btn-dark btn-icon" title="Eliminar imagen del producto: @item.Name"><i data-feather="maximize-2"></i></a>
+                <a href="" class="btn btn-dark btn-icon" title="Eliminar imagen del producto: @item.Name"><i data-feather="trash-2"></i></a>
+            </div>
+        </figcaption>
+    </figure>
+}
+
+
+

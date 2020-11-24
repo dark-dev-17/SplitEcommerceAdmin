@@ -45,6 +45,8 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<Categoria> Categoria { get; internal set; }
         public DarkManagerMySQL<SubCategoria> SubCategoria { get; internal set; }
         public DarkManagerMySQL<ProductoBuscador> ProductoBuscador { get; internal set; }
+        public DarkManagerMySQL<FichaTecnica> FichaTecnica { get; internal set; }
+        public DarkManagerMySQL<DescripcionCompartida> DescripcionCompartida { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -141,6 +143,11 @@ namespace SplitAdminEcomerce
                 SubCategoria = new DarkManagerMySQL<SubCategoria>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.ProductoBuscador)
                 ProductoBuscador = new DarkManagerMySQL<ProductoBuscador>(DbEcommerce);
+
+            else if (ecomObjects == Enums.EcomObjects.FichaTecnica)
+                FichaTecnica = new DarkManagerMySQL<FichaTecnica>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.DescripcionCompartida)
+                DescripcionCompartida = new DarkManagerMySQL<DescripcionCompartida>(DbEcommerce);
         }
         #endregion
 

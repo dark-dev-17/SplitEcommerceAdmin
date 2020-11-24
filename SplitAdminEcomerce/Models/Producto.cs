@@ -1,10 +1,6 @@
 ﻿using DbManagerDark.Attributes;
-using SplitAdminEcomerce.Catalogos;
 using SplitAdminEcomerce.Tools;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace SplitAdminEcomerce.Models
 {
@@ -124,5 +120,9 @@ namespace SplitAdminEcomerce.Models
         [DarkColumn(Name = "EncriptId", IsMapped = false, IsKey = false)]
         public string EncriptId { get { return EncryptData.Encrypt(Codigo + ""); } }
 
+
+        [Display(Name = "Ruta360")]
+        [DarkColumn(Name = "EncriptId", IsMapped = false, IsKey = false)]
+        public string View360 { get; set; }
     }
 }
