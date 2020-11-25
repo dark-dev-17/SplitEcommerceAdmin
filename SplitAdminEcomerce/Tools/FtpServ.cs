@@ -39,6 +39,103 @@ namespace SplitAdminEcomerce.Tools
         #endregion
 
         #region Metodos
+        /// <summary>
+        /// renombrar un archivo
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="oldFile"></param>
+        /// <param name="newName"></param>
+        public void Rename(string path, string NameOld, string newName)
+        {
+            //ftp.fibremex.co/{path}/{NameOld}
+            //ftp.fibremex.co/{path}/{NameNew}
+            string UriNew = $"ftp://{FTP_server}/{path}/{newName}";
+            string UriOld = $"ftp://{FTP_server}/{path}/{NameOld}";
+            FtpWebResponse response = null;
+            try
+            {
+                if (ExistsFile($"/{path}/{newName}"))
+                {
+                    throw new SplitException { Category = TypeException.Info, Description = $"Ya existe un archivo con el nombre: {newName}", ErrorCode = 100 };
+                }
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(new Uri(UriOld));
+                request.Method = WebRequestMethods.Ftp.Rename;
+                request.RenameTo = newName;
+                request.Credentials = new NetworkCredential(FTP_user, FTP_password);
+                response = (FtpWebResponse)request.GetResponse();
+            }
+            catch (SplitException ex)
+            {
+                throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                    throw new SplitException { Category = TypeException.Info, Description = $"Error al renombrar tu archivo {NameOld}, no se encontró el directorio", ErrorCode = 1100 };
+                else
+                    throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
+            catch (Exception ex)
+            {
+                throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+            }
+        }
+        /// <summary>
+        /// Eliminar el archivo selcccionado
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="Filename"></param>
+        public void DeleteFile(string path, string Filename)
+        {
+            string Uri = "ftp://" + FTP_server + path;
+            FtpWebRequest request = null;
+            FtpWebResponse response = null;
+            try
+            {
+                if (!ExistsFile(path))
+                {
+                    throw new SplitException { Category = TypeException.Info, Description = "No existe el archivo", ErrorCode = 100 };
+                }
+                request = (FtpWebRequest)WebRequest.Create(new Uri(Uri));
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+                request.Credentials = new NetworkCredential(FTP_user, FTP_password);
+                response = (FtpWebResponse)request.GetResponse();
+            }
+            catch (SplitException ex)
+            {
+                throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                    throw new SplitException { Category = TypeException.Info, Description = $"Error al cargar tu archivo {Filename}, no se encontró el directorio", ErrorCode = 1100 };
+                else
+                    throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
+            catch (Exception ex)
+            {
+                throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
+            finally
+            {
+                if (response != null)
+                {
+                    response.Close();
+                }
+            }
+        }
+        /// <summary>
+        /// Subir un archivo al path seleccionado
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="FormFile"></param>
         public void UpdateFile(string path, IFormFile FormFile)
         {
             string Uri = "ftp://" + FTP_server + path;
@@ -63,6 +160,13 @@ namespace SplitAdminEcomerce.Tools
             {
                 throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
             }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                    throw new SplitException { Category = TypeException.Info, Description = $"Error al cargar tu archivo {FormFile.FileName}, no se encontró el directorio", ErrorCode = 1100 };
+                else
+                    throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
+            }
             catch (Exception ex)
             {
                 throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
@@ -79,6 +183,11 @@ namespace SplitAdminEcomerce.Tools
                 }
             }
         }
+        /// <summary>
+        /// Verificar que exista un archivos
+        /// </summary>
+        /// <param name="PathFile"></param>
+        /// <returns></returns>
         public bool ExistsFile(string PathFile)
         {
             string Uri = "ftp://" + FTP_server + PathFile;
@@ -171,5 +280,6 @@ namespace SplitAdminEcomerce.Tools
     {
         public string Ruta { get; set; }
         public string Name { get; set; }
+        public string Seccion { get; set; }
     }
 }

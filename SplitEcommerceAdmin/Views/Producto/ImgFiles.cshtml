@@ -1,25 +1,73 @@
-﻿@model IEnumerable<SplitAdminEcomerce.Tools.FileFtp>
-@*@if (Model == null || Model != null && Model.Count() == 0)
+﻿@model SplitAdminEcomerce.Uniones.ImagenesSeccion
+@if (Model.Tipo == SplitAdminEcomerce.Controllers.ProductoTipoFile.Miniatura)
 {
-    <div class="bd bg-gray-100 pd-20 tx-center col-lg-12">
-        <p class="tx-13 mg-b-0">No se encontrarón imagenes</p>
+    <div class="alert alert-info mg-b-0 col-lg-12 mg-t-5 collapse" id="collapseExample" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p><h4>Para cambiar la imagen miniatura de este producto has lo siguiente</h4></p>
+        <p>
+            Pasos
+            <ul>
+                <li>Eliminar miniatura actual</li>
+                <li>Dar click en el bonton <i data-feather="plus"></i> que se encuentra en la parte superior derecha de esta misma sección</li>
+            </ul>
+        </p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel. @DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")</p>
     </div>
-}*@
-
-@foreach (var item in Model)
-{
-    <figure class="pos-relative mg-b-0 col-lg-3">
-        <img src="@item.Ruta" class="img-fit-cover" title="@item.Name" alt="Responsive image">
-        <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
-            <div class="btn-group">
-                <a href="@item.Ruta" class="btn btn-dark btn-icon" title="Descargar imagen del producto: @item.Name"><i data-feather="download"></i></a>
-                <a href="" class="btn btn-dark btn-icon" title="Edit imagen del producto: @item.Name"><i data-feather="edit-2"></i></a>
-                <a href="" class="btn btn-dark btn-icon" title="Eliminar imagen del producto: @item.Name"><i data-feather="maximize-2"></i></a>
-                <a href="" class="btn btn-dark btn-icon" title="Eliminar imagen del producto: @item.Name"><i data-feather="trash-2"></i></a>
-            </div>
-        </figcaption>
-    </figure>
 }
+@if (Model == null || Model.Imagenes != null && Model.Imagenes.Count() == 0)
+{
+    <hr />
+    if (Model.Tipo == SplitAdminEcomerce.Controllers.ProductoTipoFile.Miniatura)
+    {
+        <div class="alert alert-warning mg-b-0 col-lg-12" role="alert">
+            <h6 class="alert-heading">Estimado usuario!</h6>
+            <p><h4>Sin miniatura para este producto</h4></p>
+            <p>
+                Posibles causas:
+                <ul>
+                    <li>No existen archivos en el directorio</li>
+                    <li>La carpeta no fue nombrada correctamente o no tiene la estructura adecuada</li>
+                </ul>
+            </p>
+            <hr>
+            <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel. @DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")</p>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mg-b-0 col-lg-12" role="alert">
+            <h6 class="alert-heading">Estimado usuario!</h6>
+            <p><h4>Sin archivos en esta sección</h4></p>
+            <p>
+                Posibles causas:
+                <ul>
+                    <li>No existen archivos en el directorio</li>
+                    <li>La carpeta no fue nombrada correctamente o no tiene la estructura adecuada</li>
+                </ul>
+            </p>
+            <hr>
+            <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel. @DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")</p>
+        </div>
+    }
+}
+
+@foreach (var item in Model.Imagenes)
+{
+<figure class="pos-relative mg-b-0 col-lg-3">
+    <a href="#" class="badge badge-success-light col-lg-12">@item.Name</a>
+    <img src="@item.Ruta" class="img-fit-cover" title="@item.Name" alt="Responsive image">
+    <figcaption class="pos-absolute b-0 l-0 wd-100p pd-20 d-flex justify-content-center">
+        <div class="btn-group">
+            <a href="@item.Ruta" target="_blank" class="btn btn-dark btn-icon" title="Descargar imagen del producto: @item.Name"><i data-feather="download"></i></a>
+            <a href="#" class="btn btn-dark btn-icon" title="Renombrar imagen del producto: @item.Name" onclick="app_detalleProducto.renombrar('@item.Name','@item.Seccion')"><i data-feather="edit-2"></i></a>
+            <a href="#" class="btn btn-dark btn-icon" title="Eliminar imagen del producto: @item.Name" onclick="app_detalleProducto.delete('@item.Name','@item.Seccion')"><i data-feather="trash-2"></i></a>
+        </div>
+    </figcaption>
+</figure>
+}
+
+
 
 
 

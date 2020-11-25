@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using SplitAdminEcomerce.Exceptions;
 using SplitAdminEcomerce.Models;
 using SplitAdminEcomerce.Tools;
+using SplitAdminEcomerce.Uniones;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,7 @@ namespace SplitAdminEcomerce.Controllers
     {
         #region Propiedades
         public Splittel Splittel { get; internal set; }
+        private Producto Producto;
         #endregion
 
         #region Constructores
@@ -46,6 +48,98 @@ namespace SplitAdminEcomerce.Controllers
         #region Metodos
 
         #region Archivos
+        /// <summary>
+        /// Renombrar archivo seleccionado
+        /// </summary>
+        /// <param name="Codigo"></param>
+        /// <param name="FileOld"></param>
+        /// <param name="NameNew"></param>
+        /// <param name="Tipo"></param>
+        public void RenameFile(string Codigo, string FileOld, string NameNew, ProductoTipoFile Tipo = ProductoTipoFile.Producto)
+        {
+            if (string.IsNullOrEmpty(Codigo))
+            {
+                throw new SplitException { Category = TypeException.Info, Description = "Por favor selecciona un producto", ErrorCode = 100 };
+            }
+
+            string CodigoReal = Codigo;
+            // Limpiar codigo de caracteres como [/] remplazar por  [-]
+
+            Codigo = Codigo.Replace('-', '/');
+
+            string Path = "";
+
+            if (Tipo == ProductoTipoFile.Producto)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}";
+            }
+            else if (Tipo == ProductoTipoFile.Descripcion)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/descripcion";
+            }
+            else if (Tipo == ProductoTipoFile.InfoAdicional)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/adicional";
+            }
+            else if (Tipo == ProductoTipoFile.Miniatura)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/thumbnail";
+
+            }
+            NameNew = NameNew + "." + FileOld.Split('.')[1];
+
+            Splittel.FtpServ.Rename(Path, FileOld, NameNew);
+
+            if (Tipo == ProductoTipoFile.Miniatura)
+            {
+                UpdateMiniatura(CodigoReal, NameNew);
+            }
+        }
+        /// <summary>
+        /// Eliminar archivo seleccionado
+        /// </summary>
+        /// <param name="Codigo"></param>
+        /// <param name="FileName"></param>
+        /// <param name="Tipo"></param>
+        public void DeleteFile(string Codigo, string FileName, ProductoTipoFile Tipo = ProductoTipoFile.Producto)
+        {
+            if (string.IsNullOrEmpty(Codigo))
+            {
+                throw new SplitException { Category = TypeException.Info, Description = "Por favor selecciona un producto", ErrorCode = 100 };
+            }
+
+            string CodigoReal = Codigo;
+            // Limpiar codigo de caracteres como [/] remplazar por  [-]
+
+            Codigo = Codigo.Replace('-', '/');
+
+            string Path = "";
+
+            if (Tipo == ProductoTipoFile.Producto)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/{FileName}";
+            }
+            else if (Tipo == ProductoTipoFile.Descripcion)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/descripcion/{FileName}";
+            }
+            else if (Tipo == ProductoTipoFile.InfoAdicional)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/adicional/{FileName}";
+            }
+            else if (Tipo == ProductoTipoFile.Miniatura)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/thumbnail/{FileName}";
+
+            }
+            Splittel.FtpServ.DeleteFile(Path, FileName);
+
+            if (Tipo == ProductoTipoFile.Miniatura)
+            {
+                UpdateMiniatura(CodigoReal, "");
+            }
+
+        }
         /// <summary>
         /// Subir archivos a directorio del producto
         /// </summary>
@@ -109,7 +203,7 @@ namespace SplitAdminEcomerce.Controllers
         /// <param name="Codigo"></param>
         /// <param name="Tipo"></param>
         /// <returns></returns>
-        public List<FileFtp> GetFileProducto(string Codigo, ProductoTipoFile Tipo = ProductoTipoFile.Producto)
+        public ImagenesSeccion GetFileProducto(string Codigo, ProductoTipoFile Tipo = ProductoTipoFile.Producto)
         {
             if (string.IsNullOrEmpty(Codigo))
             {
@@ -143,9 +237,9 @@ namespace SplitAdminEcomerce.Controllers
 
             var result = Splittel.FtpServ.Getfiles(Path, RutePublic);
 
-           
+            result.ForEach(a=> a.Seccion = Tipo.ToString());
 
-            return result;
+            return new ImagenesSeccion { Tipo = Tipo, Imagenes = result };
         }
         #endregion
 
@@ -155,6 +249,12 @@ namespace SplitAdminEcomerce.Controllers
         {
             List<ActionsMode> valore = new List<ActionsMode>();
             valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName("ImgPrincipal"), ColumPR = "ImgPrincipal", Value = filename });
+            Splittel.Producto.Update(valore, $"codigo = '{codigo}'");
+        }
+        public void Activar(string codigo, bool active)
+        {
+            List<ActionsMode> valore = new List<ActionsMode>();
+            valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName(nameof(Splittel.Producto.Element.Activo)), ColumPR = "Activo", Value = (active ? "si" : "no") });
             Splittel.Producto.Update(valore, $"codigo = '{codigo}'");
         }
         /// <summary>

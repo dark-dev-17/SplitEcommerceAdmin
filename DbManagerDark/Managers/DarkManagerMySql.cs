@@ -80,7 +80,7 @@ namespace DbManagerDark.Managers
             List<ProcedureModel> procedureModels = new List<ProcedureModel>();
             valores.ForEach(a => {
                 sentencia = a.Columnname + " = @" + a.ColumPR + ",";
-                procedureModels.Add(new ProcedureModel { Namefield = "@"+ a.ColumPR, value = "" + a.Value });
+                procedureModels.Add(new ProcedureModel { Namefield = ""+ a.ColumPR, value = "" + a.Value });
             });
             string Statement = string.Format("UPDATE {0} SET {1} WHERE {2} ", Nametable, sentencia.Substring(0, sentencia.Length - 1), where);
             dBConnection.StartUpdate(Statement, procedureModels);

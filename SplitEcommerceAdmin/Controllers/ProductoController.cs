@@ -68,7 +68,77 @@ namespace SplitEcommerceAdmin.Controllers
                 }
                 string idDecripted = EncryptData.Decrypt(Codigo);
                 string result = ProductoCtrl.UpdateFile(idDecripted, FormFile, Tipo);
-                return Ok(result);
+                return Ok(new { ruta = result, name = FormFile.FileName });
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
+        [HttpPost]
+        public ActionResult DeeteFile(string Codigo, string FileName, ProductoTipoFile Tipo)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Codigo))
+                {
+                    return BadRequest();
+                }
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                ProductoCtrl.DeleteFile(idDecripted, FileName, Tipo);
+                return Ok("Archivo eliminado");
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RenameFile(string Codigo, string FileOld, string NameNew, ProductoTipoFile Tipo)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Codigo))
+                {
+                    return BadRequest();
+                }
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                ProductoCtrl.RenameFile(idDecripted, FileOld, NameNew,Tipo);
+                return Ok("Archivo renombrado");
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
+        [HttpPost]
+        public ActionResult Activar(string Codigo, bool Active)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Codigo))
+                {
+                    return BadRequest();
+                }
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                ProductoCtrl.Activar(idDecripted, Active);
+                return Ok("Cambios guardados");
             }
             catch (SplitAdminEcomerce.Exceptions.SplitException ex)
             {
@@ -113,6 +183,29 @@ namespace SplitEcommerceAdmin.Controllers
             }
         }
 
+
+        public ActionResult ImgFiles(string Codigo, ProductoTipoFile Tipo)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Codigo))
+                {
+                    return BadRequest("Por favor selecciona un producto");
+                }
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                var result = ProductoCtrl.GetFileProducto(idDecripted, Tipo);
+                return PartialView(result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
        
     }
 }
