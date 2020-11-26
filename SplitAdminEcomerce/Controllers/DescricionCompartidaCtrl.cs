@@ -54,6 +54,15 @@ namespace SplitAdminEcomerce.Controllers
             return result;
         }
         /// <summary>
+        /// extraer listado de descripciones
+        /// </summary>
+        /// <returns></returns>
+        public List<DescripcionCompartida> Buscardor(string patron)
+        {
+            var result = Splittel.DescripcionCompartida.GetOpenquery($" where desc_larga like '%{patron}%'", " order by desc_larga asc limit 3");
+            return result;
+        }
+        /// <summary>
         /// Extraer descripcion
         /// </summary>
         /// <param name="clave"></param>

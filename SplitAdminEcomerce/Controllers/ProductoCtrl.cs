@@ -245,12 +245,42 @@ namespace SplitAdminEcomerce.Controllers
 
 
         #region Informacion
+        /// <summary>
+        /// Cambiar ficha tecnica por otra
+        /// </summary>
+        /// <param name="Codigo"></param>
+        /// <param name="clave"></param>
+        public void CambioFicha(string Codigo, string clave = "")
+        {
+
+        }
+        /// <summary>
+        /// Cambiar descripcion larga por otra
+        /// </summary>
+        /// <param name="Codigo"></param>
+        /// <param name="clave"></param>
+        public void CambioDescripcion(string Codigo, string clave)
+        {
+            List<ActionsMode> valore = new List<ActionsMode>();
+            valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName(nameof(Splittel.Producto.Element.IdDesclarga)), ColumPR = "IdDesclarga", Value = clave });
+            Splittel.Producto.Update(valore, $"codigo = '{Codigo}'");
+        }
+        /// <summary>
+        /// Cambiar imagen miniatura del producto
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="filename"></param>
         public void UpdateMiniatura(string codigo, string filename)
         {
             List<ActionsMode> valore = new List<ActionsMode>();
             valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName("ImgPrincipal"), ColumPR = "ImgPrincipal", Value = filename });
             Splittel.Producto.Update(valore, $"codigo = '{codigo}'");
         }
+        /// <summary>
+        /// Activar o desactivar producto en ecommerce
+        /// </summary>
+        /// <param name="codigo"></param>
+        /// <param name="active"></param>
         public void Activar(string codigo, bool active)
         {
             List<ActionsMode> valore = new List<ActionsMode>();

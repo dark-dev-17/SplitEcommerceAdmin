@@ -19,6 +19,27 @@ namespace SplitEcommerceAdmin.Controllers
         {
             ProductoCtrl = new ProductoCtrl(new Splittel(configuration));
         }
+
+        [HttpPost]
+        public ActionResult CarbirDescripcion(string Codigo, string clave)
+        {
+            try
+            {
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                ProductoCtrl.CambioDescripcion(idDecripted, clave);
+                var result = ProductoCtrl.GetDescripcionCompartida(idDecripted, clave);
+                return PartialView("../DescripcionCompartida/Edit", result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
         [HttpPost]
         public ActionResult Buscador(string Codigo, string Columna)
         {

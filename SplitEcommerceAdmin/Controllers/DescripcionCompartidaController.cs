@@ -48,5 +48,24 @@ namespace SplitEcommerceAdmin.Controllers
                 DescricionCompartidaCtrl = null;
             }
         }
+
+        [HttpPost]
+        public IActionResult Get(string Patron)
+        {
+            try
+            {
+                var result = DescricionCompartidaCtrl.Buscardor(Patron);
+                return Ok(result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                DescricionCompartidaCtrl.Terminar();
+                DescricionCompartidaCtrl = null;
+            }
+        }
     }
 }
