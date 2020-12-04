@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<table class="table datatable1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescripcionFamilia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivoInfoTec)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivoInfoTec2)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionFamilia)
+            </td>
+            <td>
+                @if (item.Activo == "no")
+                {
+                    <span class="badge badge-danger">No</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Activo)
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivoInfoTec)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivoInfoTec2)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id=item.EncriptId }) |
+                @Html.ActionLink("Detalle", "Details", new { id = item.EncriptId }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

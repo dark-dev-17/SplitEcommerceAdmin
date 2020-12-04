@@ -32,6 +32,10 @@ namespace SplitAdminEcomerce.Enums
         ProductoBuscador = 14,
         FichaTecnica = 15,
         DescripcionCompartida = 16,
+        BlogBuscador = 17,
+        Blog = 18,
+        BlogComentario = 19,
+        Configurable = 20,
     }
     public enum SplinObjects
     {

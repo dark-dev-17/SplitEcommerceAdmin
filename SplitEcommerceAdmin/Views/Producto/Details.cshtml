@@ -78,7 +78,7 @@
                         <ul class="list-unstyled profile-info-list mg-b-0">
                             <li>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                                <span class="tx-color-03">@SubCategoria.SubDescripcion</span>
+                                <span class="tx-color-03">@SubCategoria.Nombre</span>
                             </li>
                         </ul>
                         <label class="content-label">@Html.DisplayNameFor(model => model.PrecioUnitario)</label>
@@ -216,7 +216,6 @@
                                 @if (ViewBag.FichaTecnica != null)
                                 {
                                     SplitAdminEcomerce.Models.FichaTecnica Ficha = (SplitAdminEcomerce.Models.FichaTecnica)ViewBag.FichaTecnica;
-
                                     <iframe src="@Ficha.Rutapath" type="application/pdf" allowfullscreen="allowfullscreen" class="embed-responsive-item"></iframe>
                                 }
                                 else
@@ -232,9 +231,19 @@
                             </div>
                         </div>
                         <div id="tab-view360" class="tab-pane">
-                            <div class="row" style="height: 500px;">
-                                <iframe src="@Model.View360" allowfullscreen="allowfullscreen" class="embed-responsive-item col-lg-12"></iframe>
+                            <div class="card card-hover card-deal">
+                                <div class="card-header bg-transparent bd-b-0">
+                                    <h6 class="card-title mg-b-0">@Model.Codigo</h6>
+                                    <nav class="nav nav-card-icon">
+                                        <a href="#" title="Eliminar vista 360" v-on:click="Eliminar360()"><i data-feather="trash"></i></a>
+                                        <a href="#" title="Agregar nuevo" v-on:click="Add360()"><i data-feather="plus"></i></a>
+                                    </nav>
+                                </div>
+                                <div class="card-body  row" id="List_Miniatura" style="height: 500px;">
+                                    <iframe src="@Model.View360" allowfullscreen="allowfullscreen" class="embed-responsive-item col-lg-12"></iframe>
+                                </div>
                             </div>
+
                         </div>
                         <div id="tab-settings" class="tab-pane">
                             <div class="row row-xs">
@@ -264,21 +273,66 @@
                                     <div class="card card-body pd-sm-40 pd-md-30 pd-xl-y-35 pd-xl-x-40">
                                         <div class="tab-content">
                                             <div id="pane-accountSettings" class="tab-pane active show">
-                                                <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Desactivar producto</h6>
-                                                <hr>
-                                                
-                                                <div class="form-group" id="ctl_desactivar" v-if="activo == 'si'">
-                                                    <label class="form-label text-danger">Desactivar producto</label>
-                                                    <p class="tx-sm tx-color-04">Una vez desactivada el producto, el usuario no podra visualizar el producto dentro de nuestro E-commerce.</p>
-                                                    <button class="btn btn-sm btn-danger" v-on:click="Activar(false)" title="Desactivar cuenta : @Model.Descripcion">Desactivar</button>
+                                                <div id="accordion2" class="accordion ui-accordion ui-widget ui-helper-reset" role="tablist">
+                                                    <h6 class="accordion-title ui-accordion-header ui-corner-top ui-state-default ui-accordion-header-active ui-state-active ui-accordion-icons" role="tab" id="ui-id-1" aria-controls="ui-id-2" aria-selected="true" aria-expanded="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>Activar producto</h6>
+                                                    <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-2" aria-labelledby="ui-id-1" role="tabpanel" aria-hidden="false">
+                                                        <div class="form-group" id="ctl_desactivar" v-if="activo == 'si'">
+                                                            <label class="form-label text-danger">Desactivar producto</label>
+                                                            <p class="tx-sm tx-color-04">Una vez desactivada el producto, el usuario no podra visualizar el producto dentro de nuestro E-commerce.</p>
+                                                            <button class="btn btn-sm btn-danger" v-on:click="Activar(false)" title="Desactivar cuenta : @Model.Descripcion">Desactivar</button>
+                                                        </div>
+                                                        <div class="form-group" id="ctl_activar" v-if="activo == 'no'">
+                                                            <label class="form-label text-success">Activar producto</label>
+                                                            <p class="tx-sm tx-color-04">Una vez activada el producto, el usuario podra visualizar el producto dentro de nuestro E-commerce.</p>
+                                                            <button class="btn btn-sm btn-success" v-on:click="Activar(true)" title="Activar cuenta : @Model.Descripcion">Activar</button>
+                                                        </div>
+                                                    </div>
+                                                    <h6 class="accordion-title ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-corner-all ui-state-default ui-accordion-icons" role="tab" id="ui-id-3" aria-controls="ui-id-4" aria-selected="false" aria-expanded="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>Ficha ténica</h6>
+                                                    <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content" style="display: none;" id="ui-id-4" aria-labelledby="ui-id-3" role="tabpanel" aria-hidden="true">
+                                                        <div class="card card-hover card-sale-location col-lg-12">
+                                                            <div class="card-header bg-transparent">
+                                                                <div>
+                                                                    <h6 class="card-title mg-b-0">Fichas ténicas</h6>
+                                                                </div>
+                                                                <nav class="nav">
+                                                                    <a href="#" title="actualizar" v-on:click="UpdateFichas('')" class="link-gray-500"><i data-feather="refresh-cw"></i></a>
+                                                                </nav>
+                                                            </div><!-- card-header -->
+                                                            <div class="card-body row" v-if="fichas.data != null">
+                                                                <table class="table datatable1 col-lg-12" v-if="fichas.data.contenido.length">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <td>Archivo</td>
+                                                                            <td>Clave</td>
+                                                                            <td>Opciones</td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="(item, index) in fichas.data.contenido">
+                                                                            <td>
+                                                                                <span v-if="item.isDirectorio == false"><i class="bd-green" data-feather="file"></i>{{ item.name }}</span>
+                                                                                <a v-if="item.isDirectorio == true || item.name == '..'" v-on:click="UpdateFichas(item.pathServer+'/')" href="#"><i data-feather="folder"></i>{{ item.name }}</a>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span v-if="item.isDirectorio == false && item.datos != null">{{ item.datos.clave }}</span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="#"  v-if="item.isDirectorio == false && item.datos != null" v-on:click="cambiarFicha(item.datos.clave)" title="Usar esta">Usar</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div><!-- card-body -->
+                                                            <div class="alert alert-info mg-b-0 col-lg-12"  v-if="fichas.data == null" role="alert">
+                                                                <h6 class="alert-heading">Estimado usuario!</h6>
+                                                                <p>Por favor has clic en <i data-feather="refresh-cw"></i> para poder obtener las fichas técnicas</p>
+                                                                <hr>
+                                                                <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
-                                                <div class="form-group" id="ctl_activar" v-if="activo == 'no'">
-                                                    <label class="form-label text-success">Activar producto</label>
-                                                    <p class="tx-sm tx-color-04">Una vez activada el producto, el usuario podra visualizar el producto dentro de nuestro E-commerce.</p>
-                                                    <button class="btn btn-sm btn-success" v-on:click="Activar(true)" title="Activar cuenta : @Model.Descripcion">Activar</button>
-                                                </div>
-                                                <hr />
-                                                <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Cambiar ficha ténica</h6>
                                             </div><!-- tab-pane -->
                                             <div id="pane-desclarg" class="tab-pane">
                                                 <h6 class="tx-uppercase tx-semibold tx-color-01 mg-b-0">Modificar descripción larga</h6>
@@ -287,8 +341,8 @@
                                                 @if (ViewBag.DescricionCompartida != null)
                                                 {
                                                     <div id="accordion1" class="accordion ui-accordion ui-widget ui-helper-reset" role="tablist">
-                                                        <h6 class="accordion-title ui-accordion-header ui-corner-top ui-state-default ui-accordion-header-active ui-state-active ui-accordion-icons" role="tab" id="ui-id-1" aria-controls="ui-id-2" aria-selected="true" aria-expanded="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>Editar actual descripción</h6>
-                                                        <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-2" aria-labelledby="ui-id-1" role="tabpanel" aria-hidden="false">
+                                                        <h6 class="accordion-title ui-accordion-header ui-corner-top ui-state-default ui-accordion-header-active ui-state-active ui-accordion-icons" role="tab" id="ui-id1-1" aria-controls="ui-id1-2" aria-selected="true" aria-expanded="true" tabindex="0"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>Editar actual descripción</h6>
+                                                        <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id1-2" aria-labelledby="ui-id1-1" role="tabpanel" aria-hidden="false">
                                                             <div class="alert alert-warning mg-b-0" role="alert">
                                                                 <h6 class="alert-heading">Estimado usuario!</h6>
                                                                 <p>La descripción de este producto es compartida, asi que cualquier cambio realizado afectará a más de un producto</p>
@@ -297,18 +351,18 @@
                                                             </div>
                                                             <hr />
                                                             <div id="form-desc">
-                                                                <partial name= "../DescripcionCompartida/Edit" model= "ViewBag.DescricionCompartida" />
+                                                                <partial name="../DescripcionCompartida/Edit" model="ViewBag.DescricionCompartida" />
                                                             </div>
                                                         </div>
-                                                        <h6 class="accordion-title ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-corner-all ui-state-default ui-accordion-icons" role="tab" id="ui-id-3" aria-controls="ui-id-4" aria-selected="false" aria-expanded="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>Cambiar por otra</h6>
-                                                        <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content" style="display: none;" id="ui-id-4" aria-labelledby="ui-id-3" role="tabpanel" aria-hidden="true">
+                                                        <h6 class="accordion-title ui-accordion-header ui-corner-top ui-accordion-header-collapsed ui-corner-all ui-state-default ui-accordion-icons" role="tab" id="ui-id1-3" aria-controls="ui-id1-4" aria-selected="false" aria-expanded="false" tabindex="-1"><span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>Cambiar por otra</h6>
+                                                        <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content" style="display: none;" id="ui-id1-4" aria-labelledby="ui-id1-3" role="tabpanel" aria-hidden="true">
                                                             @{
                                                                 SplitAdminEcomerce.Models.DescripcionCompartida descripcionCompartida = (SplitAdminEcomerce.Models.DescripcionCompartida)ViewBag.DescricionCompartida;
 
                                                             }
-                                                            <h4>Descrión actual</h4>
+                                                            <h4>Descripción actual</h4>
                                                             <p>@descripcionCompartida.Descripcion</p>
-                                                            <span class="d-block tx-12 tx-color-04">@descripcionCompartida.Clave</span>
+                                                            <span class="d-block tx-12 tx-color-04">@descripcionCompartida.Codigo</span>
                                                             <hr />
                                                             <form id="searchExpanding" class="search-form">
                                                                 <input type="search" class="form-control" v-model="descripciones.patron" placeholder="Search">
@@ -326,20 +380,20 @@
 
                                                         </div>
                                                     </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="alert alert-danger mg-b-0" role="alert">
-                                                            <h6 class="alert-heading">Estimado usuario!</h6>
-                                                            <p>El producto <strong>@Model.Codigo</strong> no cuenta con una descripción asignada</p>
-                                                            <hr>
-                                                            <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
-                                                        </div>
-                                                        <hr />
-                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-danger mg-b-0" role="alert">
+                                                        <h6 class="alert-heading">Estimado usuario!</h6>
+                                                        <p>El producto <strong>@Model.Codigo</strong> no cuenta con una descripción asignada</p>
+                                                        <hr>
+                                                        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+                                                    </div>
+                                                    <hr />
+                                                }
 
                                             </div><!-- tab-pane -->
-                                            </div><!-- tab-content -->
+                                        </div><!-- tab-content -->
                                     </div><!-- card -->
                                 </div><!-- col -->
                             </div>
@@ -372,6 +426,13 @@
                     data: [],
                     selected: null,
                     patron: ""
+                },
+                fichas: {
+                    data: null,
+                    selected: null,
+                    patron: "",
+                    Folder: "",
+                    Last: "",
                 }
             },
             mounted() {
@@ -382,6 +443,77 @@
 
             },
             methods: {
+                Eliminar360: async function () {
+                    var headers = {                        'Content-Type': 'application/json',                        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",                        'Access-Control-Allow-Origin': '*',                        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',                        }
+                     Swal.fire({
+                        title: "¿Deseas eliminar vista 360?",
+                        text: "",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, eliminalo!'
+                    }).then((result) => {
+                        if (result.value) {
+                            axios.get('@Html.Raw(string.Format("{0}models/PublicApi/UnzipFile.php?ItemCode={1}&Process=delete",ViewBag.SiteRute, Model.Codigo))', null, headers).then(response => {
+                                $.toast({
+                                    title: 'Error',
+                                    subtitle: 'Ahora',
+                                    content: response.data,
+                                    type: 'success',
+                                    delay: 15000
+                                });
+                            }).catch(error => {
+                                if (error.response) {
+                                    if (error.response.status === 400) {
+                                        $.toast({
+                                            title: 'Error',
+                                            subtitle: 'Ahora',
+                                            content: error.response.data,
+                                            type: 'error',
+                                            delay: 15000
+                                        });
+                                    }
+                                }
+                                console.error(error)
+                            }).finally(() => {
+
+                            })
+                        }
+                    })
+                },
+                UpdateFichas: async function (folder) {
+
+                    if (this.fichas.data == null) {
+                        this.fichas.Folder = '';
+                    }
+                    else {
+                        this.fichas.Folder = folder;
+                    }
+
+                    var params = new URLSearchParams();
+                    params.append('Folder', this.fichas.Folder);
+                    params.append('Last', this.fichas.Last);
+                    await axios.post('@Url.Action("GetList", "FichaTecnica")', params, null).then(response => {
+                        this.fichas.data = response.data
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+                        feather.replace();
+                    })
+                    //$('.datatable1').DataTable({
+                    //    language: {
+                    //        searchPlaceholder: 'Search...',
+                    //        sSearch: '',
+                    //        lengthMenu: '_MENU_ items/page',
+                    //    }
+                    //});
+                },
                 save_decComp: function () {
 
                     var data = $('#form-descripLarga').serialize();
@@ -626,6 +758,41 @@
                     })
 
                 },
+                 cambiarFicha: async function (clave) {
+                    Swal.fire({
+                        title: "¿Deseas cambiar la ficha técnica?",
+                        text: "",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, adelante!'
+                    }).then(async (result) => {
+                        if (result.value) {
+                            let params = new FormData();
+                            params.append('clave', clave);
+                            params.append('codigo', '@Model.EncriptId');
+                            await axios.post('@Url.Action("CarbiarFichatecnica", "Producto")', params, null).then(response => {
+                                document.getElementById("btn_refress").click();
+                            }).catch(error => {
+                                if (error.response) {
+                                    if (error.response.status === 400) {
+                                        $.toast({
+                                            title: 'Error',
+                                            subtitle: 'Ahora',
+                                            content: error.response.data,
+                                            type: 'error',
+                                            delay: 15000
+                                        });
+                                    }
+                                }
+                                console.error(error)
+                            }).finally(() => {
+                            })
+                        }
+                    })
+
+                },
                 Activar: async function (Act) {
                     console.log(Act)
                     Swal.fire({
@@ -703,6 +870,9 @@
 
             // Default functionality
             $('#accordion1').accordion({
+                heightStyle: 'content'
+            });
+            $('#accordion2').accordion({
                 heightStyle: 'content'
             });
         })

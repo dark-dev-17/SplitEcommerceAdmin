@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using SplitAdminEcomerce;
 using SplitAdminEcomerce.Controllers;
 using SplitAdminEcomerce.Models;
+using SplitAdminEcomerce.Tools;
 
 namespace SplitEcommerceAdmin.Controllers
 {
@@ -18,9 +19,45 @@ namespace SplitEcommerceAdmin.Controllers
         {
             DescricionCompartidaCtrl = new DescricionCompartidaCtrl(new Splittel(configuration));
         }
-        public IActionResult Edit()
+
+        [HttpGet]
+        public IActionResult Edit(string id)
         {
-            return View();
+            try
+            {
+                string idDecripted = EncryptData.Decrypt(id);
+                var result = DescricionCompartidaCtrl.GetDescripcion(idDecripted);
+                return PartialView(result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                DescricionCompartidaCtrl.Terminar();
+                DescricionCompartidaCtrl = null;
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            try
+            {
+                string idDecripted = EncryptData.Decrypt(id);
+                var result = DescricionCompartidaCtrl.GetDescripcion(idDecripted);
+                return PartialView(result);
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                DescricionCompartidaCtrl.Terminar();
+                DescricionCompartidaCtrl = null;
+            }
         }
 
         [HttpPost]
@@ -66,6 +103,10 @@ namespace SplitEcommerceAdmin.Controllers
                 DescricionCompartidaCtrl.Terminar();
                 DescricionCompartidaCtrl = null;
             }
+        }
+        public IActionResult Descripcion()
+        {
+            return View();
         }
     }
 }

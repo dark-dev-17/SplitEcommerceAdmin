@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.Configurable>
+
+@{
+    ViewData["Title"] = "Configurables";
+}
+
+<table class="table datatable1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Che_Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Che_IsProximamente)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Che_Activo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Che_IsProximamente)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.EncriptId }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.EncriptId }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

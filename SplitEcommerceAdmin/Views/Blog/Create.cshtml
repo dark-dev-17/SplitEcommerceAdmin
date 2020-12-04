@@ -1,0 +1,85 @@
+﻿@model SplitAdminEcomerce.Models.Blog
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Blog</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdBlog" class="control-label"></label>
+                <input asp-for="IdBlog" class="form-control" />
+                <span asp-validation-for="IdBlog" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo2" class="control-label"></label>
+                <input asp-for="Titulo2" class="form-control" />
+                <span asp-validation-for="Titulo2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contenido1" class="control-label"></label>
+                <input asp-for="Contenido1" class="form-control" />
+                <span asp-validation-for="Contenido1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contenido2" class="control-label"></label>
+                <input asp-for="Contenido2" class="form-control" />
+                <span asp-validation-for="Contenido2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WebDescripcion" class="control-label"></label>
+                <input asp-for="WebDescripcion" class="form-control" />
+                <span asp-validation-for="WebDescripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgCaratula" class="control-label"></label>
+                <input asp-for="ImgCaratula" class="form-control" />
+                <span asp-validation-for="ImgCaratula" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgLanding" class="control-label"></label>
+                <input asp-for="ImgLanding" class="form-control" />
+                <span asp-validation-for="ImgLanding" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activo" class="control-label"></label>
+                <input asp-for="Activo" class="form-control" />
+                <span asp-validation-for="Activo" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Che_Activo" /> @Html.DisplayNameFor(model => model.Che_Activo)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="EncriptId" class="control-label"></label>
+                <input asp-for="EncriptId" class="form-control" />
+                <span asp-validation-for="EncriptId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,86 @@
+﻿@model SplitAdminEcomerce.Models.Configurable
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+
+    </div>
+    <hr />
+}
+<div data-label="Informacion" class="df-example demo-forms">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="Codigo" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-2">
+                <input type="hidden" asp-for="IdConfigurable" class="form-control" />
+                <input type="hidden" asp-for="FolderDirectory" class="form-control" />
+                <input type="hidden" asp-for="ClaveCodigo" class="form-control" />
+                <input type="hidden" asp-for="NivelConf" class="form-control" />
+                <input asp-for="Codigo" class="form-control" readonly />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Descripcio" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Descripcio" class="form-control" />
+                <span asp-validation-for="Descripcio" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="IdCategoria" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select asp-for="IdCategoria" asp-items="ViewBag.Categorias" class="form-control">
+                    <option value="">Selecciona una opción</option>
+                </select>
+                <span asp-validation-for="IdCategoria" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="IdSubCategoria" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select asp-for="IdSubCategoria" asp-items="ViewBag.SubCategorias" class="form-control">
+                    <option value="">Selecciona una opción</option>
+                </select>
+                <span asp-validation-for="IdSubCategoria" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Descuento" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-2">
+                <input asp-for="Descuento" readonly class="form-control" />
+                <span asp-validation-for="Descuento" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group form-check col-lg-2">
+
+            </div>
+            <div class="form-group form-check col-lg-3 text-left">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Che_Activo" /> @Html.DisplayNameFor(model => model.Che_Activo)
+                </label>
+            </div>
+            <div class="form-group form-check col-lg-3">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Che_IsProximamente" /> @Html.DisplayNameFor(model => model.Che_IsProximamente)
+                </label>
+            </div>
+        </div>
+        <div class="form-group row mg-b-0">
+            <div class="col-sm-12 text-right">
+                <a class="btn btn-sm btn-secondary" asp-action="Index">Regresar</a>
+                <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+

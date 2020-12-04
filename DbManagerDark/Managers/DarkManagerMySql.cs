@@ -11,8 +11,17 @@ namespace DbManagerDark.Managers
 {
     public class ActionsMode
     {
+        /// <summary>
+        /// nombre columna en DB
+        /// </summary>
         public string Columnname { get; set; }
+        /// <summary>
+        /// Nombre variable para evitar injecciones SQL
+        /// </summary>
         public string ColumPR { get; set; }
+        /// <summary>
+        /// valor de la variable
+        /// </summary>
         public string Value { get; set; }
     }
     public class DarkManagerMySQL<T> where T : new()
@@ -88,6 +97,53 @@ namespace DbManagerDark.Managers
 
             return result;
         }
+        /// <summary>
+        /// ejecutar update
+        /// </summary>
+        /// <param name="tablename">Nombre de la tabla</param>
+        /// <param name="valores">Valores nuevos</param>
+        /// <param name="where">Sentencia where</param>
+        /// <returns></returns>
+        public bool Update(string tablename, List<ActionsMode> valores, string where)
+        {
+
+            string sentencia = "";
+            List<ProcedureModel> procedureModels = new List<ProcedureModel>();
+            valores.ForEach(a => {
+                sentencia += a.Columnname + " = @" + a.ColumPR + ",";
+                procedureModels.Add(new ProcedureModel { Namefield = "" + a.ColumPR, value = "" + a.Value });
+            });
+            string Statement = string.Format("UPDATE {0} SET {1} WHERE {2} ", tablename, sentencia.Substring(0, sentencia.Length - 1), where);
+            dBConnection.StartUpdate(Statement, procedureModels);
+            bool result = true;
+
+            return result;
+        }
+
+        /// <summary>
+        /// ejecutar insert
+        /// </summary>
+        /// <param name="tablename">Nombre de la tabla</param>
+        /// <param name="valores">Valores nuevos</param>
+        /// <param name="where">Sentencia where</param>
+        /// <returns></returns>
+        public bool Insert(string tablename, List<ActionsMode> valores)
+        {
+
+            string sentencia = "";
+            string sentenciaVariables = "";
+            List<ProcedureModel> procedureModels = new List<ProcedureModel>();
+            valores.ForEach(a => {
+                sentencia += a.Columnname + ",";
+                sentenciaVariables += "@"+a.ColumPR + ",";
+                procedureModels.Add(new ProcedureModel { Namefield = "" + a.ColumPR, value = "" + a.Value });
+            });
+            string Statement = string.Format("INSERT INTO {0}({1}) VALUES({2})", tablename, sentencia.Substring(0, sentencia.Length - 1), sentenciaVariables.Substring(0, sentenciaVariables.Length - 1));
+            dBConnection.StartInsert(Statement, procedureModels);
+            bool result = true;
+
+            return result;
+        }
 
         public bool Delete()
         {
@@ -105,6 +161,10 @@ namespace DbManagerDark.Managers
         public int GetLastId()
         {
             return dBConnection.GetIntegerValue(string.Format("select max(Id{0}) from {0}", Nametable));
+        }
+        public int GetMaxOpen(string SentenceMax)
+        {
+            return dBConnection.GetIntegerValue(SentenceMax);
         }
 
         public T Get(int? id)

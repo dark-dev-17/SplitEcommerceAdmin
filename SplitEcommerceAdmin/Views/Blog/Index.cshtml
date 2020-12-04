@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.BlogBuscador>
+
+@{
+    ViewData["Title"] = "Listado de blogs";
+}
+
+<table class="table datatable1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contenido1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Che_Activo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contenido1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Che_Activo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EncriptId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EncriptId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EncriptId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

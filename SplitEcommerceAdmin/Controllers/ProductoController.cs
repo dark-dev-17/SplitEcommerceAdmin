@@ -21,6 +21,25 @@ namespace SplitEcommerceAdmin.Controllers
         }
 
         [HttpPost]
+        public ActionResult CarbiarFichatecnica(string Codigo, string clave)
+        {
+            try
+            {
+                string idDecripted = EncryptData.Decrypt(Codigo);
+                ProductoCtrl.CambioFicha(idDecripted, clave);
+                return Ok("Ficha cambiada");
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                ProductoCtrl.Terminar();
+                ProductoCtrl = null;
+            }
+        }
+        [HttpPost]
         public ActionResult CarbirDescripcion(string Codigo, string clave)
         {
             try
@@ -191,6 +210,7 @@ namespace SplitEcommerceAdmin.Controllers
                 ViewData["DescricionCompartida"] = ProductoCtrl.GetDescripcionCompartida(result.Codigo, result.IdDesclarga);
                 ViewData["Categoria"] = ProductoCtrl.GetCategoria(result.Codigo, result.IdCategoria);
                 ViewData["SubCategoria"] = ProductoCtrl.GetSubCategoria(result.Codigo, result.IdSubcategoria);
+                ViewData["SiteRute"] = ProductoCtrl.Splittel.FtpServ.Site.Replace("public/","");
                 return View(result);
             }
             catch (SplitAdminEcomerce.Exceptions.SplitException ex)

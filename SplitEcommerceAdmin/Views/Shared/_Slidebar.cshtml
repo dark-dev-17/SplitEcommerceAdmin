@@ -22,9 +22,17 @@
             <li class="nav-item">
                 <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Producto</a>
                 <nav class="nav nav-sub">
-                    <a href="@Url.Action("Index","Producto")" class="nav-sub-link">Buscador</a>
-                    <a href="#" class="nav-sub-link">Index</a>
-                    <a href="#" class="nav-sub-link">Mail</a>
+                    <a href="@Url.Action("Details","Producto")" class="nav-sub-link">Buscador</a>
+                    <a href="@Url.Action("Index","Categoria")" class="nav-sub-link">Categorias</a>
+                    <a href="@Url.Action("Index","SubCategoria")" class="nav-sub-link">SubCategorias</a>
+                    <a href="@Url.Action("Descripcion","DescripcionCompartida")" class="nav-sub-link">Descripciones</a>
+                    <a href="@Url.Action("Index","Configurable")" class="nav-sub-link">Configurables</a>
+                </nav>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Contenido</a>
+                <nav class="nav nav-sub">
+                    <a href="@Url.Action("Index","Blog")" class="nav-sub-link">Blog</a>
                 </nav>
             </li>
         </ul>

@@ -6,7 +6,7 @@
 @if(ViewBag.Message != null)
 {
 <div class="alert alert-info alert-dismissible mg-b-0 fade show" role="alert">
-    <strong>Estimado usuario!</strong> @ViewBag.Message
+    <strong>Estimado usuario!</strong> @ViewBag.Message @DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">×</span>
     </button>
@@ -17,10 +17,10 @@
     <form asp-action="Edit" asp-controller="DescripcionCompartida" id="form-descripLarga" class="" >
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Clave" class="control-label"></label>
+            <label asp-for="Codigo" class="control-label"></label>
             <input asp-for="IdDescripcionCompartida" readonly type="hidden" class="form-control" />
-            <input asp-for="Clave" class="form-control" />
-            <span asp-validation-for="Clave" class="text-danger"></span>
+            <input asp-for="Codigo" readonly class="form-control" />
+            <span asp-validation-for="Codigo" class="text-danger"></span>
         </div><!-- form-group -->
         <div class="form-group">
             <label asp-for="Descripcion" class="control-label"></label>

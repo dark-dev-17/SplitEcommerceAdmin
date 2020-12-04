@@ -32,7 +32,7 @@ namespace SplitAdminEcomerce.Controllers
                 throw new SplitException { Category = TypeException.Info, Description = "Por favor selecciona una descripción", ErrorCode = 100 };
             }
 
-            if(GetDescripcion(descripcionCompartida.IdDescripcionCompartida) == null)
+            if(GetDescripcion(descripcionCompartida.Codigo) == null)
             {
                 throw new SplitException { Category = TypeException.Info, Description = "No se encontró la descripción", ErrorCode = 100 };
             }
@@ -67,9 +67,9 @@ namespace SplitAdminEcomerce.Controllers
         /// </summary>
         /// <param name="clave"></param>
         /// <returns></returns>
-        public DescripcionCompartida GetDescripcion(int Id)
+        public DescripcionCompartida GetDescripcion(string clve)
         {
-            var result = Splittel.DescripcionCompartida.Get(Id);
+            var result = Splittel.DescripcionCompartida.GetString(clve);
             return result;
         }
         /// <summary>

@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewData["Title"] = "Descripciones";
+}
+<div id="app_descripciones">
+    <hr />
+    <div>
+        <div class="search-form">
+            <input type="search" v-on:keyup.enter="BuscardorDesc" class="form-control" v-model="descripciones.patron" placeholder="Search">
+            <button class="btn" type="button" v-on:click="BuscardorDesc"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+        </div>
+        <ul class="list-group" v-if="descripciones.data.length" style="position: absolute;">
+            <li class="list-group-item d-flex align-items-center" v-for="(item, index) in descripciones.data">
+                <div>
+                    <h6 class="tx-14 tx-dark tx-semibold mg-b-0">{{item.descripcion.replace(descripciones.patron,'*****')}}</h6>
+                    <span class="d-block tx-12 tx-color-04">{{item.clave}}</span>
+                    <a href="#" v-on:click="Edit(item.encriptId)">Editar</a> | <a href="#" v-on:click="Details(item.encriptId)">Ver detalles</a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <hr />
+    <div id="form-desc"></div>
+    <div id="cont_section"></div>
+
+</div>
+@section Scripts {
+
+    <script>
+        var app_descripciones = new Vue({
+            el: "#app_descripciones",
+            data: {
+                ResultadosBus: [],
+                descripciones: {
+                    data: [],
+                    data2: [],
+                    selected: null,
+                    patron: "",
+                }
+            },
+            mounted() {
+
+            },
+            methods: {
+                save_decComp: function () {
+                    var data = $('#form-descripLarga').serialize();
+                    axios.post('@Url.Action("Edit", "DescripcionCompartida")', data, null).then(response => {
+                        document.getElementById("cont_section").innerHTML = response.data;
+                        document.getElementById("form-descripLarga").addEventListener("submit", function (event) {
+                            event.preventDefault()
+                            app_descripciones.save_decComp()
+                        });
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+                                $.toast({
+                                    title: 'Error',
+                                    subtitle: 'Ahora',
+                                    content: error.response.data,
+                                    type: 'error',
+                                    delay: 15000
+                                });
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+                    })
+                },
+                BuscardorDesc: async function () {
+                    var params = new URLSearchParams();
+                    params.append('Patron', this.descripciones.patron);
+                    axios.post('@Url.Action("Get", "DescripcionCompartida")', params, null).then(response => {
+                        this.descripciones.data = response.data
+
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+
+                    })
+                },
+                Edit: async function (calve) {
+                    this.descripciones.data2 = this.descripciones.data;
+                    this.descripciones.data = [];
+                    axios.get('@Url.Action("Edit", "DescripcionCompartida")/' + calve, null, null).then(response => {
+                        document.getElementById("cont_section").innerHTML = response.data
+                        document.getElementById("form-descripLarga").addEventListener("submit", function (event) {
+                            event.preventDefault()
+                            app_descripciones.save_decComp()
+                        });
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+                                $.toast({
+                                    title: 'Error',
+                                    subtitle: 'Ahora',
+                                    content: error.response.data,
+                                    type: 'error',
+                                    delay: 15000
+                                });
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+
+                    })
+                },
+                Details: async function (calve) {
+                    this.descripciones.data2 = this.descripciones.data;
+                    this.descripciones.data = [];
+                    axios.get('@Url.Action("Details", "DescripcionCompartida")/' + calve, null, null).then(response => {
+                        document.getElementById("cont_section").innerHTML = response.data
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+                                $.toast({
+                                    title: 'Error',
+                                    subtitle: 'Ahora',
+                                    content: error.response.data,
+                                    type: 'error',
+                                    delay: 15000
+                                });
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+
+                    })
+                },
+            }
+        });
+    </script>
+}

@@ -15,7 +15,8 @@ namespace SplitAdminEcomerce.Controllers
         Producto,
         Descripcion,
         InfoAdicional,
-        Miniatura
+        Miniatura,
+        View360
     }
     public class ProductoCtrl
     {
@@ -188,6 +189,11 @@ namespace SplitAdminEcomerce.Controllers
                 Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/thumbnail/{nombreNuewFile}";
                 RutePublic = $"{Splittel.FtpServ.Site}images/img_spl/productos/{Codigo}/thumbnail/{nombreNuewFile}";
             }
+            else if (Tipo == ProductoTipoFile.View360)
+            {
+                Path = $"public_html/fibra-optica/public/images/img_spl/productos/{Codigo}/360.zip";
+                RutePublic = $"{Splittel.FtpServ.Site}images/img_spl/productos/{Codigo}/360.zip";
+            }
             Splittel.FtpServ.UpdateFile(Path, FormFile);
 
             if (Tipo == ProductoTipoFile.Miniatura)
@@ -252,7 +258,48 @@ namespace SplitAdminEcomerce.Controllers
         /// <param name="clave"></param>
         public void CambioFicha(string Codigo, string clave = "")
         {
+            Splittel.StartTransaction();
+            try
+            {
+                var prod = Get(Codigo);
+                if(prod is null)
+                {
+                    throw new SplitException { Category = TypeException.Info, Description = $"No se encontro el producto selecccionado", ErrorCode = 100 };
+                }
+                if (string.IsNullOrEmpty(prod.IdInfo_tecnica))
+                {
+                    //agregar
+                    //string claveew = string.Format("HB{0:0000000}", Splittel.Producto.GetMaxOpen("SELECT CAST(Max(replace(id_ficha, 'HB', '0')) AS UNSIGNED) FROM u_producto_ficha") + 1);
+                    //List<ActionsMode> valore = new List<ActionsMode>();
+                    //valore.Add(new ActionsMode { Columnname = "id_producto", ColumPR = "FichaNueva", Value = clave });
+                    //valore.Add(new ActionsMode { Columnname = "Id_ficha", ColumPR = "ProductoClave", Value = claveew });
+                    //Splittel.Producto.Insert("u_producto_ficha", valore);
 
+                    //valore.Clear();
+                    //valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName(nameof(Splittel.Producto.Element.IdInfo_tecnica)), ColumPR = "IdFicha", Value = claveew });
+                    //Splittel.Producto.Update(valore, $"codigo = '{Codigo}'");
+                    throw new SplitException { Category = TypeException.Info, Description = $"No se encontro relacion con ninguna ficha técnica", ErrorCode = 100 };
+                }
+                else
+                {
+                    //editar
+                    List<ActionsMode> valore = new List<ActionsMode>();
+                    valore.Add(new ActionsMode { Columnname = "id_producto", ColumPR = "FichaNueva", Value = clave });
+                    Splittel.Producto.Update("u_producto_ficha", valore, $"id_producto = '{clave}' and id_ficha = (select info_tecnica from catalogo_productos where codigo = '{Codigo}')");
+                }
+
+                //List<ActionsMode> valores = new List<ActionsMode>();
+                //valores.Add(new ActionsMode { Columnname = "id_producto", ColumPR = "FichaNueva", Value = clave });
+                //Splittel.Producto.Update(valores, $"codigo = '{Codigo}')");
+
+                Splittel.Commit();
+            }
+            catch (SplitException ex)
+            {
+                Splittel.RolBack();
+                throw ex;
+            }
+            
         }
         /// <summary>
         /// Cambiar descripcion larga por otra
@@ -261,9 +308,20 @@ namespace SplitAdminEcomerce.Controllers
         /// <param name="clave"></param>
         public void CambioDescripcion(string Codigo, string clave)
         {
-            List<ActionsMode> valore = new List<ActionsMode>();
-            valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName(nameof(Splittel.Producto.Element.IdDesclarga)), ColumPR = "IdDesclarga", Value = clave });
-            Splittel.Producto.Update(valore, $"codigo = '{Codigo}'");
+            Splittel.StartTransaction();
+            try
+            {
+                List<ActionsMode> valore = new List<ActionsMode>();
+                valore.Add(new ActionsMode { Columnname = Splittel.Producto.ColumName(nameof(Splittel.Producto.Element.IdDesclarga)), ColumPR = "IdDesclarga", Value = clave });
+                Splittel.Producto.Update(valore, $"codigo = '{Codigo}'");
+                Splittel.Commit();
+            }
+            catch (SplitException ex)
+            {
+                Splittel.RolBack();
+                throw ex;
+            }
+           
         }
         /// <summary>
         /// Cambiar imagen miniatura del producto
@@ -347,7 +405,7 @@ namespace SplitAdminEcomerce.Controllers
                 {
                     throw new SplitException { Category = TypeException.Info, Description = "Por favor selecciona un producto", ErrorCode = 100 };
                 }
-                var result = Splittel.DescripcionCompartida.GetOpenquery($"where id_desc_larga = (select id_desc_larga from catalogo_productos where codigo = '{Codigo}')");
+                var result = Splittel.DescripcionCompartida.GetOpenquery($"where id_desc_larga = (select info_tecnica from catalogo_productos where codigo = '{Codigo}')");
                 return result;
             }
             else
