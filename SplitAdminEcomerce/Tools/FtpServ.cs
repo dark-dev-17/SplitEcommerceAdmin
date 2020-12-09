@@ -19,7 +19,7 @@ namespace SplitAdminEcomerce.Tools
         private string FTP_password;
         public string Dominio { get; internal set; }
         /// <summary>
-        /// url del sitio
+        /// url del sitio https://fibremex.com/fibra-optica/public/
         /// </summary>
         public string Site { get; internal set; }
         #endregion
@@ -120,7 +120,7 @@ namespace SplitAdminEcomerce.Tools
             catch (WebException ex)
             {
                 if (ex.Status == WebExceptionStatus.ProtocolError)
-                    throw new SplitException { Category = TypeException.Info, Description = $"Error al cargar tu archivo {Filename}, no se encontró el directorio", ErrorCode = 1100 };
+                    throw new SplitException { Category = TypeException.Info, Description = $"Error al eliminar tu archivo {Filename}, no se encontró el directorio", ErrorCode = 1100 };
                 else
                     throw new SplitException { Category = TypeException.Info, Description = ex.Message, ErrorCode = 100 };
             }

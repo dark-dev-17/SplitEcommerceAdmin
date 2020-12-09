@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SplitAdminEcomerce;
 using SplitAdminEcomerce.Controllers;
+using SplitAdminEcomerce.Models;
 using SplitAdminEcomerce.Tools;
 
 namespace SplitEcommerceAdmin.Controllers
@@ -18,11 +19,12 @@ namespace SplitEcommerceAdmin.Controllers
         {
             BlogCtrl = new BlogCtrl(new Splittel(configuration));
         }
-        public IActionResult Index()
+        public IActionResult Index(string Mode)
         {
             try
             {
                 var result = BlogCtrl.Getblogs();
+                ViewData["Mode"] = string.IsNullOrEmpty(Mode) ? "List" : Mode;
                 return View(result);
             }
             catch (SplitAdminEcomerce.Exceptions.SplitException ex)
@@ -74,6 +76,40 @@ namespace SplitEcommerceAdmin.Controllers
             catch (SplitAdminEcomerce.Exceptions.SplitException ex)
             {
                 return NotFound(ex.Message);
+            }
+            finally
+            {
+                BlogCtrl.Terminar();
+                BlogCtrl = null;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Blog blog)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(blog);
+                }
+                BlogCtrl.Update(blog);
+                ViewData["MessageSuccess"] = $"El blog'{blog.Titulo}' ha sido actualizada, fecha de actualizacion: {DateTime.Now.ToString("yyyy-MM-dd hh:mm")}";
+                return View(BlogCtrl.GetBlog(blog.IdBlog));
+            }
+            catch (SplitAdminEcomerce.Exceptions.SplitException ex)
+            {
+                if(ex.ErrorCode == 10)
+                {
+                    ModelState.AddModelError(ex.IdAux, ex.Message);
+                }
+                else
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+                
+                return View(blog);
             }
             finally
             {

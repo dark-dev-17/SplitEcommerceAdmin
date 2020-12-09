@@ -1,4 +1,5 @@
 ﻿using DbManagerDark.Attributes;
+using Microsoft.AspNetCore.Http;
 using SplitAdminEcomerce.Tools;
 using System;
 using System.Collections.Generic;
@@ -42,9 +43,17 @@ namespace SplitAdminEcomerce.Models
         [DarkColumn(Name = "img", IsMapped = true, IsKey = false)]
         public string ImgCaratula { get; set; }
 
+        [Display(Name = "Portada externa(Tarjeta)")]
+        [DarkColumn(Name = "img", IsMapped = false, IsKey = false)]
+        public IFormFile ImgCaratulaFile { get; set; }
+
         [Display(Name = "Portada interna")]
         [DarkColumn(Name = "img_landing", IsMapped = true, IsKey = false)]
         public string ImgLanding { get; set; }
+
+        [Display(Name = "Portada interna")]
+        [DarkColumn(Name = "img_landing", IsMapped = false, IsKey = false)]
+        public IFormFile ImgLandingFile { get; set; }
 
         [Display(Name = "Fecha")]
         [DarkColumn(Name = "fecha", IsMapped = true, IsKey = false)]
@@ -109,6 +118,6 @@ namespace SplitAdminEcomerce.Models
 
         [Display(Name = "Activo E-commerce")]
         [DarkColumn(Name = "activo", IsMapped = false, IsKey = false)]
-        public bool Che_Activo { get { return Activo == "1" ? true : false; } }
+        public bool Che_Activo { get { return Activo == "si" ? true : false; } }
     }
 }

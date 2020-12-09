@@ -36,6 +36,8 @@ namespace SplitAdminEcomerce.Enums
         Blog = 18,
         BlogComentario = 19,
         Configurable = 20,
+        ConsultorRespuestas = 21,
+        ConsultorTecnico = 22,
     }
     public enum SplinObjects
     {
