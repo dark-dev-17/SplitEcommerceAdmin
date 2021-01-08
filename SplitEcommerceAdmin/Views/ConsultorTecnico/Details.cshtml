@@ -1,0 +1,469 @@
+﻿@model SplitAdminEcomerce.Models.ConsultorTecnico
+
+@{
+    ViewData["Title"] = "Detalle de solicitud";
+    List<SplitAdminEcomerce.Models.ConsultorRespuestas> respuestas = (List<SplitAdminEcomerce.Models.ConsultorRespuestas>)ViewBag.Respuestas;
+    System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-ES");
+    System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("es-ES");
+}
+<style>
+    .chat-body {
+        width: calc(100% - 0px) !important;
+        margin-left: 0px !important;
+    }
+
+    .chat-body-content {
+        height: calc(100% - 190px) !important;
+    }
+
+    .OptionsMesa {
+        display: none;
+    }
+
+    .messageP {
+        text-align: left !important;
+    }
+
+        .messageP:hover + .OptionsMesa, .OptionsMesa:hover {
+            display: inline-block;
+        }
+
+    .msg-item.reverse .msg-body p span {
+        background-color: rgba(192,32,47,.8) !important;
+        color: #fff;
+    }
+</style>
+
+<div class="content-header justify-content-between">
+    <div>
+        @*<nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Analytics &amp; Monitoring</li>
+                </ol>
+            </nav>*@
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+        <a class="btn btn-brand-01 mg-l-5" href="#modal1" data-toggle="modal"><i data-feather="share-2" class="svg-14"></i> Asignar consultores</a>
+
+        @if (Model.Che_Activo)
+        {
+            <a class="btn btn-danger mg-l-5" href="#" onclick="app_consultecnico.ChangeEstas(false)"><i data-feather="arrow-down" class="svg-14"></i> Desactivar</a>
+        }
+        else
+        {
+            @*<a class="btn btn-danger mg-l-5" href="#" onclick="app_consultecnico.ChangeEstas(true)"><i data-feather="arrow-down" class="svg-14"></i> Desactivar</a>*@
+        }
+
+    </div>
+</div><!-- content-header -->
+@if (!Model.Che_Activo)
+{
+    <div class="alert alert-warning mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado Usuario!</h6>
+        <p>Esta consulta técnica fue desactivada y por lo tanto no sera visible en nuestra plataforma E-commerce.</p>
+        <hr>
+        <p class="mb-0">Administrador E-commerce.</p>
+    </div>
+}
+<hr />
+<div id="app_consultecnico">
+    <div>
+        <h6>I. Solicitante</h6>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Solicitante)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.Solicitante)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Correo)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.Correo)
+            </dd>
+        </dl>
+        <h6>II. Detalle</h6>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Titulo)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.Titulo)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IdCategoria)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.Categoria)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Pregunta)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Pregunta)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Creado)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Creado)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Che_Activo)
+            </dt>
+            <dd class="col-sm-4">
+                @Html.DisplayFor(model => model.Che_Activo)
+            </dd>
+        </dl>
+    </div>
+    <div class="chat-body" style="height: auto;">
+        <div class="chat-body-header">
+            <div class="avatar avatar-xs avatar-online"><img src="https://fibremex.co//fibra-optica/public/images/Otros/user_.jpg" class="rounded-circle" alt=""></div>
+            <h6 class="tx-14 tx-color-01 mg-b-0 mg-l-10">@Html.DisplayFor(model => model.Solicitante)</h6>
+            <div class="chat-body-options">
+                @*<a href="" data-toggle="tooltip" title="" data-original-title="Search messages"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>*@
+                @*<a href="" data-toggle="tooltip" title="" data-original-title="Call"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>*@
+                @*<a href="" data-toggle="tooltip" title="" data-original-title="Video Call"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-video"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></a>*@
+                <a href="#footerchat" id="mailComposeBtn" v-on:click="EditMode = false" data-toggle="tooltip" title="" data-original-title="Info">
+                    Escribir nueva respuesta
+                </a>
+            </div>
+        </div><!-- chat-body-header -->
+
+        <div class="chat-body-content ps ps--active-y">
+            <ul class="chat-msg-list">
+                @*<li class="divider-text">July 14, 2019</li>*@
+                @foreach (var respuesta in respuestas)
+                {
+                    if ("CLIENTE" == respuesta.Fuente)
+                    {
+                        <li class="msg-item">
+                            <div class="avatar avatar-sm "><img src="@Html.Raw($"{ViewBag.Sitio}/images/Otros/user_.jpg")" class="rounded-circle" alt=""></div>
+                            <div class="msg-body">
+                                <h6 class="msg-user">@Model.Solicitante <span>@respuesta.Creado.ToString("F")</span></h6>
+                                <p><span>@Html.DisplayFor(model => respuesta.Respuesta)</span></p>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="msg-item reverse ">
+                            <div class="avatar avatar-sm avatar-online"><img src="@Html.Raw($"{ViewBag.Sitio}/images/img_spl/splittellers/{respuesta.UsuarioInterno.IdImagen}")" class="rounded-circle" alt=""></div>
+                            <div class="msg-body ">
+                                <h6 class="msg-user">@respuesta.UsuarioInterno.NombreCompleto <span>@respuesta.Creado.ToString("F")</span></h6>
+                                <p>
+                                    <span class="messageP">@Html.Raw(respuesta.Respuesta.Replace("\n", "<br>"))</span>
+                                    <a class="OptionsMesa" href="#" title="Editar esta respuesta" v-on:click="Details('@respuesta.IdConsultorRespuestas')"><i data-feather="edit" class="svg-14"></i></a>
+                                    <br />
+                                    <a href="@Html.Raw($"{ViewBag.Sitio}/images/img_spl/consultecnico/{@respuesta.RutaAchivo}")">@respuesta.RutaAchivo</a>
+                                </p>
+
+                            </div>
+
+                        </li>
+                    }
+                }
+            </ul>
+        </div><!-- chat-body-content -->
+
+        <div class="chat-body-footer" id="footerchat" style="height:auto">
+
+        </div><!-- chat-body-footer -->
+    </div>
+    <div id="mailCompose" class="mail-compose">
+        <div class="mail-compose-dialog">
+            <div class="mail-compose-header">
+                <h6 v-if="EditMode == false" class="mail-compose-title tx-white">Nueva respuesta</h6>
+                <h6 v-if="EditMode == true" class="mail-compose-title tx-white">Editar respuesta</h6>
+                <nav class="nav nav-icon">
+                    <a id="mailComposeMinimize" href="" class="nav-link nav-link-minimize d-none d-lg-block">
+                        <i data-feather="minus"></i>
+                        <i data-feather="square"></i>
+                    </a>
+                    <a id="mailComposeShrink" href="" class="nav-link nav-link-shrink d-none d-lg-block">
+                        <i data-feather="minimize-2"></i>
+                        <i data-feather="maximize-2"></i>
+                    </a>
+                    <a id="mailComposeClose" href="" class="nav-link nav-link-close"><i data-feather="x"></i></a>
+                </nav>
+            </div><!-- mail-compose-header -->
+            <div class="mail-compose-body">
+                <div class="form-row align-items-center">
+                    <div class="col-sm">Respuesta para:</div>
+                    <div class="col-sm-10">
+                        <input type="hidden" class="form-control bd-0 pd-x-0" value="" id="inpt_idRespuesta" disabled placeholder="Name">
+                        <input type="text" class="form-control bd-0 pd-x-0" value="@Html.DisplayFor(model => model.Solicitante)" disabled placeholder="Name">
+                    </div>
+                </div>
+                <hr class="mg-y-10">
+                <div class="form-row align-items-center" v-if="EditMode == false">
+                    <div class="col-sm">Archivo:</div>
+                    <div class="col-sm-10">
+                        <input type="file" id="create_file" class="form-control bd-0 pd-x-0" placeholder="Selecciona un archivo">
+                    </div>
+                </div>
+                <div id="editor-container2" class="tx-14 ht-150 mg-t-15"></div>
+                <div class="d-sm-flex align-items-center justify-content-between mg-t-25">
+                    <div id="toolbar-container2" class="bd-0-f pd-0-f">
+                    </div>
+                    <div class="tx-14 mg-t-15 mg-sm-t-0">
+                        <button class="btn btn-brand-01" v-if="EditMode == false" onclick="app_consultecnico.Create()">Enviar</button>
+                        <button class="btn btn-brand-01" v-if="EditMode == true" onclick="app_consultecnico.Edit()">Guardar cambios</button>
+                    </div>
+                </div>
+                <div v-if="Registrando == true">
+                    <hr />
+                    <div class="text-center">
+                        <span class="spinner-border spinner-border-sm text-success" role="status" aria-hidden="true"></span>
+                        Registrando...
+                    </div>
+                </div>
+            </div><!-- mail-compose-body -->
+        </div><!-- mail-compose-dialog -->
+    </div><!-- mail-compose -->
+
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Asignar consultores</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i data-feather="x"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @{
+                        List<SplitAdminEcomerce.Models.UsuarioInterno> usuarioInternos = (List<SplitAdminEcomerce.Models.UsuarioInterno>)ViewBag.Consultores;
+                        List<SplitAdminEcomerce.Models.ConsultorConsultor> ConsultorConsultor = (List<SplitAdminEcomerce.Models.ConsultorConsultor>)ViewBag.ConsultorConsultor;
+                    }
+                    <div class="table-responsive">
+                        <table class="table mg-b-0">
+                            @foreach (var item in usuarioInternos)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-xs"><img src="@Html.Raw($"{ViewBag.Sitio}/images/img_spl/splittellers/{item.IdImagen}")" class="rounded-circle" alt=""></div>
+                                            <span class="tx-medium mg-l-10">@item.NombreCompleto</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="form-control check_consu" @Html.Raw(ConsultorConsultor.Find(a => a.IdConsultor == item.IdSplitnet) != null ? "checked" : "") name="check_Con_@item.IdSplitnet" value="@item.IdSplitnet" title="Marcar para asignar" />
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark" v-on:click="SaveConsultores()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        var app_consultecnico = new Vue({
+            el: "#app_consultecnico",
+            data: {
+                quill2: null,
+                Registrando: false,
+                EditMode: false,
+            },
+            mounted() {
+                const msgContent = new PerfectScrollbar('.chat-body-content', {
+                    suppressScrollX: true
+                });
+                this.quill2 = new Quill('#editor-container2', {
+                    modules: {
+                        toolbar: '#toolbar-container2'
+                    },
+                    placeholder: 'Escribe tu respuesta aqui',
+                    theme: 'snow'
+                });
+            },
+            methods: {
+                ChangeEstas: async function (status) {
+                    var formData = new FormData();
+                    formData.append('id', "@Model.EncriptId");
+                    formData.append('Ative', status);
+
+                    await axios.post('@Url.Action("Desactivar", "ConsultorTecnico")', formData, null).then(response => {
+                        $.toast({
+                            title: 'Administrador E-commerce',
+                            subtitle: 'Ahora',
+                            content: response.data,
+                            type: 'success',
+                            delay: 15000
+                        });
+                        document.getElementById("btn_refress").click()
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                        console.error(error)
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                },
+                SaveConsultores: async function () {
+                    var Consultores = [];
+                    var con = document.getElementsByClassName("check_consu");
+                    for (var i = 0; i < con.length; i++) {
+                        if (con[i].checked == true) {
+                            Consultores.push(parseInt(con[i].value));
+                        }
+                    }
+
+                    @*var formData = new FormData();
+                    formData.append('IdConsultorTecnico_', "@Model.IdConsultorTecnico");
+                    formData.append('Consultores', JSON.stringify(Consultores));*@
+
+                    var data = {
+                        IdConsultorTecnico_: parseInt("@Model.IdConsultorTecnico"),
+                        Consultores: Consultores
+                    }
+
+                    console.log(data)
+
+                    await axios.post('@Url.Action("AddConsultores", "ConsultorTecnico")', data, null).then(response => {
+                        $.toast({
+                            title: 'Administrador E-commerce',
+                            subtitle: 'Ahora',
+                            content: response.data,
+                            type: 'success',
+                            delay: 15000
+                        });
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                },
+                GetConsultores: async function () {
+                    var formData = new FormData();
+                    formData.append('IdConsultorTecnico_', "@Model.IdConsultorTecnico");
+
+                    await axios.post('@Url.Action("EditarRespuesta", "ConsultorTecnico")', formData, null).then(response => {
+
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                },
+                Edit: async function () {
+                    this.Registrando = true;
+                    var formData = new FormData();
+                    formData.append('Respuesta_', this.quill2.getText().trim());
+                    formData.append('IdConsultor_', "33");
+                    formData.append('IdConsultorTecnico_', "@Model.IdConsultorTecnico");
+                    formData.append('IdConsultorRespuestas', document.getElementById("inpt_idRespuesta").value);
+
+                    await axios.post('@Url.Action("EditarRespuesta", "ConsultorTecnico")', formData, { headers: { 'Content-Type': 'multipart/form-data', }}).then(response => {
+                        $.toast({
+                            title: 'Administrador E-commerce',
+                            subtitle: 'Ahora',
+                            content: response.data,
+                            type: 'success',
+                            delay: 15000
+                        });
+                        document.getElementById("btn_refress").click()
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                        console.error(error)
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                },
+                Details: async function (id) {
+                    this.EditMode = true;
+                    $('#mailCompose').addClass('show');
+
+                    var formData = new FormData();
+                    formData.append('IdConsultorRespuestas', id)
+
+                    await axios.post('@Url.Action("DetailsRespuesta", "ConsultorTecnico")', formData, null).then(response => {
+                        this.quill2.setText(response.data.respuesta)
+                        document.getElementById("inpt_idRespuesta").value = response.data.idConsultorRespuestas
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                },
+                Create: async function () {
+                    this.EditMode = false;
+                    this.Registrando = true;
+                    var formData = new FormData();
+                    formData.append('Archivo', document.getElementById("create_file").files.length > 0 ? document.getElementById("create_file").files[0] : null)
+                    formData.append('Respuesta_', this.quill2.getText().trim());
+                    formData.append('IdConsultor_', "33");
+                    formData.append('IdConsultorTecnico_', "@Model.IdConsultorTecnico");
+                    formData.append('Source', "FIBREMEX");
+
+                    await axios.post('@Url.Action("Crear", "ConsultorTecnico")', formData, { headers: { 'Content-Type': 'multipart/form-data', }}).then(response => {
+                        $.toast({
+                            title: 'Administrador E-commerce',
+                            subtitle: 'Ahora',
+                            content: response.data,
+                            type: 'success',
+                            delay: 15000
+                        });
+                        document.getElementById("btn_refress").click()
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                        console.error(error)
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                }
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // compose form
+
+            $('#mailComposeBtn').on('click', function () {
+                $('#mailCompose').addClass('show');
+            })
+
+            $('#mailComposeClose').on('click', function (e) {
+                e.preventDefault()
+
+                if ($('#mailCompose').hasClass('minimize') || $('#mailCompose').hasClass('shrink')) {
+                    $('#mailCompose').addClass('d-none');
+
+                    setTimeout(function () {
+                        $('#mailCompose').attr('class', 'mail-compose');
+                    }, 500);
+
+                } else {
+                    $('#mailCompose').removeClass('show');
+                }
+            })
+
+            $('#mailComposeShrink').on('click', function (e) {
+                e.preventDefault()
+                $('#mailCompose').toggleClass('shrink')
+                $('#mailCompose').removeClass('minimize')
+            })
+
+            $('#mailComposeMinimize').on('click', function (e) {
+                e.preventDefault()
+                $('#mailCompose').toggleClass('minimize')
+            })
+        });
+
+    </script>
+}

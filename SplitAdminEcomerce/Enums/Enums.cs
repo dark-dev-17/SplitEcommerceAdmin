@@ -38,6 +38,8 @@ namespace SplitAdminEcomerce.Enums
         Configurable = 20,
         ConsultorRespuestas = 21,
         ConsultorTecnico = 22,
+        UsuarioInterno = 23,
+        ConsultorConsultor = 24,
     }
     public enum SplinObjects
     {

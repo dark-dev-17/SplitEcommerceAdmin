@@ -157,10 +157,17 @@ namespace DbManagerDark.Managers
                 return ActionsObjectCode(DbManagerTypes.Delete, tableDefinifiton);
             }
         }
-
+        public int GetLastId(string column)
+        {
+            return dBConnection.GetIntegerValue(string.Format("select max({1}) from {0}", Nametable, column));
+        }
         public int GetLastId()
         {
             return dBConnection.GetIntegerValue(string.Format("select max(Id{0}) from {0}", Nametable));
+        }
+        public int Count(string where)
+        {
+            return dBConnection.GetIntegerValue(string.Format("select count(*) from {0} {1}", Nametable, where));
         }
         public int GetMaxOpen(string SentenceMax)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SplitAdminEcomerce.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -34,27 +35,35 @@ namespace SplitAdminEcomerce.Tools
 
         public static string Decrypt(string value)
         {
-            string Key = CreateKey("JALPJCJ_2o2o");
-            string Salt = CreateSalt("JALPJCJ_2o2osss");
-
-            value= value.Replace("PLUS", "+").Replace("LESS", "-").Replace("EQQ", "=").Replace("SLA", "/");
-
-
-            DeriveBytes rgb = new Rfc2898DeriveBytes(Key, Encoding.Unicode.GetBytes(Salt));
-            SymmetricAlgorithm algorithm = new TripleDESCryptoServiceProvider();
-            byte[] rgbKey = rgb.GetBytes(algorithm.KeySize >> 3);
-            byte[] rgbIV = rgb.GetBytes(algorithm.BlockSize >> 3);
-            ICryptoTransform transform = algorithm.CreateDecryptor(rgbKey, rgbIV);
-            using (MemoryStream buffer = new MemoryStream(Convert.FromBase64String(value)))
+            try
             {
-                using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Read))
+                string Key = CreateKey("JALPJCJ_2o2o");
+                string Salt = CreateSalt("JALPJCJ_2o2osss");
+
+                value = value.Replace("PLUS", "+").Replace("LESS", "-").Replace("EQQ", "=").Replace("SLA", "/");
+
+
+                DeriveBytes rgb = new Rfc2898DeriveBytes(Key, Encoding.Unicode.GetBytes(Salt));
+                SymmetricAlgorithm algorithm = new TripleDESCryptoServiceProvider();
+                byte[] rgbKey = rgb.GetBytes(algorithm.KeySize >> 3);
+                byte[] rgbIV = rgb.GetBytes(algorithm.BlockSize >> 3);
+                ICryptoTransform transform = algorithm.CreateDecryptor(rgbKey, rgbIV);
+                using (MemoryStream buffer = new MemoryStream(Convert.FromBase64String(value)))
                 {
-                    using (StreamReader reader = new StreamReader(stream, Encoding.Unicode))
+                    using (CryptoStream stream = new CryptoStream(buffer, transform, CryptoStreamMode.Read))
                     {
-                        return reader.ReadToEnd();
+                        using (StreamReader reader = new StreamReader(stream, Encoding.Unicode))
+                        {
+                            return reader.ReadToEnd();
+                        }
                     }
                 }
             }
+            catch (FormatException ex)
+            {
+                throw new SplitException { Category = TypeException.Info, Description = "Error al obtener clave real", ErrorCode = 409 };
+            }
+            
         }
 
         private static string CreateKey(string codigoBase)

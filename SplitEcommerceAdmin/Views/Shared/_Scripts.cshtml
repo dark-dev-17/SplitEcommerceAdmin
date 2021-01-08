@@ -32,3 +32,32 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
 <script src="~/lib/toast-bootstrapv4/toast.js"></script>
+
+<script src="~/Template/lib/quill/quill.min.js"></script>
+
+<script>
+    var GlobalValidAxios = function (error) {
+        if (error.response) {
+            if (error.response.status === 400) {
+                $.toast({
+                    title: 'Error',
+                    subtitle: 'Ahora',
+                    content: error.response.data,
+                    type: 'error',
+                    delay: 15000
+                });
+            }
+            else if (error.response.status === 500) {
+                $.toast({
+                    title: 'Error',
+                    subtitle: 'Ahora',
+                    content: "Error de sistema, contacta a TI",
+                    type: 'error',
+                    delay: 15000
+                });
+            }
+        }
+        console.error(error)
+    }
+
+</script>

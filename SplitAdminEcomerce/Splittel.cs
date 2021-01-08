@@ -53,6 +53,8 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<BlogComentario> BlogComentario { get; internal set; }
         public DarkManagerMySQL<ConsultorTecnico> ConsultorTecnico { get; internal set; }
         public DarkManagerMySQL<ConsultorRespuestas> ConsultorRespuestas { get; internal set; }
+        public DarkManagerMySQL<UsuarioInterno> UsuarioInterno { get; internal set; }
+        public DarkManagerMySQL<ConsultorConsultor> ConsultorConsultor { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -168,6 +170,10 @@ namespace SplitAdminEcomerce
                 ConsultorTecnico = new DarkManagerMySQL<ConsultorTecnico>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.ConsultorRespuestas)
                 ConsultorRespuestas = new DarkManagerMySQL<ConsultorRespuestas>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.UsuarioInterno)
+                UsuarioInterno = new DarkManagerMySQL<UsuarioInterno>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.ConsultorConsultor)
+                ConsultorConsultor = new DarkManagerMySQL<ConsultorConsultor>(DbEcommerce);
         }
         #endregion
 
