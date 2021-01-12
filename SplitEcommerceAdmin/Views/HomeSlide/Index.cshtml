@@ -1,0 +1,69 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.HomeSlide>
+
+@{
+    ViewData["Title"] = "Lista de slides";
+}
+
+<div class="content-header justify-content-between">
+    <div>
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+        <a class="btn btn-brand-01 mg-l-5" asp-action="Create" ><i data-feather="plus" class="svg-14"></i> Agregar nuevo</a>
+    </div>
+</div><!-- content-header -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHomeSlide)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen1_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen2_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Segmento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Che_active)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdHomeSlide)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Imagen1_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Imagen2_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Segmento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Che_active)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EncriptId }) @*|
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

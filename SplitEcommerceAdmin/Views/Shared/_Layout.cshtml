@@ -19,7 +19,7 @@
         </div>*@
         <div class="content-body">
             <h5 class="content-lead"></h5>
-            <div class="card card-body">
+            <div class="card card-body mt-4">
                 @RenderBody()
             </div>
         </div><!-- content-body -->
@@ -40,6 +40,12 @@
                     sSearch: '',
                     lengthMenu: '_MENU_ items/page',
                 }
+            });
+
+            // Basic with search
+            $('.select2Multi').select2({
+                placeholder: 'Selecciona una opción',
+                searchInputPlaceholder: 'BUscar opciones'
             });
         });
     </script>

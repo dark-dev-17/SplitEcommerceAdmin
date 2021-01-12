@@ -12,27 +12,30 @@
                 <a href="" class="nav-link with-sub"><i data-feather="box"></i>Ventas</a>
                 <nav class="nav nav-sub">
                     <a href="../pages/dashboard-one.html" class="nav-sub-link">Rastreador</a>
-                    <a href="@Url.Action("Index","Cliente")" class="nav-sub-link">Clientes</a>
+                    @*<a href="@Url.Action("Index","Cliente")" class="nav-sub-link">Clientes</a>
                     <a href="@Url.Action("Cotizacion","Pedido")" class="nav-sub-link">Cotizaciones</a>
                     <a href="@Url.Action("Pendiente","Pedido")" class="nav-sub-link">Pendientes</a>
-                    <a href="@Url.Action("Pedido","Pedido")" class="nav-sub-link">Pedidos</a>
-                    <a href="../pages/dashboard-three.html" class="nav-sub-link">Historico</a>
+                    <a href="@Url.Action("Pedido","Pedido")" class="nav-sub-link">Pedidos</a>*@
+                    <a href="../pages/dashboard-three.html" class="nav-sub-link">Reportes</a>
                 </nav>
             </li>
             <li class="nav-item">
                 <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Producto</a>
                 <nav class="nav nav-sub">
-                    <a href="@Url.Action("Details","Producto")" class="nav-sub-link">Buscador</a>
+                    <a href="@Url.Action("Buscador","Producto")" class="nav-sub-link">Buscador</a>
                     <a href="@Url.Action("Index","Categoria")" class="nav-sub-link">Categorias</a>
                     <a href="@Url.Action("Index","SubCategoria")" class="nav-sub-link">SubCategorias</a>
                     <a href="@Url.Action("Descripcion","DescripcionCompartida")" class="nav-sub-link">Descripciones</a>
                     <a href="@Url.Action("Index","Configurable")" class="nav-sub-link">Configurables</a>
+                    <a href="@Url.Action("Index","Configurable")" class="nav-sub-link">Fichas técnicas*</a>
                 </nav>
             </li>
             <li class="nav-item">
                 <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Contenido</a>
                 <nav class="nav nav-sub">
                     <a href="@Url.Action("Index","Blog")" class="nav-sub-link">Blog</a>
+                    <a href="@Url.Action("Index","HomeSlide")" class="nav-sub-link">Home slide*</a>
+                    <a href="@Url.Action("Index","SeccionesCont")" class="nav-sub-link">Secciones*</a>
                 </nav>
             </li>
             <li class="nav-item">

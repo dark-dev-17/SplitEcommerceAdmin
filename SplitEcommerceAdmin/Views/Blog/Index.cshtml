@@ -3,6 +3,14 @@
 @{
     ViewData["Title"] = "Listado de blogs";
 }
+<div class="content-header justify-content-between">
+    <div>
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+        <a class="btn btn-brand-01 mg-l-5" asp-action="Create" ><i data-feather="plus" class="svg-14"></i> Agregar nuevo</a>
+    </div>
+</div><!-- content-header -->
 @if (ViewBag.Mode == "List")
 {
     <table class="table datatable1">
@@ -47,7 +55,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("Editar", "Edit", new { id = item.EncriptId }) |
-                        @Html.ActionLink("Detalle", "Details", new { id = item.EncriptId }) 
+                        @Html.ActionLink("Detalle", "Details", new { id = item.EncriptId })
                     </td>
                 </tr>
             }
@@ -56,42 +64,42 @@
 }
 else
 {
-<div class="row">
-    @foreach (var item in Model)
-    {
-    <div class="col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="blog-card">
-                    <img src="@item.ImgCaratula" alt="" class="img-fluid rounded">
-                    <h4 class="my-3">
-                        <a href="" class="">@Html.DisplayFor(modelItem => item.Titulo)</a>
-                    </h4>
-                    <p class="text-muted">@Html.DisplayFor(modelItem => item.Contenido1)</p>
-                    <hr class="hr-dashed">
-                    <div class="d-flex justify-content-between">
-                        <div class="meta-box">
-                            <div class="media">
-                                <div class="media-body align-self-center text-truncate">
-                                    <ul class="p-0 list-inline mb-0">
-                                        <li class="list-inline-item">@Html.DisplayFor(modelItem => item.Fecha)</li>
-                                        <li class="list-inline-item">by <a href="">admin</a></li>
-                                    </ul>
-                                </div><!--end media-body-->
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="blog-card">
+                            <img src="@item.ImgCaratula" alt="" class="img-fluid rounded">
+                            <h4 class="my-3">
+                                <a href="" class="">@Html.DisplayFor(modelItem => item.Titulo)</a>
+                            </h4>
+                            <p class="text-muted">@Html.DisplayFor(modelItem => item.Contenido1)</p>
+                            <hr class="hr-dashed">
+                            <div class="d-flex justify-content-between">
+                                <div class="meta-box">
+                                    <div class="media">
+                                        <div class="media-body align-self-center text-truncate">
+                                            <ul class="p-0 list-inline mb-0">
+                                                <li class="list-inline-item">@Html.DisplayFor(modelItem => item.Fecha)</li>
+                                                <li class="list-inline-item">by <a href="">admin</a></li>
+                                            </ul>
+                                        </div><!--end media-body-->
+                                    </div>
+                                </div><!--end meta-box-->
+                                <div class="align-self-center">
+                                    <a href="#" class="text-dark">Read more <i class="fas fa-long-arrow-alt-right"></i></a>
+                                </div>
                             </div>
-                        </div><!--end meta-box-->
-                        <div class="align-self-center">
-                            <a href="#" class="text-dark">Read more <i class="fas fa-long-arrow-alt-right"></i></a>
-                        </div>
-                    </div>
-                </div><!--end blog-card-->
+                        </div><!--end blog-card-->
 
-            </div><!--end card-body-->
-        </div>
+                    </div><!--end card-body-->
+                </div>
+            </div>
+        }
+
     </div>
-    }
-
-</div>
 }
 
 

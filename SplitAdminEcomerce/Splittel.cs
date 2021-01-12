@@ -55,6 +55,7 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<ConsultorRespuestas> ConsultorRespuestas { get; internal set; }
         public DarkManagerMySQL<UsuarioInterno> UsuarioInterno { get; internal set; }
         public DarkManagerMySQL<ConsultorConsultor> ConsultorConsultor { get; internal set; }
+        public DarkManagerMySQL<HomeSlide> HomeSlide { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -62,6 +63,7 @@ namespace SplitAdminEcomerce
         /// Direcciones de envio en SAP B1 para clientes B2B
         /// </summary>
         public DarkSpecialMSSQL<DireccionPedido> DireccionPedido { get; internal set; }
+        public DarkManagerMSSQL<CardGroup> CardGroup { get; internal set; }
 
         #endregion
 
@@ -117,6 +119,9 @@ namespace SplitAdminEcomerce
 
             if (SapB1Objects == Enums.SapB1Objects.DireccionPedido)
                 DireccionPedido = new DarkSpecialMSSQL<DireccionPedido>(DbSapBussinesOne);
+
+            if (SapB1Objects == Enums.SapB1Objects.CardGroup)
+                CardGroup = new DarkManagerMSSQL<CardGroup>(DbSapBussinesOne);
         }
         public void LoadObject(Enums.EcomObjects ecomObjects)
         {
@@ -174,6 +179,8 @@ namespace SplitAdminEcomerce
                 UsuarioInterno = new DarkManagerMySQL<UsuarioInterno>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.ConsultorConsultor)
                 ConsultorConsultor = new DarkManagerMySQL<ConsultorConsultor>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.HomeSlide)
+                HomeSlide = new DarkManagerMySQL<HomeSlide>(DbEcommerce);
         }
         #endregion
 

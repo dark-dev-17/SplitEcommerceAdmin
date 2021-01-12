@@ -1,0 +1,147 @@
+﻿@model SplitAdminEcomerce.Models.HomeSlide
+
+@{
+    ViewData["Title"] = "Editar slide";
+}
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <p>Tus cambios han sido gurdados, por favor presiona <code>Ctrl</code> + <code>F5</code> si cambiaste alguna imagen y no ves reflejados los cambios</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+
+    </div>
+    <hr />
+}
+<div class="content-header justify-content-between">
+    <div>
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+    </div>
+</div><!-- content-header -->
+<div id="app_Blog" data-label="Informacion" class="df-example demo-forms">
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="divider-text">Información del slide</div>
+        <div class="form-group row">
+            <label asp-for="Titulo" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <input asp-for="IdHomeSlide" type="hidden" class="form-control" />
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <label asp-for="Segmento" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <select asp-for="Segmento" class="form-control">
+                    <option value="B2C">Clientes B2C</option>
+                    <option value="B2B">Clientes B2B</option>
+                    <option value="PUBLIC">Publico</option>
+                </select>
+            </div>
+        </div>
+        <div class="divider-text">Contenido multimedia</div>
+        <div class="form-group row">
+            <label asp-for="Imagen1_name" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <img src="@Html.Raw($"{ViewBag.Sitio}images/img_spl/slide/img1/{Model.Imagen1_name}")" id="Imagen1_prev" class="img-thumbnail" alt="Imagen de portada" style="height: 200px;align-content: center;">
+            </div>
+            <label asp-for="Imagen2_name" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <img src="@Html.Raw($"{ViewBag.Sitio}images/img_spl/slide/img2/{Model.Imagen2_name}")" id="Imagen2_prev" class="img-thumbnail" alt="Imagen de portada" style="height: 200px;align-content: center;">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <input type="file" asp-for="Imagen1" class="form-control" />
+                <span asp-validation-for="Imagen1" class="text-danger"></span>
+            </div>
+            <label class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <input type="file" asp-for="Imagen2" class="form-control" />
+                <span asp-validation-for="Imagen2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Link1" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <input asp-for="Link1" class="form-control" />
+                <span asp-validation-for="Link1" class="text-danger"></span>
+            </div>
+            <label asp-for="Link2" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <input asp-for="Link2" class="form-control" />
+                <span asp-validation-for="Link2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label  col-sm-2 "></label>
+            <div class="form-group form-check col-sm-4">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Che_NewWindows1" /> @Html.DisplayNameFor(model => model.Che_NewWindows1)
+                </label>
+                <span asp-validation-for="Che_NewWindows1" class="text-danger"></span>
+            </div>
+            <label class="control-label  col-sm-2 "></label>
+            <div class="form-group form-check col-sm-4">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Che_NewWindows2" /> @Html.DisplayNameFor(model => model.Che_NewWindows2)
+                </label>
+                <span asp-validation-for="Che_NewWindows2" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="divider-text">Información para slides dedicados a clientes B2B</div>
+        <div class="form-group row">
+            <label asp-for="SapGrupo" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <select asp-for="SapGrupo" asp-items="ViewBag.GruposSap" multiple class="form-control select2Multi">
+                    <option value="">Selecciona una opción</option>
+                </select>
+            </div>
+            <label asp-for="Categoria" class="control-label  col-sm-2 "></label>
+            <div class="col-sm-4">
+                <select asp-for="Categoria" class="form-control">
+                    <option selected="selected" value="">Sin categoria</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row mg-b-0">
+            <div class="col-sm-12 text-right">
+                <a class="btn btn-sm btn-secondary" asp-action="Index">Regresar</a>
+                <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/lib/summernote/summernote.min.js"></script>
+    <script>
+        var app_Blog = new Vue({
+            el: "#app_Blog",
+            data: {
+            },
+            mounted() {
+                $('#summernote').summernote({
+                    height: 650
+                });
+
+                GlobalImgPreview("Imagen1", "Imagen1_prev");
+                GlobalImgPreview("Imagen2", "Imagen2_prev");
+            },
+            methods: {
+
+            }
+        });
+    </script>
+}

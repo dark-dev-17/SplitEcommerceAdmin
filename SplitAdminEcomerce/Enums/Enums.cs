@@ -12,7 +12,8 @@ namespace SplitAdminEcomerce.Enums
     }
     public enum SapB1Objects
     {
-        DireccionPedido = 1
+        DireccionPedido = 1,
+        CardGroup = 2
     }
     public enum EcomObjects
     {
@@ -40,6 +41,7 @@ namespace SplitAdminEcomerce.Enums
         ConsultorTecnico = 22,
         UsuarioInterno = 23,
         ConsultorConsultor = 24,
+        HomeSlide = 25,
     }
     public enum SplinObjects
     {

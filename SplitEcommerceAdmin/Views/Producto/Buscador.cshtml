@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "Buscador de productos";
+}
+<div class="content-header justify-content-between">
+    <div>
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+    </div>
+</div><!-- content-header -->
+<div id="app_detalleProducto">
+    <div class="row">
+        <div class="col-4">
+            <div class="input-group">
+                <input type="text" id="inp_bus_patron" v-on:keyup="Buscardor()" class="form-control" placeholder="¿Qué deseas buscar?" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <select class="form-control" v-on:change="Buscardor()" id="inp_bus_colum">
+                        <option value="Codigo">Codigo</option>
+                        <option value="Descripcion" selected>Descripcion</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card card-hover card-analytics-two" v-if="ResultadosBus.length > 0">
+                <div class="card-header bg-transparent">
+                    <h6 class="card-title mg-b-0">Lista de coincidencias</h6>
+                    <nav class="nav nav-card-icon">
+                    </nav>
+                </div><!-- card-header -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush "  style="overflow-y: scroll; height: auto;position: absolute;max-height: 400px;">
+                        <li class="list-group-item" v-for="(item , index) in ResultadosBus">
+                            <div class="list-group-icon bg-orange tx-white"><i class="fab fa-firefox"></i></div>
+                            <div class="list-body">
+                                <h6><a target="_blank" v-bind:href="'@Url.Action("Details","Producto")/'+item.encriptId">{{ item.descripcion }}</a></h6>
+                                <span>{{ item.codigo }}</span>
+                            </div>
+                            <div class="list-visit"></div>
+                            <div class="list-rate tx-success"><i class="icon ion-android-arrow-up"></i></div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- content-header -->
+@section Scripts {
+    <script src="~/lib/UI-Search-master/search.min.js"></script>
+    <script>
+        var app_detalleProducto = new Vue({
+            el: "#app_detalleProducto",
+            data: {
+                ResultadosBus: [],
+
+            },
+            mounted() {
+
+
+            },
+            methods: {
+
+                Buscardor: async function () {
+                    let Patron = document.getElementById("inp_bus_patron");
+                    let Coluna = document.getElementById("inp_bus_colum");
+                    var params = new URLSearchParams();
+                    params.append('Codigo', Patron.value);
+                    params.append('Columna', Coluna.value);
+                    axios.post('@Url.Action("Buscador","Producto")', params,null).then(response => {
+                        this.ResultadosBus = response.data
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+
+                    })
+                },
+
+            }
+        });
+    </script>
+
+}

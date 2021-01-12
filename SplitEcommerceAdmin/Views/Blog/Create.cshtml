@@ -1,85 +1,115 @@
 ﻿@model SplitAdminEcomerce.Models.Blog
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear nuevo blog";
 }
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
 
-<h1>Create</h1>
-
-<h4>Blog</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdBlog" class="control-label"></label>
-                <input asp-for="IdBlog" class="form-control" />
-                <span asp-validation-for="IdBlog" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Titulo" class="control-label"></label>
+    </div>
+    <hr />
+}
+<link href="~/lib/summernote/summernote.min.css" rel="stylesheet">
+<div id="app_Blog" data-label="Informacion" class="df-example demo-forms">
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="Titulo" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input type="hidden" asp-for="IdBlog" class="form-control" />
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Titulo2" class="control-label"></label>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Titulo2" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
                 <input asp-for="Titulo2" class="form-control" />
                 <span asp-validation-for="Titulo2" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Contenido1" class="control-label"></label>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Contenido1" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
                 <input asp-for="Contenido1" class="form-control" />
                 <span asp-validation-for="Contenido1" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Contenido2" class="control-label"></label>
-                <input asp-for="Contenido2" class="form-control" />
-                <span asp-validation-for="Contenido2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WebDescripcion" class="control-label"></label>
+        </div>
+        <div class="form-group row">
+            <label asp-for="WebDescripcion" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-4">
                 <input asp-for="WebDescripcion" class="form-control" />
                 <span asp-validation-for="WebDescripcion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImgCaratula" class="control-label"></label>
-                <input asp-for="ImgCaratula" class="form-control" />
-                <span asp-validation-for="ImgCaratula" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImgLanding" class="control-label"></label>
-                <input asp-for="ImgLanding" class="form-control" />
-                <span asp-validation-for="ImgLanding" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Activo" class="control-label"></label>
-                <input asp-for="Activo" class="form-control" />
-                <span asp-validation-for="Activo" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
+            <div class="form-check col-lg-4">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Che_Activo" /> @Html.DisplayNameFor(model => model.Che_Activo)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="EncriptId" class="control-label"></label>
-                <input asp-for="EncriptId" class="form-control" />
-                <span asp-validation-for="EncriptId" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <label asp-for="ImgCaratulaFile" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-4">
+                <img src="#" id="ImgCaratulaPrev" class="img-thumbnail" alt="Imagen de portada" style="height: 200px;align-content: center;">
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <label asp-for="ImgLandingFile" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-4">
+                <img src="#" id="ImgLandingPrev" class="img-thumbnail" alt="Imagen del blog" style="height: 200px;align-content: center;">
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-4">
+                <input type="file" asp-for="ImgCaratulaFile" class="form-control" />
+                <span asp-validation-for="ImgCaratulaFile" class="text-danger"></span>
+            </div>
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-4">
+                <input type="file" asp-for="ImgLandingFile" class="form-control" />
+                <span asp-validation-for="ImgLandingFile" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Contenido2" class="col-sm-12 col-form-label"></label>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <textarea id="summernote" asp-for="Contenido2" class="form-control"></textarea>
+                <span asp-validation-for="Contenido2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row mg-b-0">
+            <div class="col-sm-12 text-right">
+                <a class="btn btn-sm btn-secondary" asp-action="Index">Regresar</a>
+                <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    <script src="~/lib/summernote/summernote.min.js"></script>
+    <script>
+        var app_Blog = new Vue({
+            el: "#app_Blog",
+            data: {
+            },
+            mounted() {
+                $('#summernote').summernote({
+                    height: 650
+                });
 
+                GlobalImgPreview("ImgCaratulaFile","ImgCaratulaPrev");
+                GlobalImgPreview("ImgLandingFile","ImgLandingPrev");
+            },
+            methods: {
+
+            }
+        });
+    </script>
+}

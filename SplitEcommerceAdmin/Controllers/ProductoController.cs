@@ -97,6 +97,11 @@ namespace SplitEcommerceAdmin.Controllers
             }
         }
 
+        public ActionResult Buscador()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult UpdateFile(string Codigo, IFormFile FormFile, ProductoTipoFile Tipo)
         {

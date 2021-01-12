@@ -124,6 +124,30 @@ namespace DbManagerDark.Managers
         {
             return DataReader(string.Format("select * from {0}", Nametable));
         }
+        /// <summary>
+        /// obtener lista en base sentencia where y order by
+        /// </summary>
+        /// <param name="where"></param>
+        /// <param name="Order"></param>
+        /// <returns></returns>
+        public List<T> GetOpenquery(string where = "", string Order = "")
+        {
+            return DataReader(string.Format("select * from {0} {1} {2}", Nametable, where, Order));
+        }
+        /// <summary>
+        /// obtener objeto de acuerdo a sentencia where
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public T GetOpenquery(string where = "")
+        {
+            List<T> Lista = DataReader(string.Format("select * from {0} {1} ", Nametable, where));
+            if (Lista.Count == 0)
+            {
+                return default(T);
+            }
+            return Lista.ElementAt(0);
+        }
 
         private string KeyCol()
         {

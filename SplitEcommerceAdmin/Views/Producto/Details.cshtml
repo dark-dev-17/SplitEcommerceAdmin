@@ -24,7 +24,13 @@
         <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
     </div>
 }
-
+<div class="content-header justify-content-between">
+    <div>
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+    </div>
+</div><!-- content-header -->
 <div id="app_detalleProducto">
     @if (Model == null)
     {
@@ -278,12 +284,12 @@
                                                     <div class="accordion-body ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active" style="" id="ui-id-2" aria-labelledby="ui-id-1" role="tabpanel" aria-hidden="false">
                                                         <div class="form-group" id="ctl_desactivar" v-if="activo == 'si'">
                                                             <label class="form-label text-danger">Desactivar producto</label>
-                                                            <p class="tx-sm tx-color-04">Una vez desactivada el producto, el usuario no podra visualizar el producto dentro de nuestro E-commerce.</p>
+                                                            <p class="tx-sm tx-color-04">Una vez desactivada el producto, el cliente no podra visualizar el producto dentro de nuestro E-commerce.</p>
                                                             <button class="btn btn-sm btn-danger" v-on:click="Activar(false)" title="Desactivar cuenta : @Model.Descripcion">Desactivar</button>
                                                         </div>
                                                         <div class="form-group" id="ctl_activar" v-if="activo == 'no'">
                                                             <label class="form-label text-success">Activar producto</label>
-                                                            <p class="tx-sm tx-color-04">Una vez activada el producto, el usuario podra visualizar el producto dentro de nuestro E-commerce.</p>
+                                                            <p class="tx-sm tx-color-04">Una vez activado el producto, el cliente podra visualizar el producto dentro de nuestro E-commerce.</p>
                                                             <button class="btn btn-sm btn-success" v-on:click="Activar(true)" title="Activar cuenta : @Model.Descripcion">Activar</button>
                                                         </div>
                                                     </div>
@@ -317,18 +323,19 @@
                                                                                 <span v-if="item.isDirectorio == false && item.datos != null">{{ item.datos.clave }}</span>
                                                                             </td>
                                                                             <td>
-                                                                                <a href="#"  v-if="item.isDirectorio == false && item.datos != null" v-on:click="cambiarFicha(item.datos.clave)" title="Usar esta">Usar</a>
+                                                                                <a href="#" v-if="item.isDirectorio == false && item.datos != null" v-on:click="cambiarFicha(item.datos.clave)" title="Usar esta">Usar</a>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div><!-- card-body -->
-                                                            <div class="alert alert-info mg-b-0 col-lg-12"  v-if="fichas.data == null" role="alert">
+                                                            <div class="alert alert-info mg-b-0 col-lg-12" v-if="fichas.data == null" role="alert">
                                                                 <h6 class="alert-heading">Estimado usuario!</h6>
                                                                 <p>Por favor has clic en <i data-feather="refresh-cw"></i> para poder obtener las fichas técnicas</p>
                                                                 <hr>
                                                                 <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
                                                             </div>
+                                                            <br />
                                                         </div>
 
                                                     </div>
@@ -364,10 +371,10 @@
                                                             <p>@descripcionCompartida.Descripcion</p>
                                                             <span class="d-block tx-12 tx-color-04">@descripcionCompartida.Codigo</span>
                                                             <hr />
-                                                            <form id="searchExpanding" class="search-form">
+                                                            <div id="searchExpanding" class="search-form">
                                                                 <input type="search" class="form-control" v-model="descripciones.patron" placeholder="Search">
                                                                 <button class="btn" type="button" v-on:click="BuscardorDesc"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-                                                            </form>
+                                                            </div>
                                                             <ul class="list-group" v-if="descripciones.data.length">
                                                                 <li class="list-group-item d-flex align-items-center" v-for="(item, index) in descripciones.data">
                                                                     <div>
@@ -412,7 +419,7 @@
     </div><!-- off-canvas -->
 
     <div class="off-canvas-backdrop"></div>
-    
+
 </div>
 @section Scripts {
     <script src="~/lib/UI-Search-master/search.min.js"></script>
@@ -444,7 +451,12 @@
             },
             methods: {
                 Eliminar360: async function () {
-                    var headers = {                        'Content-Type': 'application/json',                        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",                        'Access-Control-Allow-Origin': '*',                        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',                        }
+                    var headers = {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                        }
                      Swal.fire({
                         title: "¿Deseas eliminar vista 360?",
                         text: "",
