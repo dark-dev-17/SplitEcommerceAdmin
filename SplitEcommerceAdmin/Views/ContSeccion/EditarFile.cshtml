@@ -1,0 +1,100 @@
+﻿@model SplitAdminEcomerce.Models.Cont_SeccionArchivo
+
+@{
+    SplitAdminEcomerce.Models.Cont_Seccion seccion = (SplitAdminEcomerce.Models.Cont_Seccion)ViewBag.Seccion;
+    ViewData["Title"] = "Editar arhivo a:" + seccion.Nombre;
+}
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+
+    </div>
+    <hr />
+}
+<div id="app_archivosConte">
+    <div class="content-header justify-content-between">
+        <div>
+            <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+        </div>
+        <div class="d-none d-sm-flex">
+
+        </div>
+    </div><!-- content-header -->
+    <hr />
+    <div data-label="Informacion" class="df-example demo-forms">
+        <form asp-action="EditarFile" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <label asp-for="DescripcionWeb" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="DescripcionWeb" class="form-control" />
+                    <input asp-for="IdCont_SeccionArchivo" type="hidden" class="form-control" />
+                    <input asp-for="IdCont_Seccion" type="hidden" class="form-control" />
+                    <input asp-for="Posicion" type="hidden" class="form-control" />
+                    <input asp-for="ArchivoPath" type="hidden" class="form-control" />
+                    <span asp-validation-for="DescripcionWeb" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Url" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Url" class="form-control" />
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Archivo" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-5">
+                    <img src="@Html.Raw($"{ViewBag.SiteBase}{Model.ArchivoPath}")" id="ImgeConte" class="img-thumbnail" alt="Imagen" style="height: 200px;align-content: center;">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input type="file" asp-for="Archivo" class="form-control" />
+                    <span asp-validation-for="Archivo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Che_AbrirNuevatab" /> @Html.DisplayNameFor(model => model.Che_AbrirNuevatab)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Che_EsVisible" /> @Html.DisplayNameFor(model => model.Che_EsVisible)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mg-b-0">
+                <div class="col-sm-12 text-right">
+                    <a class="btn btn-sm btn-secondary" href="@Url.Action("Details","ContSeccion", new { Id = seccion.EncriptId })">Regresar</a>
+                    <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var app_archivosConte = new Vue({
+            el: "#app_archivosConte",
+            data: {
+            },
+            mounted() {
+                GlobalImgPreview("Archivo", "ImgeConte");
+            },
+            methods: {
+
+            }
+        });
+    </script>
+}

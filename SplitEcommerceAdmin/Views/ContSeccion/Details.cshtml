@@ -1,0 +1,95 @@
+﻿@model SplitAdminEcomerce.Models.Cont_Seccion
+
+@{
+    ViewData["Title"] = "Detalle de sección";
+}
+
+<div id="app_contSectiondetails">
+    <div class="content-header justify-content-between">
+        <div>
+            <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+        </div>
+        <div class="d-none d-sm-flex">
+
+        </div>
+    </div><!-- content-header -->
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PathFtp)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PathFtp)
+            </dd>
+        </dl>
+    </div>
+    <hr />
+    <div class="content-header justify-content-between">
+        <div>
+            <h4 class="content-title content-title-xs">Lista de archivos</h4>
+        </div>
+        <div class="d-none d-sm-flex">
+            <a class="btn btn-brand-01 mg-l-5" href="#" v-on:click="GSaveItemsOrder()"><i data-feather="file" class="svg-14"></i> Guardar orden</a>
+            <a class="btn btn-secondary mg-l-5" href="@Url.Action("AgregarFile","ContSeccion", new { Id = Model.EncriptId })"><i data-feather="save" class="svg-14"></i> Agregar archivo</a>
+        </div>
+    </div><!-- content-header -->
+    <partial name="ListFiles" model="ViewBag.Files" />
+    <hr />
+    <div class="form-group row mg-b-0">
+        <div class="col-sm-12 text-right">
+            <a class="btn btn-sm btn-secondary" asp-action="Index">Regresar</a>
+            <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/html5sortable.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            sortable('.js-sortable-table-no-placeholder tbody', {
+                items: "tr",
+                forcePlaceholderSize: true,
+                placeholderClass: 'placeholder sort-placeholder',
+            })
+
+        });
+    </script>
+    <script>
+            var app_contSectiondetails = new Vue({
+                el: "#app_contSectiondetails",
+                data: {
+                    ListOrder: []
+                },
+                mounted() {
+
+                },
+                methods: {
+                    GSaveItemsOrder: async function () {
+                        this.ListOrder = [];
+                        var table = document.getElementById("tale_lstaarchivos")
+                        for (var i = 0; i < table.rows.length; i++) {
+                            if (table.rows[i].dataset.idkey !== undefined) {
+                                let data = {
+                                    Key: parseInt(table.rows[i].dataset.idkey),
+                                    Posicion: parseInt(i),
+                                }
+                                this.ListOrder.push(data)
+                            }
+                        }
+                        console.log(this.ListOrder)
+                        await axios.post('@Url.Action("EditarFilePosiciones", "ContSeccion")', this.ListOrder, null).then(response => {
+                            document.getElementById("btn_refress").click()
+                        }).catch(error => {
+                            GlobalValidAxios(error);
+                        })
+                    },
+                }
+            });
+    </script>
+}

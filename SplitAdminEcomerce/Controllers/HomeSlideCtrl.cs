@@ -159,7 +159,7 @@ namespace SplitAdminEcomerce.Controllers
         /// Crear nuevo slide
         /// </summary>
         /// <param name="HomeSlide"></param>
-        public void Crear(HomeSlide HomeSlide)
+        public int Crear(HomeSlide HomeSlide)
         {
             string File1 = "";
             string File2 = "";
@@ -167,6 +167,7 @@ namespace SplitAdminEcomerce.Controllers
             {
                 int MaxId = Splittel.HomeSlide.GetLastId("t35_pk01") + 1;
 
+                #region validar archivos imagen
                 if (HomeSlide.Imagen1 == null)
                 {
                     throw new SplitException
@@ -193,9 +194,10 @@ namespace SplitAdminEcomerce.Controllers
                 {
                     if (HomeSlide.Imagen1.Length <= 0)
                     {
-                        throw new SplitException { 
-                            Category = TypeException.Error, 
-                            Description = $"Error al subir el archivo: {HomeSlide.Imagen1.FileName}", 
+                        throw new SplitException
+                        {
+                            Category = TypeException.Error,
+                            Description = $"Error al subir el archivo: {HomeSlide.Imagen1.FileName}",
                             ErrorCode = 100,
                             NameObject = "Imagen1"
                         };
@@ -212,9 +214,10 @@ namespace SplitAdminEcomerce.Controllers
                 {
                     if (HomeSlide.Imagen2.Length <= 0)
                     {
-                        throw new SplitException { 
-                            Category = TypeException.Error, 
-                            Description = $"Error al subir el archivo: {HomeSlide.Imagen2.FileName}", 
+                        throw new SplitException
+                        {
+                            Category = TypeException.Error,
+                            Description = $"Error al subir el archivo: {HomeSlide.Imagen2.FileName}",
                             ErrorCode = 100,
                             NameObject = "Imagen2"
                         };
@@ -226,7 +229,9 @@ namespace SplitAdminEcomerce.Controllers
                         File2 = HomeSlide.Imagen2_name;
                     }
                 }
-                if(HomeSlide.Segmento == "PUBLIC")
+                #endregion
+
+                if (HomeSlide.Segmento == "PUBLIC")
                 {
                     HomeSlide.Regla = "ning@<@0";
                 }
@@ -249,6 +254,8 @@ namespace SplitAdminEcomerce.Controllers
                 {
                     throw new SplitException { Category = TypeException.Error, Description = $"Error al guardar los cambios", ErrorCode = 100 };
                 }
+
+                return Splittel.HomeSlide.GetLastId("t35_pk01");
             }
             catch (SplitException ex)
             {

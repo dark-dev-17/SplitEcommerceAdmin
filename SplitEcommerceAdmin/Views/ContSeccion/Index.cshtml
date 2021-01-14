@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.Cont_Seccion>
+
+@{
+    ViewData["Title"] = "Bloques de contenido";
+}
+
+<div class="content-header justify-content-between">
+    <div>
+        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+    </div>
+    <div class="d-none d-sm-flex">
+        <a class="btn btn-brand-01 mg-l-5" asp-action="Create"><i data-feather="plus" class="svg-14"></i> Agregar nuevo</a>
+    </div>
+</div><!-- content-header -->
+<table class="table datatable1">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCont_Seccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PathFtp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCont_Seccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PathFtp)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.EncriptId }) |
+                    @Html.ActionLink("Archivos", "Details", new { id = item.EncriptId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

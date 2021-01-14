@@ -22,6 +22,7 @@ namespace SplitAdminEcomerce.Tools
         /// url del sitio https://fibremex.com/fibra-optica/public/
         /// </summary>
         public string Site { get; internal set; }
+        public string FtpSitebase { get; internal set; }
         #endregion
 
         #region Constructores
@@ -33,13 +34,14 @@ namespace SplitAdminEcomerce.Tools
         {
 
         }
-        public FtpServ(string FTP_server, string FTP_user, string FTP_password, string Dominio, string Site)
+        public FtpServ(string FTP_server, string FTP_user, string FTP_password, string Dominio, string Site,string FtpSitebase)
         {
             this.FTP_server = FTP_server;
             this.FTP_user = FTP_user;
             this.FTP_password = FTP_password;
             this.Dominio = Dominio;
             this.Site = Site;
+            this.FtpSitebase = FtpSitebase;
         }
         #endregion
 

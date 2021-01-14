@@ -42,6 +42,8 @@ namespace SplitAdminEcomerce.Enums
         UsuarioInterno = 23,
         ConsultorConsultor = 24,
         HomeSlide = 25,
+        Cont_Seccion = 26,
+        Cont_SeccionArchivo = 27,
     }
     public enum SplinObjects
     {

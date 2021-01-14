@@ -56,6 +56,8 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<UsuarioInterno> UsuarioInterno { get; internal set; }
         public DarkManagerMySQL<ConsultorConsultor> ConsultorConsultor { get; internal set; }
         public DarkManagerMySQL<HomeSlide> HomeSlide { get; internal set; }
+        public DarkManagerMySQL<Cont_Seccion> Cont_Seccion { get; internal set; }
+        public DarkManagerMySQL<Cont_SeccionArchivo> Cont_SeccionArchivo { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -105,8 +107,9 @@ namespace SplitAdminEcomerce
             string FtpPassword = Configuration.GetSection(FTPS).GetSection("Password").Value;
             string FtpDomain = Configuration.GetSection(FTPS).GetSection("Domain").Value;
             string FtpSiterute = Configuration.GetSection(FTPS).GetSection("Siterute").Value;
+            string FtpSitebase = Configuration.GetSection(FTPS).GetSection("Sitebase").Value;
 
-            FtpServ = new FtpServ(FtpServer, FtpUser, FtpPassword, FtpDomain, FtpSiterute);
+            FtpServ = new FtpServ(FtpServer, FtpUser, FtpPassword, FtpDomain, FtpSiterute, FtpSitebase);
 
         }
         #endregion
@@ -181,6 +184,11 @@ namespace SplitAdminEcomerce
                 ConsultorConsultor = new DarkManagerMySQL<ConsultorConsultor>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.HomeSlide)
                 HomeSlide = new DarkManagerMySQL<HomeSlide>(DbEcommerce);
+
+            else if (ecomObjects == Enums.EcomObjects.Cont_Seccion)
+                Cont_Seccion = new DarkManagerMySQL<Cont_Seccion>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.Cont_SeccionArchivo)
+                Cont_SeccionArchivo = new DarkManagerMySQL<Cont_SeccionArchivo>(DbEcommerce);
         }
         #endregion
 

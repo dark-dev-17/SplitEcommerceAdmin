@@ -35,9 +35,9 @@ namespace SplitEcommerceAdmin.Controllers
                 {
                     return View(HomeSlide);
                 }
-                HomeSlideCtrl.Crear(HomeSlide);
+                int IdCreated = HomeSlideCtrl.Crear(HomeSlide);
                 ViewData["MessageSuccess"] = "Slide actualizada";
-                return View(HomeSlide);
+                return RedirectToAction("Edit",new { id = EncryptData.Encrypt(IdCreated + "") });
             }
             catch (SplitException ex)
             {
@@ -52,9 +52,22 @@ namespace SplitEcommerceAdmin.Controllers
         }
         public IActionResult Create()
         {
-            ViewData["Sitio"] = HomeSlideCtrl.Splittel.FtpServ.Site;
-            ViewData["GruposSap"] = new SelectList(HomeSlideCtrl.getGruposSap(), "GroupCode", "GroupName");
-            return View();
+            try
+            {
+                ViewData["Sitio"] = HomeSlideCtrl.Splittel.FtpServ.Site;
+                ViewData["GruposSap"] = new SelectList(HomeSlideCtrl.getGruposSap(), "GroupCode", "GroupName");
+                return View();
+            }
+            catch (SplitException ex)
+            {
+                return NotFound();
+            }
+            finally
+            {
+                HomeSlideCtrl.Terminar();
+                HomeSlideCtrl = null;
+            }
+           
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,6 +103,12 @@ namespace SplitEcommerceAdmin.Controllers
             {
                 string idDecripted = EncryptData.Decrypt(id);
                 var result = HomeSlideCtrl.GetHomeSlide(Int32.Parse(idDecripted));
+
+                if(result is null)
+                {
+                    return NotFound();
+                }
+
                 ViewData["GruposSap"] = new SelectList(HomeSlideCtrl.getGruposSap(), "GroupCode", "GroupName", result.SapGrupo);
 
                 return View(result);
@@ -111,6 +130,10 @@ namespace SplitEcommerceAdmin.Controllers
             {
                 string idDecripted = EncryptData.Decrypt(id);
                 var result = HomeSlideCtrl.GetHomeSlide(Int32.Parse(idDecripted));
+                if (result is null)
+                {
+                    return NotFound();
+                }
                 return View(result);
             }
             catch (SplitException ex)

@@ -1,0 +1,42 @@
+﻿@model SplitAdminEcomerce.Models.Cont_Seccion
+
+@{
+    ViewData["Title"] = "Agregar ueva sección";
+}
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+
+    </div>
+    <hr />
+}
+<div id="app_Blog" data-label="Informacion" class="df-example demo-forms">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="Nombre" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input type="hidden" asp-for="IdCont_Seccion" class="form-control" />
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PathFtp" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="PathFtp" class="form-control" />
+                <span asp-validation-for="PathFtp" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row mg-b-0">
+            <div class="col-sm-12 text-right">
+                <a class="btn btn-sm btn-secondary" asp-action="Index">Regresar</a>
+                <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
