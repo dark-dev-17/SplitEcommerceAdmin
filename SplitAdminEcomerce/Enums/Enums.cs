@@ -44,6 +44,14 @@ namespace SplitAdminEcomerce.Enums
         HomeSlide = 25,
         Cont_Seccion = 26,
         Cont_SeccionArchivo = 27,
+        PrecioCableServ = 28,
+        PrecioDistriPreca = 29,
+        PrecioDistriPrecon = 30,
+        PrecioJumperCable = 31,
+        PrecioJumperConect = 32,
+        PrecioMPO = 33,
+        PrecioPatchCord = 34,
+        PrecioPigtail = 35,
     }
     public enum SplinObjects
     {

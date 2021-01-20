@@ -58,6 +58,14 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<HomeSlide> HomeSlide { get; internal set; }
         public DarkManagerMySQL<Cont_Seccion> Cont_Seccion { get; internal set; }
         public DarkManagerMySQL<Cont_SeccionArchivo> Cont_SeccionArchivo { get; internal set; }
+        public DarkManagerMySQL<PrecioCableServ> PrecioCableServ { get; internal set; }
+        public DarkManagerMySQL<PrecioDistriPreca> PrecioDistriPreca { get; internal set; }
+        public DarkManagerMySQL<PrecioDistriPrecon> PrecioDistriPrecon { get; internal set; }
+        public DarkManagerMySQL<PrecioJumperCable> PrecioJumperCable { get; internal set; }
+        public DarkManagerMySQL<PrecioJumperConect> PrecioJumperConect { get; internal set; }
+        public DarkManagerMySQL<PrecioMPO> PrecioMPO { get; internal set; }
+        public DarkManagerMySQL<PrecioPatchCord> PrecioPatchCord { get; internal set; }
+        public DarkManagerMySQL<PrecioPigtail> PrecioPigtail { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -189,6 +197,23 @@ namespace SplitAdminEcomerce
                 Cont_Seccion = new DarkManagerMySQL<Cont_Seccion>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.Cont_SeccionArchivo)
                 Cont_SeccionArchivo = new DarkManagerMySQL<Cont_SeccionArchivo>(DbEcommerce);
+
+            else if (ecomObjects == Enums.EcomObjects.PrecioCableServ)
+                PrecioCableServ = new DarkManagerMySQL<PrecioCableServ>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioDistriPreca)
+                PrecioDistriPreca = new DarkManagerMySQL<PrecioDistriPreca>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioDistriPrecon)
+                PrecioDistriPrecon = new DarkManagerMySQL<PrecioDistriPrecon>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioJumperCable)
+                PrecioJumperCable = new DarkManagerMySQL<PrecioJumperCable>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioJumperConect)
+                PrecioJumperConect = new DarkManagerMySQL<PrecioJumperConect>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioMPO)
+                PrecioMPO = new DarkManagerMySQL<PrecioMPO>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioPatchCord)
+                PrecioPatchCord = new DarkManagerMySQL<PrecioPatchCord>(DbEcommerce);
+            else if (ecomObjects == Enums.EcomObjects.PrecioPigtail)
+                PrecioPigtail = new DarkManagerMySQL<PrecioPigtail>(DbEcommerce);
         }
         #endregion
 

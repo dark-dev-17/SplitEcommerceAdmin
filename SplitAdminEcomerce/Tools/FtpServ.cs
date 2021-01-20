@@ -333,6 +333,8 @@ namespace SplitAdminEcomerce.Tools
                         {
                             if (isroot)
                             {
+                                string[] allAddresses = pattern.Split("/".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                                string Patrea = string.Join("/", allAddresses.Take(allAddresses.Count() - 1).ToArray());
                                 FTPDirectorio.PathLast = dir;
                                 FTPDirectorio.Contenido.Add(new FtpContenido
                                 {
@@ -340,7 +342,7 @@ namespace SplitAdminEcomerce.Tools
                                     IsFile = (isDirectory ? false : true),
                                     Extension = (isDirectory ? false : true) ? filename.Split('.')[1] : "",
                                     Name = filename,
-                                    PathServer = $"{pattern}{filename}"
+                                    PathServer = $"{Patrea}"
                                 });
                             }
                         }
@@ -409,6 +411,14 @@ namespace SplitAdminEcomerce.Tools
         /// Path anterior
         /// </summary>
         public string PathLast { get; set; }
+        /// <summary>
+        /// Nombre del folder actual
+        /// </summary>
+        public string ActualFoder { get; set; }
+        /// <summary>
+        /// Descripcion corta del path
+        /// </summary>
+        public string ShortPath { get; set; }
         /// <summary>
         /// Lista de arcchivos
         /// </summary>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.PrecioMPO>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Componente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Componente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                <a href="#modal2" data-toggle="modal" onclick="app_preciosConf.EditForm('MPO','@item.EncriptId','MPO')" title="Editar este componente">Editar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

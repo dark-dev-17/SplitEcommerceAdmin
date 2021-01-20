@@ -1,0 +1,236 @@
+﻿@model SplitAdminEcomerce.Tools.FTPDirectorio
+
+@{
+    ViewData["Title"] = "Lista de archivos";
+    int FileCount = 0;
+}
+<div id="app_fichaTec">
+    <div class="content-header justify-content-between">
+        <div>
+            <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
+        </div>
+        <div class="d-none d-sm-flex">
+            <a class="btn btn-brand-01 mg-l-5" href="#modal1" data-toggle="modal"><i data-feather="file" class="svg-14"></i> Agregar nuevo</a>
+        </div>
+    </div><!-- content-header -->
+
+    <div class="card card-hover card-active-projects">
+        <div class="card-header bg-transparent pd-15">
+            <h6 class="card-title mg-b-0">@Model.ShortPath</h6>
+            <nav class="nav align-items-center">
+                <span class="mg-r-5"></span>
+            </nav>
+        </div><!-- card-header -->
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.Contenido)
+            {
+                
+                @if (item.IsDirectorio)
+                {
+                    @if (item.Name.Trim() == "..")
+                    {
+                        @if (Model.IsPathRoot == false)
+                        {
+                            <li class="list-group-item">
+                                <div class="media">
+                                    <div class="project-img"><i class="bd-green" data-feather="corner-up-left"></i></div>
+                                    <div class="media-body mg-t-10 mg-md-t-0 mg-md-l-10">
+                                        <h6 class="project-title"><a href="@Url.Action("Index","FichaTecnica", new { Folder = item.PathServer+"/" })">@Html.DisplayFor(modelItem => item.Name)</a></h6>
+                                    </div>
+                                </div><!-- media -->
+                                <div class="progress-wrapper">
+                                    <div class="progress-label"></div>
+
+                                </div><!-- progress-wrapper -->
+                                @*<div><a href="" class="link-04"><i data-feather="more-horizontal" class="svg-16"></i></a></div>*@
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="list-group-item">
+                            <div class="media">
+
+                                <div class="project-img"><i class="bd-green" data-feather="folder"></i></div>
+                                <div class="media-body mg-t-10 mg-md-t-0 mg-md-l-10">
+                                    <h6 class="project-title"><a href="@Url.Action("Index","FichaTecnica", new { Folder = item.PathServer+"/" })">@Html.DisplayFor(modelItem => item.Name)</a></h6>
+                                </div>
+                            </div><!-- media -->
+                            <div class="progress-wrapper">
+                                <div class="progress-label">Carpeta</div>
+
+                            </div><!-- progress-wrapper -->
+                            @*<div><a href="" class="link-04"><i data-feather="more-horizontal" class="svg-16"></i></a></div>*@
+                        </li>
+                    }
+                }
+                else
+                {
+                    SplitAdminEcomerce.Models.FichaTecnica fichaTecnica = item.Datos is null ? null : (SplitAdminEcomerce.Models.FichaTecnica)item.Datos;
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="project-img"><i class="bd-green" data-feather="file"></i></div>
+                            <div class="media-body mg-t-10 mg-md-t-0 mg-md-l-10">
+                                <h6 class="project-title"><a href="">@Html.DisplayFor(modelItem => item.Name)</a></h6>
+                            </div>
+                        </div><!-- media -->
+                        <div class="progress-wrapper">
+                            <div class="progress-label"><span></span></div>
+
+                        </div><!-- progress-wrapper -->
+                        @if (fichaTecnica != null)
+                        {
+                            <div class="project-date-end bg-success-light">@Html.DisplayFor(modelItem => fichaTecnica.Clave)</div>
+
+                        }
+                        else
+                        {
+                            <div class="project-date-end bg-success-light" style="display: none" id="div_clave_file_@FileCount"></div>
+                        }
+                    <div id="div_file_@FileCount">
+                        @if (fichaTecnica == null)
+                        {
+                            <div class="dropdown dropleft " id="Opt_file_@FileCount">
+                                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="dropleftMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i data-feather="more-horizontal" class="svg-16"></i>
+                                </button>
+                                <div class="dropdown-menu tx-14" aria-labelledby="dropleftMenuButton">
+                                    <a v-on:click="RegiserFile('@Html.DisplayFor(modelItem => item.Name)',@FileCount)" class="dropdown-item" title="Registrar este archivo como Ficha Técnica" href="#">Registrar</a>
+                                </div>
+                            </div>
+                            <div id="loader_@FileCount"></div>
+                        }
+                    </div>
+                    </li>
+                }
+
+                FileCount++;
+            }
+
+        </ul>
+    </div><!-- card -->
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Agregar archivo</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i data-feather="x"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info mg-b-0" role="alert">
+                        <h6 class="alert-heading">Estimado Usuario!</h6>
+                        <p>Recuerde que el subir un nuevo PDF implica el registro nuevo de su ficha técnica.</p>
+                        <hr>
+                        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel.</p>
+                    </div>
+                    <div v-if="Registrando == false">
+                        <div class="form-group">
+                            <label>Carpeta</label>
+                            <input type="text" disabled name="inp_fileAfolder" id="inp_fileAfolder" class="form-control-file" value="@Model.ShortPath" />
+                        </div>
+                        <div class="form-group">
+                            <label>Selecciona un archivo</label>
+                            <input type="file" name="inp_fileAdd" id="inp_fileAdd" class="form-control-file" value="" />
+                        </div>
+                    </div>
+                    <div v-if="Registrando == true">
+                        Cargando nuevo archivo
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-dark" v-on:click="AddFile()">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts 
+{
+    <script>
+        var app_fichaTec = new Vue({
+            el: "#app_fichaTec",
+            data: {
+                Registrando: false,
+            },
+            mounted() {
+
+            },
+            methods: {
+                RegiserFile: async function (fileName, id) {
+                    Swal.fire({
+                        title: "¿Deseas registrar este archivo: " + fileName + "?",
+                        text: "",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, adelante!'
+                    }).then(async (result) => {
+                        if (result.value) {
+                            var divCont = document.getElementById("div_file_"+id)
+                            var optCont = document.getElementById("Opt_file_"+id)
+                            var loadCont = document.getElementById("loader_"+id)
+                            var keyCont = document.getElementById("div_clave_file_" + id)
+
+                            loadCont.innerHTML = "<div class='text-center'><span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span></div>";
+                            optCont.style.display = "none"
+                            
+
+                            var formData = new FormData();
+                            formData.append('FileName', fileName)
+                            formData.append('Folder', document.getElementById("inp_fileAfolder").value);
+
+                            await axios.post('@Url.Action("RegisterFile", "FichaTecnica")', formData, { headers: { 'Content-Type': 'multipart/form-data', }}).then(response => {
+                                keyCont.innerText = response.data;
+                                keyCont.style.display = "block"
+                                optCont.innerHTML = ""
+                                $.toast({
+                                    title: 'Administrador E-commerce',
+                                    subtitle: 'Ahora',
+                                    content: "El archivo: " + fileName + " fue registrado exitosamente",
+                                    type: 'success',
+                                    delay: 15000
+                                });
+
+
+                            }).catch(error => {
+                                GlobalValidAxios(error);
+                                optCont.style.display = "block"
+                            }).finally(() => {
+                                loadCont.innerHTML = ""
+                            })
+                        }
+                    })
+                },
+                AddFile: async function() {
+                    this.Registrando = true;
+                    var formData = new FormData();
+                    formData.append('File', document.getElementById("inp_fileAdd").files.length > 0 ? document.getElementById("inp_fileAdd").files[0] : null)
+                    formData.append('Folder', document.getElementById("inp_fileAfolder").value);
+
+                    await axios.post('@Url.Action("AddFile", "FichaTecnica")', formData, { headers: { 'Content-Type': 'multipart/form-data', }}).then(response => {
+                        $.toast({
+                            title: 'Administrador E-commerce',
+                            subtitle: 'Ahora',
+                            content: response.data,
+                            type: 'success',
+                            delay: 15000
+                        });
+                        document.getElementById("btn_refress").click()
+                    }).catch(error => {
+                        GlobalValidAxios(error);
+                    }).finally(() => {
+                        this.Registrando = false
+                    })
+                }
+            }
+        });
+    </script>
+}
+

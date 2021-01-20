@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SplitAdminEcomerce.Models.PrecioDistriPreca>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Componente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Placas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Refrencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Componente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Placas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Refrencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                <a href="#modal2" data-toggle="modal" onclick="app_preciosConf.EditForm('DistriPreca','@item.EncriptId','Disribuidor precargado')" title="Editar este componente">Editar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,90 @@
+﻿@model SplitAdminEcomerce.Models.PrecioJumperCable
+
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel. @DateTime.Now.ToString()</p>
+
+    </div>
+    <hr />
+}
+<form asp-action="JumpeCableEdit" asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="IdPrecioJumperCable" class="control-label"></label>
+        <input asp-for="IdPrecioJumperCable" class="form-control" />
+        <span asp-validation-for="IdPrecioJumperCable" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Precio" class="control-label"></label>
+        <input asp-for="Precio" class="form-control" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoJumper" class="control-label"></label>
+        <input asp-for="TipoJumper" class="form-control" />
+        <span asp-validation-for="TipoJumper" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoFibra" class="control-label"></label>
+        <input asp-for="TipoFibra" class="form-control" />
+        <span asp-validation-for="TipoFibra" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoCubierta" class="control-label"></label>
+        <input asp-for="TipoCubierta" class="form-control" />
+        <span asp-validation-for="TipoCubierta" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Creado" class="control-label"></label>
+        <input asp-for="Creado" class="form-control" />
+        <span asp-validation-for="Creado" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Modificado" class="control-label"></label>
+        <input asp-for="Modificado" class="form-control" />
+        <span asp-validation-for="Modificado" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoHilo" class="control-label"></label>
+        <input asp-for="TipoHilo" class="form-control" />
+        <span asp-validation-for="TipoHilo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoJumper_" class="control-label"></label>
+        <input asp-for="TipoJumper_" class="form-control" />
+        <span asp-validation-for="TipoJumper_" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoFibra_" class="control-label"></label>
+        <input asp-for="TipoFibra_" class="form-control" />
+        <span asp-validation-for="TipoFibra_" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoCubierta_" class="control-label"></label>
+        <input asp-for="TipoCubierta_" class="form-control" />
+        <span asp-validation-for="TipoCubierta_" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoHilo_" class="control-label"></label>
+        <input asp-for="TipoHilo_" class="form-control" />
+        <span asp-validation-for="TipoHilo_" class="text-danger"></span>
+    </div>
+    <div class="form-group row mg-b-0">
+        <div class="col-sm-12 text-right">
+            @if (ViewBag.MessageSuccess != null)
+            {
+                <button class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+            }
+            else
+            {
+                <button class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
+            }
+
+            <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+        </div>
+    </div>
+</form>

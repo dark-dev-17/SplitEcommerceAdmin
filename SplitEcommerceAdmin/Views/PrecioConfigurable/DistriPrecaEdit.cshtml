@@ -1,0 +1,65 @@
+﻿@model SplitAdminEcomerce.Models.PrecioDistriPreca
+@if (ViewBag.MessageSuccess != null)
+{
+    <div class="alert alert-success mg-b-0" role="alert">
+        <h6 class="alert-heading">Estimado usuario!</h6>
+        <p>@ViewBag.MessageSuccess</p>
+        <hr>
+        <p class="mb-0">Atte: Administrador Ecommerce Grupo Splittel. @DateTime.Now.ToString()</p>
+
+    </div>
+    <hr />
+}
+<form asp-action="DistriPrecaEdit" asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="IdPrecioDistriPreca" class="control-label"></label>
+        <input asp-for="IdPrecioDistriPreca" class="form-control" />
+        <span asp-validation-for="IdPrecioDistriPreca" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Tipo" class="control-label"></label>
+        <input asp-for="Tipo" class="form-control" />
+        <span asp-validation-for="Tipo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Componente" class="control-label"></label>
+        <input asp-for="Componente" class="form-control" />
+        <span asp-validation-for="Componente" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Placas" class="control-label"></label>
+        <input asp-for="Placas" class="form-control" />
+        <span asp-validation-for="Placas" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Refrencia" class="control-label"></label>
+        <input asp-for="Refrencia" class="form-control" />
+        <span asp-validation-for="Refrencia" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Precio" class="control-label"></label>
+        <input asp-for="Precio" class="form-control" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Descripcion" class="control-label"></label>
+        <input asp-for="Descripcion" class="form-control" />
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+    <div class="form-group row mg-b-0">
+        <div class="col-sm-12 text-right">
+            @if (ViewBag.MessageSuccess != null)
+            {
+                <button class="btn btn-sm btn-secondary" data-dismiss="modal">Cerrar</button>
+            }
+            else
+            {
+                <button class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
+            }
+
+            <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+        </div>
+    </div>
+</form>
+

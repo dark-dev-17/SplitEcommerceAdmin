@@ -15,7 +15,7 @@ namespace SplitAdminEcomerce.Models
         public string Clave { get; set; }
 
         [Display(Name = "Ruta Archivo")]
-        [DarkColumn(Name = "ruta", IsMapped = false, IsKey = false)]
+        [DarkColumn(Name = "ruta", IsMapped = true, IsKey = false)]
         public string Rutapath { get; set; }
     }
 }

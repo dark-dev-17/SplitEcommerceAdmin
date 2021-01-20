@@ -8,7 +8,7 @@
     <div id="dpSidebarBody" class="sidebar-body">
         <ul class="nav nav-sidebar">
             <li class="nav-label"><label class="content-label">Template Pages</label></li>
-            <li class="nav-item">
+            <li class="nav-item show">
                 <a href="" class="nav-link with-sub"><i data-feather="box"></i>Ventas</a>
                 <nav class="nav nav-sub">
                     <a href="../pages/dashboard-one.html" class="nav-sub-link">Rastreador</a>
@@ -19,7 +19,7 @@
                     <a href="../pages/dashboard-three.html" class="nav-sub-link">Reportes</a>
                 </nav>
             </li>
-            <li class="nav-item">
+            <li class="nav-item show">
                 <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Producto</a>
                 <nav class="nav nav-sub">
                     <a href="@Url.Action("Buscador","Producto")" class="nav-sub-link">Buscador</a>
@@ -27,18 +27,19 @@
                     <a href="@Url.Action("Index","SubCategoria")" class="nav-sub-link">SubCategorias</a>
                     <a href="@Url.Action("Descripcion","DescripcionCompartida")" class="nav-sub-link">Descripciones</a>
                     <a href="@Url.Action("Index","Configurable")" class="nav-sub-link">Configurables</a>
-                    <a href="@Url.Action("Index","Configurable")" class="nav-sub-link">Fichas técnicas*</a>
+                    <a href="@Url.Action("Index","FichaTecnica")" class="nav-sub-link">Fichas técnicas</a>
+                    <a href="@Url.Action("Index","PrecioConfigurable")" class="nav-sub-link">Precios configurables</a>
                 </nav>
             </li>
-            <li class="nav-item">
+            <li class="nav-item show">
                 <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Contenido</a>
                 <nav class="nav nav-sub">
                     <a href="@Url.Action("Index","Blog")" class="nav-sub-link">Blog</a>
                     <a href="@Url.Action("Index","HomeSlide")" class="nav-sub-link">Home slide*</a>
-                    <a href="@Url.Action("Index","ContSeccion")" class="nav-sub-link">Secciones*</a>
+                    <a href="@Url.Action("Index","ContSeccion")" class="nav-sub-link">Secciones</a>
                 </nav>
             </li>
-            <li class="nav-item">
+            <li class="nav-item show">
                 <a href="" class="nav-link with-sub"><i data-feather="layout"></i>Biblioteca Técnica</a>
                 <nav class="nav nav-sub">
                     <a href="@Url.Action("Asignar","ConsultorTecnico")" class="nav-sub-link">Consulttécnico</a>

@@ -1,0 +1,339 @@
+﻿@{
+    ViewData["Title"] = "Precio configurables";
+
+}
+<div class="row row-xs" id="app_preciosConf">
+    <div class="col-md-3">
+        <ul class="list-group list-group-settings">
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_CableServ" data-toggle="tab" class="media active">
+                    <i data-feather="user"></i>
+                    <div class="media-body">
+                        <h6>Cable de servicio</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_DistriPreca" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>Distribuidor precargado</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_DistriPrecon" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>Distribuidor preconectorizado</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_JumperCable" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>Jumper cable</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_JumperConect" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>Jumper conector</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_MPO" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>MPO</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_PatchCord" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>PatchCord</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#pane_Pigtail" data-toggle="tab" class="media">
+                    <i data-feather="settings"></i>
+                    <div class="media-body">
+                        <h6>Pigtail</h6>
+                        <span>Administrar</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="card card-body pd-sm-40 pd-md-30 pd-xl-y-35 pd-xl-x-40">
+            <div class="tab-content">
+                <div id="pane_CableServ" class="tab-pane active show">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">Cable de servicio</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('CableServ')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_CableServ">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_DistriPreca" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">Distribuidor precargado</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('DistriPreca')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_DistriPreca">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_DistriPrecon" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">Distribuidor preconectorizado</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('DistriPrecon')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_DistriPrecon">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_JumperCable" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">Jumper cable</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('JumperCable')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_JumperCable">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_JumperConect" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">Jumper conector</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('JumperConect')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_JumperConect">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_MPO" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">MPO</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('MPO')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_MPO">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_PatchCord" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">PatchCord</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('PatchCord')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_PatchCord">
+
+                    </div>
+                </div><!-- tab-pane -->
+                <div id="pane_Pigtail" class="tab-pane">
+                    <div class="content-header justify-content-between">
+                        <div>
+                            <h4 class="content-title content-title-xs">Pigtail</h4>
+                        </div>
+                        <div class="d-none d-sm-flex">
+                            <button class="btn btn-sm btn-outline-primary mg-l-5" v-on:click="GetList('Pigtail')"><i data-feather="refresh" class="svg-14"></i> Refrescar</button>
+                        </div>
+                    </div><!-- content-header -->
+                    <hr />
+                    <div class="" id="table_res_Pigtail">
+
+                    </div>
+                </div><!-- tab-pane -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal_title">Modal Title</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i data-feather="x"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal_cont">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/lib/summernote/summernote.min.js"></script>
+    <script>
+        var app_preciosConf = new Vue({
+            el: "#app_preciosConf",
+            data: {
+                actual: ""
+            },
+            mounted() {
+
+            },
+            methods: {
+                GetList: async function (Config, force = true) {
+                    if (force) {
+                        this.actual = Config;
+                    }
+                    var Rute = '@Url.Action("List", "PrecioConfigurable")';
+                    document.getElementById("table_res_" + Config).innerHTML = "<div class='text-center'><span class='spinner-border spinner-border-sm text-success' role='status' aria-hidden='true'></span>Procesando...</div>";
+
+                    @*let params = new FormData();
+                        params.append('codigo', '@Model.EncriptId');
+                        params.append('Tipo', tipo );*@
+                    await axios.post(Rute.replace("List", Config + "List"), null, null).then(response => {
+                        document.getElementById("table_res_" + Config).innerHTML = response.data;
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+                                $.toast({
+                                    title: 'Error',
+                                    subtitle: 'Ahora',
+                                    content: error.response.data,
+                                    type: 'error',
+                                    delay: 15000
+                                });
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+                    })
+                },
+                EditForm: async function (Config, id, texto = "") {
+
+                    var Rute = '@Url.Action("List", "PrecioConfigurable")';
+                    document.getElementById("modal_cont").innerHTML = "<div class='text-center'><span class='spinner-border spinner-border-sm text-success' role='status' aria-hidden='true'></span>Procesando...</div>";
+                    document.getElementById("modal_title").innerText = texto;
+
+                    
+                    await axios.get(Rute.replace("List", Config + "Edit")+"/"+id, null, null).then(response => {
+                        document.getElementById("modal_cont").innerHTML = response.data;
+                    }).catch(error => {
+                        if (error.response) {
+                            if (error.response.status === 400) {
+                                $.toast({
+                                    title: 'Error',
+                                    subtitle: 'Ahora',
+                                    content: error.response.data,
+                                    type: 'error',
+                                    delay: 15000
+                                });
+                            }
+                        }
+                        console.error(error)
+                    }).finally(() => {
+                        this.LOadCtrlForm()
+                    })
+                },
+                GlobalFormSave: async function (elemento) {
+                    var Action = elemento.getAttribute('Action')
+                    var Method = elemento.getAttribute('Method')
+                    var divreplace = elemento.dataset.resultdiv
+                    if (divreplace != undefined || divreplace != null) {
+                        if (Method == "post") {
+                            await axios.post(Action, $(elemento).serialize(), null).then(response => {
+                                document.getElementById(divreplace).innerHTML = response.data;
+                                this.GetList(this.actual)
+                            }).catch(error => {
+                                if (error.response) {
+                                    if (error.response.status === 400) {
+                                        $.toast({
+                                            title: 'Error',
+                                            subtitle: 'Ahora',
+                                            content: error.response.data,
+                                            type: 'error',
+                                            delay: 15000
+                                        });
+                                    }
+                                }
+                                console.error(error)
+                            }).finally(() => {
+                                this.LOadCtrlForm()
+                            })
+                        } else {
+                            await axios.get(Action, $(elemento).serialize(), null).then(response => {
+                                document.getElementById(divreplace).innerHTML = response.data;
+                                this.GetList(this.actual)
+                            }).catch(error => {
+                                if (error.response) {
+                                    if (error.response.status === 400) {
+                                        $.toast({
+                                            title: 'Error',
+                                            subtitle: 'Ahora',
+                                            content: error.response.data,
+                                            type: 'error',
+                                            delay: 15000
+                                        });
+                                    }
+                                }
+                                console.error(error)
+                            }).finally(() => {
+                                this.LOadCtrlForm()
+                            })
+                        }
+                    }
+                },
+                LOadCtrlForm: function () {
+                    $('.Split_form').on('submit', function (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        app_preciosConf.GlobalFormSave(this)
+                    });
+                }
+            }
+        });
+    </script>
+}

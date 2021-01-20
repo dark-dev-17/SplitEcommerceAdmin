@@ -14,4 +14,8 @@
     <ProjectReference Include="..\DbManagerDark\DbManagerDark.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Producto\" />
+  </ItemGroup>
+
 </Project>
