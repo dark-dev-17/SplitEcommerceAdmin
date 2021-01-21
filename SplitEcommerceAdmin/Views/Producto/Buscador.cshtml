@@ -2,48 +2,69 @@
 @{
     ViewData["Title"] = "Buscador de productos";
 }
-<div class="content-header justify-content-between">
-    <div>
-        <h4 class="content-title content-title-xs">@ViewData["Title"]</h4>
-    </div>
-    <div class="d-none d-sm-flex">
-    </div>
-</div><!-- content-header -->
+<style>
+    .error-panel {
+       /* width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+        padding-top: 0px;
+        padding-right: 20px;
+        padding-bottom: 0px;
+        padding-left: 20px;*/
+    }
+    .error-panel {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: initial !important;
+        text-align: center;
+        padding: 40px 20px;
+    }
+</style>
 <div id="app_detalleProducto">
-    <div class="row">
-        <div class="col-4">
-            <div class="input-group">
-                <input type="text" id="inp_bus_patron" v-on:keyup="Buscardor()" class="form-control" placeholder="¿Qué deseas buscar?" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <select class="form-control" v-on:change="Buscardor()" id="inp_bus_colum">
-                        <option value="Codigo">Codigo</option>
-                        <option value="Descripcion" selected>Descripcion</option>
-                    </select>
-                </div>
-            </div>
-            <div class="card card-hover card-analytics-two" v-if="ResultadosBus.length > 0">
-                <div class="card-header bg-transparent">
-                    <h6 class="card-title mg-b-0">Lista de coincidencias</h6>
-                    <nav class="nav nav-card-icon">
-                    </nav>
-                </div><!-- card-header -->
-                <div class="card-body">
-                    <ul class="list-group list-group-flush "  style="overflow-y: scroll; height: auto;position: absolute;max-height: 400px;">
-                        <li class="list-group-item" v-for="(item , index) in ResultadosBus">
-                            <div class="list-group-icon bg-orange tx-white"><i class="fab fa-firefox"></i></div>
-                            <div class="list-body">
-                                <h6><a target="_blank" v-bind:href="'@Url.Action("Details","Producto")/'+item.encriptId">{{ item.descripcion }}</a></h6>
-                                <span>{{ item.codigo }}</span>
-                            </div>
-                            <div class="list-visit"></div>
-                            <div class="list-rate tx-success"><i class="icon ion-android-arrow-up"></i></div>
-                        </li>
-                    </ul>
-                </div>
-
+    <div class="error-panel" style="">
+        <a href="#" class="sidebar-logo mg-b-40"><span>Administrador E-commerce</span></a>
+        <div class="svg-wrapper mg-b-40">
+            <object type="image/svg+xml" data="http://themepixels.me/cassie/assets/svg/notfound.svg"></object>
+        </div>
+        <h1 class="tx-28 tx-sm-36 tx-numeric tx-md-40 tx-semibold">Buscador de productos</h1>
+        <h4 class="tx-16 tx-sm-18 tx-md-24 tx-light mg-b-20 mg-md-b-30">Por favor introduce el folio</h4>
+        <div class="input-group">
+            <input type="text" id="inp_bus_patron" v-on:keyup="Buscardor()" class="form-control" placeholder="¿Qué deseas buscar?" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <select class="form-control" v-on:change="Buscardor()" id="inp_bus_colum">
+                    <option value="Codigo">Codigo</option>
+                    <option value="Descripcion" selected>Descripcion</option>
+                </select>
             </div>
         </div>
-    </div>
+        
+        <div class="card card-hover card-contact-one col-lg-12" style="text-align: initial;" v-if="ResultadosBus.length > 0">
+            <div class="card-header bg-transparent pd-y-15 pd-l-15 pd-r-10">
+                
+            </div><!-- card-header -->
+            <div class="card-body" style="overflow-y: scroll; height: auto;max-height: 400px;">
+                <ul class="list-group list-group-flush col-lg-12" >
+                    <li class="list-group-item" v-for="(item , index) in ResultadosBus">
+                        <div class="avatar avatar-online"><img src="https://via.placeholder.com/500/637382/fff" class="rounded-circle" alt=""></div>
+                        <div class="list-body">
+                            <h6><a target="_blank" v-bind:href="'@Url.Action("Details","Producto")/'+item.encriptId">{{ item.descripcion }}</a></h6>
+                            <p>{{ item.codigo }}</p>
+                        </div>
+                        <nav class="nav">
+                        </nav>
+                    </li>
+                </ul>
+            </div><!-- card-body -->
+        </div><!-- card -->
+    </div><!-- error-panel -->
 </div><!-- content-header -->
 @section Scripts {
     <script src="~/lib/UI-Search-master/search.min.js"></script>

@@ -14,13 +14,9 @@
 <form asp-action="MPOEdit" asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="IdPrecioMPO" class="control-label"></label>
-        <input asp-for="IdPrecioMPO" class="form-control" />
-        <span asp-validation-for="IdPrecioMPO" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="Componente" class="control-label"></label>
-        <input asp-for="Componente" class="form-control" />
+        <input asp-for="IdPrecioMPO" type="hidden" class="form-control" />
+        <input asp-for="Componente" disabled class="form-control" />
         <span asp-validation-for="Componente" class="text-danger"></span>
     </div>
     <div class="form-group">

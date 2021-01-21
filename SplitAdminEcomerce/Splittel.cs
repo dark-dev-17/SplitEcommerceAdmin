@@ -66,6 +66,7 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<PrecioMPO> PrecioMPO { get; internal set; }
         public DarkManagerMySQL<PrecioPatchCord> PrecioPatchCord { get; internal set; }
         public DarkManagerMySQL<PrecioPigtail> PrecioPigtail { get; internal set; }
+        public DarkManagerMySQL<LogEcomWS> LogEcomWS { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -214,6 +215,9 @@ namespace SplitAdminEcomerce
                 PrecioPatchCord = new DarkManagerMySQL<PrecioPatchCord>(DbEcommerce);
             else if (ecomObjects == Enums.EcomObjects.PrecioPigtail)
                 PrecioPigtail = new DarkManagerMySQL<PrecioPigtail>(DbEcommerce);
+            
+            else if (ecomObjects == Enums.EcomObjects.LogEcomWS)
+                LogEcomWS = new DarkManagerMySQL<LogEcomWS>(DbEcommerce);
         }
         #endregion
 

@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Rastreador de pedidos";
+}
+<style>
+    .error-panel {
+        /* width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+        padding-top: 0px;
+        padding-right: 20px;
+        padding-bottom: 0px;
+        padding-left: 20px;*/
+    }
+
+    .error-panel {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: initial !important;
+        text-align: center;
+        padding: 40px 20px;
+    }
+</style>
+<div class="error-panel">
+    <a href="dashboard-one.html" class="sidebar-logo mg-b-40"><span>Administrador E-commerce</span></a>
+    <div class="svg-wrapper mg-b-40">
+        <object type="image/svg+xml" data="http://themepixels.me/cassie/assets/svg/notfound.svg"></object>
+    </div>
+    <h1 class="tx-28 tx-sm-36 tx-numeric tx-md-40 tx-semibold">Rastreador</h1>
+    <h4 class="tx-16 tx-sm-18 tx-md-24 tx-light mg-b-20 mg-md-b-30">Por favor introduce el folio</h4>
+    <form asp-action="Rastreador" asp-controller="Pedido">
+        <div class="search-form wd-250 wd-md-400">
+            <input type="search" class="form-control" id="idPedido" name="idPedido" placeholder="Folio">
+            <button class="btn" type="submit"><i data-feather="search"></i></button>
+
+        </div><!-- search-form -->
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        }
+    </form>
+
+</div><!-- error-panel -->

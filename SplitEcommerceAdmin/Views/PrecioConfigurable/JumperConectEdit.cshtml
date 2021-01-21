@@ -11,57 +11,28 @@
     </div>
     <hr />
 }
-<form asp-action="JumperConectEdit"  asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
+<form asp-action="JumperConectEdit" asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="IdPrecioJumperConect" class="control-label"></label>
-        <input asp-for="IdPrecioJumperConect" class="form-control" />
-        <span asp-validation-for="IdPrecioJumperConect" class="text-danger"></span>
+        <label asp-for="TipoJumper_" class="control-label"></label>
+        <input asp-for="IdPrecioJumperConect" type="hidden" class="form-control" />
+        <input asp-for="TipoJumper_" disabled class="form-control" />
+        <span asp-validation-for="TipoJumper_" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoFibra_" class="control-label"></label>
+        <input asp-for="TipoFibra_" disabled class="form-control" />
+        <span asp-validation-for="TipoFibra_" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TipoCubierta_" class="control-label"></label>
+        <input asp-for="TipoCubierta_" disabled class="form-control" />
+        <span asp-validation-for="TipoCubierta_" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Precio" class="control-label"></label>
         <input asp-for="Precio" class="form-control" />
         <span asp-validation-for="Precio" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TipoJumper" class="control-label"></label>
-        <input asp-for="TipoJumper" class="form-control" />
-        <span asp-validation-for="TipoJumper" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TipoFibra" class="control-label"></label>
-        <input asp-for="TipoFibra" class="form-control" />
-        <span asp-validation-for="TipoFibra" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TipoCubierta" class="control-label"></label>
-        <input asp-for="TipoCubierta" class="form-control" />
-        <span asp-validation-for="TipoCubierta" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Creado" class="control-label"></label>
-        <input asp-for="Creado" class="form-control" />
-        <span asp-validation-for="Creado" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Modificado" class="control-label"></label>
-        <input asp-for="Modificado" class="form-control" />
-        <span asp-validation-for="Modificado" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TipoJumper_" class="control-label"></label>
-        <input asp-for="TipoJumper_" class="form-control" />
-        <span asp-validation-for="TipoJumper_" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TipoFibra_" class="control-label"></label>
-        <input asp-for="TipoFibra_" class="form-control" />
-        <span asp-validation-for="TipoFibra_" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TipoCubierta_" class="control-label"></label>
-        <input asp-for="TipoCubierta_" class="form-control" />
-        <span asp-validation-for="TipoCubierta_" class="text-danger"></span>
     </div>
     <div class="form-group row mg-b-0">
         <div class="col-sm-12 text-right">

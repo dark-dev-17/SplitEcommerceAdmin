@@ -37,6 +37,8 @@
 
 <script src="~/Template/lib/select2/js/select2.min.js"></script>
 
+<script src="~/Template/lib/cleave.js/cleave.min.js"></script>
+
 <script>
     var GlobalValidAxios = function (error) {
         if (error.response) {
@@ -61,5 +63,11 @@
         }
         console.error(error)
     }
+    $(function () {
 
+        'use strict'
+
+        feather.replace();
+
+    })
 </script>

@@ -1,8 +1,12 @@
-﻿using SplitAdminEcomerce.Exceptions;
+﻿using Nancy.Json;
+using Newtonsoft.Json;
+using SplitAdminEcomerce.Exceptions;
 using SplitAdminEcomerce.Uniones;
 using SplitAdminEcomerce.Views;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Text;
 
 namespace SplitAdminEcomerce.Controllers
@@ -35,11 +39,14 @@ namespace SplitAdminEcomerce.Controllers
                 Splittel.LoadObject(Enums.EcomObjects.OPWebHookLog);;
             if (Splittel.WsB2B == null)
                 Splittel.LoadObject(Enums.EcomObjects.WsB2B);
+            if (Splittel.LogEcomWS == null)
+                Splittel.LoadObject(Enums.EcomObjects.LogEcomWS);
 
             Splittel.Connect(Enums.DbAccess.SapBussinesOne);
 
             if (Splittel.DireccionPedido == null)
                 Splittel.LoadObject(Enums.SapB1Objects.DireccionPedido);
+            
         }
         #endregion
 
@@ -61,9 +68,17 @@ namespace SplitAdminEcomerce.Controllers
                     if(pedidoUnion.Cliente.TipoCliente == "B2C")
                     {
                         //direccion de envio
-                        pedidoUnion.DireccionEnvio = Splittel.DireccionEnvio.Get(Int32.Parse(pedidoUnion.Pedido.DatosEnvio));
+                        if (!string.IsNullOrEmpty(pedidoUnion.Pedido.DatosEnvio))
+                        {
+                            pedidoUnion.DireccionEnvio = Splittel.DireccionEnvio.Get(Int32.Parse(pedidoUnion.Pedido.DatosEnvio));
+                        }
+
                         //direccion de facuracion
-                        pedidoUnion.DireccionFacturacion = Splittel.DireccionFacturacion.Get(Int32.Parse(pedidoUnion.Pedido.DatosFacturacion));
+                        if (!string.IsNullOrEmpty(pedidoUnion.Pedido.DatosFacturacion))
+                        {
+                            pedidoUnion.DireccionFacturacion = Splittel.DireccionFacturacion.Get(Int32.Parse(pedidoUnion.Pedido.DatosFacturacion));
+                        }
+                            
                         //ultimo log open pay
                         pedidoUnion.OPWebHookLog = Splittel.OPWebHookLog.GetOpenquery($"where t12_f002 = '{IdPedido}' order by t12_f099 desc limit 1");
                         //validar si el log de open pay fue exitoso
@@ -87,6 +102,16 @@ namespace SplitAdminEcomerce.Controllers
                         }
                     }
                 }
+                var LastLog = Splittel.LogEcomWS.GetOpenquery($"where t99_f003 = '{IdPedido}' order by t99_f003 desc limit 1");
+                if(LastLog != null)
+                {
+                    string Log = LastLog.JsonResponse;//.Replace("CreatePedidoB2CResult", "LogResult").Replace("CreatePedidoB2BResult", "LogResult").Replace("CreatePedidoB2B_withoutCreditResult", "LogResult");
+                    //Log = Log.Replace(@"Diccionary", "Dato");
+                    var JSONObj = JsonConvert.DeserializeObject<ResponseWS>(Log);
+
+                    Log = "";
+                }
+                
             }
             return pedidoUnion;
         }

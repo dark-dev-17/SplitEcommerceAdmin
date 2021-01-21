@@ -49,6 +49,12 @@ namespace SplitAdminEcomerce.Uniones
         /// lista de partidas
         /// </summary>
         public List<ViewAd_PedidoDetalle> PedidoDetalle { get; set; }
+        /// <summary>
+        /// Ultimo log
+        /// </summary>
+        public LogResult LogResult { get; set; }
+
+
 
     }
 }

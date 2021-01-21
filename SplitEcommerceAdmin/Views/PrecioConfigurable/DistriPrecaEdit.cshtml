@@ -13,39 +13,35 @@
 <form asp-action="DistriPrecaEdit" asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="IdPrecioDistriPreca" class="control-label"></label>
-        <input asp-for="IdPrecioDistriPreca" class="form-control" />
-        <span asp-validation-for="IdPrecioDistriPreca" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="Tipo" class="control-label"></label>
-        <input asp-for="Tipo" class="form-control" />
+        <input asp-for="IdPrecioDistriPreca" type="hidden" class="form-control" />
+        <input asp-for="Tipo" disabled class="form-control" />
         <span asp-validation-for="Tipo" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Componente" class="control-label"></label>
-        <input asp-for="Componente" class="form-control" />
+        <input asp-for="Componente" disabled class="form-control" />
         <span asp-validation-for="Componente" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Placas" class="control-label"></label>
-        <input asp-for="Placas" class="form-control" />
+        <input asp-for="Placas" disabled class="form-control" />
         <span asp-validation-for="Placas" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Refrencia" class="control-label"></label>
-        <input asp-for="Refrencia" class="form-control" />
+        <input asp-for="Refrencia" disabled class="form-control" />
         <span asp-validation-for="Refrencia" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Precio" class="control-label"></label>
-        <input asp-for="Precio" class="form-control" />
-        <span asp-validation-for="Precio" class="text-danger"></span>
+        <label asp-for="Descripcion" class="control-label"></label>
+        <input asp-for="Descripcion" disabled class="form-control" />
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Descripcion" class="control-label"></label>
-        <input asp-for="Descripcion" class="form-control" />
-        <span asp-validation-for="Descripcion" class="text-danger"></span>
+        <label asp-for="Precio" class="control-label"></label>
+        <input asp-for="Precio" type="text" class="form-control inputNumeral" />
+        <span asp-validation-for="Precio" class="text-danger"></span>
     </div>
     <div class="form-group row mg-b-0">
         <div class="col-sm-12 text-right">

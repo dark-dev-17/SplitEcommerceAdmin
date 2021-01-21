@@ -4,23 +4,25 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!--<Compile Remove="Views\PrecioConfigurable\**" />-->
-    <!--<Content Remove="Views\PrecioConfigurable\**" />-->
-    <!--<EmbeddedResource Remove="Views\PrecioConfigurable\**" />-->
-    <!--<None Remove="Views\PrecioConfigurable\**" />-->
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\SplitAdminEcomerce\SplitAdminEcomerce.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 

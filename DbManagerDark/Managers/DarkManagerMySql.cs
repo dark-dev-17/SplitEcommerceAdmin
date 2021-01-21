@@ -173,6 +173,10 @@ namespace DbManagerDark.Managers
         {
             return dBConnection.GetIntegerValue(SentenceMax);
         }
+        public string GetStringValueGen(string SentenceMax)
+        {
+            return dBConnection.GetStringValue(SentenceMax);
+        }
 
         public T Get(int? id)
         {

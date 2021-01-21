@@ -15,7 +15,6 @@
         <p class="mb-0">Atte: Sistema Administrador E-commerce.</p>
     </div>
 }
-
 <div class="row">
     <div class="col-3">
         @if (Model.Pedido.Estatus == "P")
@@ -108,7 +107,7 @@
                         }
                         else
                         {
-                            <span class="badge badge-warning">Proceso en proceso</span>
+                            <span class="badge badge-warning">Proceso activo</span>
                         }
                         <br />
                         <ul class="list-group list-group-flush mg-b-15">
@@ -162,7 +161,7 @@
     <div class="card card-invoice col-9">
         <div class="card-header">
             <div>
-                <h5 class="mg-b-3">@Html.Raw((Model.Pedido.Estatus == "P" ? "Pedido" : "Cotización")): @Model.Pedido.IdPedido</h5>
+                <h5 class="mg-b-3">@Html.Raw((Model.Pedido.Estatus == "P" ? "Pedido " + Model.Cliente.TipoCliente : "Cotización " + Model.Cliente.TipoCliente)): @Model.Pedido.IdPedido</h5>
                 <span class="tx-sm text-muted">Vigente hasta: @Model.Pedido.Fecha.AddDays(10).ToString("F")</span>
             </div>
             <div class="btn-group-invoice">
@@ -210,16 +209,24 @@
                     <label class="content-label">Direccion de facturación</label>
                     @if (Model.Pedido.Estatus == "P" && Model.Cliente.TipoCliente == "B2C")
                     {
-                        <h6 class="tx-15 mg-b-10">@Html.DisplayFor(modelItem => Model.DireccionFacturacion.RazonSocial) </h6>
-                        <p class="mg-b-0"> @Html.DisplayFor(modelItem => Model.DireccionFacturacion.RFC)</p>
-                        <p class="mg-b-0">
-                            @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Calle) ,
-                            @Html.DisplayFor(modelItem => Model.DireccionFacturacion.NoExterior)
-                            @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Colonia),
-                            @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Delegacion),
-                            @Html.DisplayFor(modelItem => Model.DireccionFacturacion.EstadoName),
-                            CP: @Html.DisplayFor(modelItem => Model.DireccionFacturacion.CP)
-                        </p>
+                        @if (Model.DireccionFacturacion != null)
+                        {
+                            <h6 class="tx-15 mg-b-10">@Html.DisplayFor(modelItem => Model.DireccionFacturacion.RazonSocial) </h6>
+                            <p class="mg-b-0"> @Html.DisplayFor(modelItem => Model.DireccionFacturacion.RFC)</p>
+                            <p class="mg-b-0">
+                                @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Calle) ,
+                                @Html.DisplayFor(modelItem => Model.DireccionFacturacion.NoExterior)
+                                @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Colonia),
+                                @Html.DisplayFor(modelItem => Model.DireccionFacturacion.Delegacion),
+                                @Html.DisplayFor(modelItem => Model.DireccionFacturacion.EstadoName),
+                                CP: @Html.DisplayFor(modelItem => Model.DireccionFacturacion.CP)
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="mg-b-0">No se requiere factura </p>
+                        }
+
                     }
                     else if (Model.Pedido.Estatus == "P" && Model.Cliente.TipoCliente == "B2B")
                     {
@@ -239,7 +246,7 @@
                     <ul class="list-unstyled lh-7">
                         <li class="d-flex justify-content-between">
                             <span>Tipo compra:</span>
-                            <span>@Model.Cliente.TipoCliente</span>
+                            <span class="badge badge-success">@Model.Cliente.TipoCliente</span>
                         </li>
                         <li class="d-flex justify-content-between">
                             <span>Estatus</span>
@@ -315,30 +322,30 @@
                     }
                         </p>
                     </div><!-- col -->
-                <div class="col-sm-6 col-lg-4 order-1 order-sm-0">
-                    <ul class="list-unstyled lh-7 pd-r-10">
-                        <li class="d-flex justify-content-between">
-                            <span>Sub-Total</span>
-                            <span>@Html.DisplayFor(modelItem => Model.Pedido.SubTotal)</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <span>Iva (16%)</span>
-                            <span>@Html.DisplayFor(modelItem => Model.Pedido.Iva)</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <span>Discount (@Html.DisplayFor(modelItem => Model.Cliente.GroupCode))</span>
-                            <span>@Html.Raw((Model.Cliente.GroupCode * Model.Pedido.Total))</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <strong>Total</strong>
-                            <strong>@Html.DisplayFor(modelItem => Model.Pedido.Total)</strong>
-                        </li>
-                    </ul>
+                    <div class="col-sm-6 col-lg-4 order-1 order-sm-0">
+                        <ul class="list-unstyled lh-7 pd-r-10">
+                            <li class="d-flex justify-content-between">
+                                <span>Sub-Total</span>
+                                <span>@Html.DisplayFor(modelItem => Model.Pedido.SubTotal)</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <span>Iva (16%)</span>
+                                <span>@Html.DisplayFor(modelItem => Model.Pedido.Iva)</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <span>Discount (@Html.DisplayFor(modelItem => Model.Cliente.GroupCode))</span>
+                                <span>@Html.Raw((Model.Cliente.GroupCode * Model.Pedido.Total))</span>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong>Total</strong>
+                                <strong>@Html.DisplayFor(modelItem => Model.Pedido.Total)</strong>
+                            </li>
+                        </ul>
 
-                    <button class="btn btn-block btn-primary btn-brand-02">Pay Now</button>
-                </div><!-- col -->
-            </div>
-        </div><!-- card-body -->
+                        <button class="btn btn-block btn-primary btn-brand-02">Pay Now</button>
+                    </div><!-- col -->
+                </div>
+            </div><!-- card-body -->
+        </div>
     </div>
-</div>
 

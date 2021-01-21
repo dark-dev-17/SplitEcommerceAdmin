@@ -184,12 +184,25 @@ namespace SplitAdminEcomerce.Controllers
         public List<PrecioJumperCable> GetPrecioJumperCables()
         {
             var result_re = Splittel.PrecioJumperCable.GetOpenquery("", "Order by t91_pk01");
+            result_re.ForEach(jum => {
+                jum.TipoJumper_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoJumper}");
+                jum.TipoFibra_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoFibra}");
+                jum.TipoCubierta_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoCubierta}");
+                jum.TipoHilo_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoHilo}");
+            });
             return result_re;
         }
         public PrecioJumperCable GetPrecioJumperCable(int id)
         {
-            var result_re = Splittel.PrecioJumperCable.Get(id);
-            return result_re;
+            var jum = Splittel.PrecioJumperCable.Get(id);
+            if(jum != null)
+            {
+                jum.TipoJumper_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoJumper}");
+                jum.TipoFibra_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoFibra}");
+                jum.TipoCubierta_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoCubierta}");
+                jum.TipoHilo_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoHilo}");
+            }
+            return jum;
         }
         #endregion
 
@@ -223,12 +236,23 @@ namespace SplitAdminEcomerce.Controllers
         public List<PrecioJumperConect> GetPrecioJumperConects()
         {
             var result_re = Splittel.PrecioJumperConect.GetOpenquery("", "Order by t91_pk01");
+            result_re.ForEach(jum => {
+                jum.TipoJumper_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoJumper}");
+                jum.TipoFibra_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoFibra}");
+                jum.TipoCubierta_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoCubierta}");
+            });
             return result_re;
         }
         public PrecioJumperConect GetPrecioJumperConect(int id)
         {
-            var result_re = Splittel.PrecioJumperConect.Get(id);
-            return result_re;
+            var jum = Splittel.PrecioJumperConect.Get(id);
+            if (jum != null)
+            {
+                jum.TipoJumper_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoJumper}");
+                jum.TipoFibra_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoFibra}");
+                jum.TipoCubierta_ = Splittel.PrecioJumperCable.GetStringValueGen($"select t91_f002 from t91_subdefiniciones where t91_pk01 = {jum.TipoCubierta}");
+            }
+            return jum;
         }
         #endregion
 

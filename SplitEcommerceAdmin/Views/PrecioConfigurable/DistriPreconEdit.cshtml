@@ -14,23 +14,19 @@
 <form asp-action="DistriPreconEdit" asp-controller="PrecioConfigurable" class="Split_form" data-resultDiv="modal_cont">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="IdPrecioDistriPrecon" class="control-label"></label>
-        <input asp-for="IdPrecioDistriPrecon" class="form-control" />
-        <span asp-validation-for="IdPrecioDistriPrecon" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="Tipo" class="control-label"></label>
-        <input asp-for="Tipo" class="form-control" />
+        <input asp-for="IdPrecioDistriPrecon" type="hidden" class="form-control" />
+        <input asp-for="Tipo" disabled class="form-control" />
         <span asp-validation-for="Tipo" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Componente" class="control-label"></label>
-        <input asp-for="Componente" class="form-control" />
+        <input asp-for="Componente" disabled class="form-control" />
         <span asp-validation-for="Componente" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Cantidad" class="control-label"></label>
-        <input asp-for="Cantidad" class="form-control" />
+        <input asp-for="Cantidad" disabled class="form-control" />
         <span asp-validation-for="Cantidad" class="text-danger"></span>
     </div>
     <div class="form-group">

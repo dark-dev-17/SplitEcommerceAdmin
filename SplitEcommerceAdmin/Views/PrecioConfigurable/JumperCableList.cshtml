@@ -4,27 +4,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoJumper)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoFibra)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoCubierta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Creado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Modificado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoHilo)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.TipoJumper_)
             </th>
             <th>
@@ -36,33 +15,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.TipoHilo_)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoJumper)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoFibra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoCubierta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Creado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modificado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoHilo)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TipoJumper_)
             </td>
@@ -76,7 +37,10 @@
                 @Html.DisplayFor(modelItem => item.TipoHilo_)
             </td>
             <td>
-                <a href="#modal2" data-toggle="modal" onclick="app_preciosConf.EditForm('JumpeCable','@item.EncriptId','Jumper cable')" title="Editar este componente">Editar</a>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                <a href="#modal2" data-toggle="modal" onclick="app_preciosConf.EditForm('JumperCable','@item.EncriptId','Jumper cable')" title="Editar este componente">Editar</a>
             </td>
         </tr>
 }

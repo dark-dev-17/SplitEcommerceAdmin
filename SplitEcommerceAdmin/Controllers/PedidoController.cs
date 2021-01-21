@@ -20,6 +20,21 @@ namespace SplitEcommerceAdmin.Controllers
         {
             PedidoCtrl = new PedidoCtrl(new Splittel(configuration));
         }
+        public ActionResult Rastreador()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rastreador(int idPedido)
+        {
+            if(idPedido == 0)
+            {
+                ViewData["ErrorMessage"] = "Por favor introduce un folio";
+                return View();
+            }
+            return RedirectToAction("Details", new { id = EncryptData.Encrypt(idPedido+"") });
+        }
 
         public ActionResult Details(string id)
         {
@@ -27,6 +42,8 @@ namespace SplitEcommerceAdmin.Controllers
             {
                 string idDecripted = EncryptData.Decrypt(id);
                 var result = PedidoCtrl.GetPedido(Int32.Parse(idDecripted));
+                if(result is null)
+                    return NotFound("El pedido no fue encontrado");
                 return View(result);
             }
             catch (SplitAdminEcomerce.Exceptions.SplitException ex)
