@@ -53,6 +53,7 @@ namespace SplitAdminEcomerce.Enums
         PrecioPatchCord = 34,
         PrecioPigtail = 35,
         LogEcomWS = 36,
+        Admin_moduloSubPer = 37,
     }
     public enum SplinObjects
     {

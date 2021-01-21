@@ -17,7 +17,7 @@ namespace SplitEcommerceAdmin.Controllers
         {
             _logger = logger;
         }
-
+        [AccessMultipleView(IdAction = new int[] { 12, 13 })]
         public IActionResult Index()
         {
             return View();

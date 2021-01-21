@@ -67,6 +67,7 @@ namespace SplitAdminEcomerce
         public DarkManagerMySQL<PrecioPatchCord> PrecioPatchCord { get; internal set; }
         public DarkManagerMySQL<PrecioPigtail> PrecioPigtail { get; internal set; }
         public DarkManagerMySQL<LogEcomWS> LogEcomWS { get; internal set; }
+        public DarkManagerMySQL<Admin_moduloSubPer> Admin_moduloSubPer { get; internal set; }
         #endregion
 
         #region Variables de acceso SAP B1
@@ -75,6 +76,10 @@ namespace SplitAdminEcomerce
         /// </summary>
         public DarkSpecialMSSQL<DireccionPedido> DireccionPedido { get; internal set; }
         public DarkManagerMSSQL<CardGroup> CardGroup { get; internal set; }
+
+        #endregion
+
+        #region Variables de acceso Splinet
 
         #endregion
 
@@ -120,6 +125,10 @@ namespace SplitAdminEcomerce
 
             FtpServ = new FtpServ(FtpServer, FtpUser, FtpPassword, FtpDomain, FtpSiterute, FtpSitebase);
 
+        }
+        public Splittel(string DBEcommerce)
+        {
+            StrDbEcommerce = DBEcommerce;
         }
         #endregion
 
@@ -218,6 +227,9 @@ namespace SplitAdminEcomerce
             
             else if (ecomObjects == Enums.EcomObjects.LogEcomWS)
                 LogEcomWS = new DarkManagerMySQL<LogEcomWS>(DbEcommerce);
+            
+            else if (ecomObjects == Enums.EcomObjects.Admin_moduloSubPer)
+                Admin_moduloSubPer = new DarkManagerMySQL<Admin_moduloSubPer>(DbEcommerce);
         }
         #endregion
 

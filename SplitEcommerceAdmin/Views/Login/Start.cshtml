@@ -1,0 +1,86 @@
+﻿@model SplitAdminEcomerce.Uniones.Usuario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Start</title>
+    <partial name="../Shared/_Styles" />
+</head>
+<body>
+
+    @*<h4>Usuario</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Start">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>*@
+
+
+    <div class="forgot-panel">
+        <div class="forgot-body" style="background: url(https://fibremex.com/fibra-optica/public/images/img_spl/slide/img2/anuncio_28.png); background-repeat: no-repeat;">
+            <svg-to-inline path="http://themepixels.me/cassie/assets/svg/skateboard.svg" class-Name="svg-bg"></svg-to-inline>
+        </div>
+        <div class="forgot-sidebar">
+            <div class="forgot-sidebar-body" >
+                <a href="dashboard-one.html" class="sidebar-logo mg-b-40"><span>cassie</span></a>
+                <h4 class="forgot-title">Reset Your Password</h4>
+                <h5 class="forgot-subtitle">Enter your username or email address and we will send you a link to reset your password.</h5>
+
+                <div class="forgot-form mg-t-20">
+                    <div class="form-group">
+                        <label>Username/Email address</label>
+                        <input type="text" class="form-control" placeholder="Enter your username/email address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-block btn-brand-01 btn-uppercase">Send Code Verification</button>
+                </div>
+                <div class="form-group">
+                    <a href="page-signin.html" class="btn btn-block btn-white btn-uppercase">Back to Login</a>
+                </div>
+            </div>
+        </div><!-- forgot-sidebar -->
+    </div><!-- forgot-panel -->
+
+    <script src="../lib/jquery/jquery.min.js"></script>
+    <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../lib/feather-icons/feather.min.js"></script>
+    <script src="../lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+    <script>
+      $(function(){
+
+        'use strict'
+
+        feather.replace();
+
+      })
+    </script>
+</body>
+</html>
