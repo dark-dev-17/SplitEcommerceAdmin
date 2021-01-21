@@ -105,11 +105,12 @@ namespace SplitAdminEcomerce.Controllers
                 var LastLog = Splittel.LogEcomWS.GetOpenquery($"where t99_f003 = '{IdPedido}' order by t99_f003 desc limit 1");
                 if(LastLog != null)
                 {
-                    string Log = LastLog.JsonResponse;//.Replace("CreatePedidoB2CResult", "LogResult").Replace("CreatePedidoB2BResult", "LogResult").Replace("CreatePedidoB2B_withoutCreditResult", "LogResult");
-                    //Log = Log.Replace(@"Diccionary", "Dato");
-                    var JSONObj = JsonConvert.DeserializeObject<ResponseWS>(Log);
+                    LastLog.JsonResponse = LastLog.JsonResponse.Replace("CreatePedidoB2CResult", "LogResult").Replace("CreatePedidoB2BResult", "LogResult").Replace("CreatePedidoB2B_withoutCreditResult", "LogResult");
+                    ////Log = Log.Replace(@"Diccionary", "Dato");
+                    //var JSONObj = JsonConvert.DeserializeObject<ResponseWS>(Log);
 
-                    Log = "";
+                    //Log = "";
+                    pedidoUnion.LogEcomWS = LastLog;
                 }
                 
             }

@@ -52,7 +52,7 @@ namespace SplitAdminEcomerce.Uniones
         /// <summary>
         /// Ultimo log
         /// </summary>
-        public LogResult LogResult { get; set; }
+        public LogEcomWS LogEcomWS { get; set; }
 
 
 
